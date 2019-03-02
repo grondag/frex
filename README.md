@@ -1,4 +1,4 @@
-# FREX - Fabric Render Extension
+# FREX - Fabric Rendering API Extensions
 
 Extensions to the Fabric rendering API.  These may or may not be proposed and accepted for inclusion in the Fabric API.  
 
