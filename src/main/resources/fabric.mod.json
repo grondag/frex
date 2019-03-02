@@ -1,0 +1,13 @@
+{
+  "id": "free",
+  "name": "Fabric Render API Extensions",
+  "description": "API for rendering features not yet included in the Fabric API",
+  "version": "1.0.0",
+  "side": "universal",
+  "initializer": "grondag.frex.Frex",
+  "requires": {
+    "fabric": "*"
+  },
+  "mixins": {
+  }
+}
