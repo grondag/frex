@@ -26,7 +26,7 @@ apply plugin: net.fabricmc.loom.LoomGradlePlugin
 
 repositories {
     flatDir {
-        dirs '../localdeps'
+        dirs '../fabric/build/libs'
     }
     mavenCentral()
 }
