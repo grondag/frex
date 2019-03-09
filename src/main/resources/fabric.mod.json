@@ -2,7 +2,7 @@
   "id": "frex",
   "name": "Fabric Render API Extensions",
   "description": "API for rendering features not yet included in the Fabric API",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "side": "universal",
   "initializer": "grondag.frex.Frex",
   "requires": {
