@@ -9,5 +9,8 @@
     "fabric": "*"
   },
   "mixins": {
+    "client": [
+      "frex.client.json"
+    ]
   }
 }
