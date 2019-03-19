@@ -1,4 +1,4 @@
-package grondag.frex.api;
+package grondag.frex.api.extended;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;

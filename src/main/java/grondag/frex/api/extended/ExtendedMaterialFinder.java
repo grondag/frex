@@ -1,6 +1,6 @@
-package grondag.frex.api;
+package grondag.frex.api.extended;
 
-import net.fabricmc.fabric.api.client.model.fabric.MaterialFinder;
+import grondag.frex.api.core.MaterialFinder;
 import net.minecraft.block.BlockRenderLayer;
 
 public interface ExtendedMaterialFinder extends MaterialFinder {

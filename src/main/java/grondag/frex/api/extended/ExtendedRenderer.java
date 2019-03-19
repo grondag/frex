@@ -1,6 +1,6 @@
-package grondag.frex.api;
+package grondag.frex.api.extended;
 
-import net.fabricmc.fabric.api.client.model.fabric.Renderer;
+import grondag.frex.api.core.Renderer;
 import net.minecraft.util.Identifier;
 
 public interface ExtendedRenderer extends Renderer {

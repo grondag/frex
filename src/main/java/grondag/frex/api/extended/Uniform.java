@@ -1,4 +1,4 @@
-package grondag.frex.api;
+package grondag.frex.api.extended;
 
 import org.joml.Matrix4f;
 

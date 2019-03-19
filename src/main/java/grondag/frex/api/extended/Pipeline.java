@@ -1,4 +1,4 @@
-package grondag.frex.api;
+package grondag.frex.api.extended;
 
 public interface Pipeline {
     public int spriteDepth();

@@ -1,16 +1,16 @@
-package grondag.frex.api;
+package grondag.frex.api.extended;
 
 import java.util.function.Consumer;
 
-import grondag.frex.api.Uniform.Uniform1f;
-import grondag.frex.api.Uniform.Uniform1i;
-import grondag.frex.api.Uniform.Uniform2f;
-import grondag.frex.api.Uniform.Uniform2i;
-import grondag.frex.api.Uniform.Uniform3f;
-import grondag.frex.api.Uniform.Uniform3i;
-import grondag.frex.api.Uniform.Uniform4f;
-import grondag.frex.api.Uniform.Uniform4i;
-import grondag.frex.api.Uniform.UniformMatrix4f;
+import grondag.frex.api.extended.Uniform.Uniform1f;
+import grondag.frex.api.extended.Uniform.Uniform1i;
+import grondag.frex.api.extended.Uniform.Uniform2f;
+import grondag.frex.api.extended.Uniform.Uniform2i;
+import grondag.frex.api.extended.Uniform.Uniform3f;
+import grondag.frex.api.extended.Uniform.Uniform3i;
+import grondag.frex.api.extended.Uniform.Uniform4f;
+import grondag.frex.api.extended.Uniform.Uniform4i;
+import grondag.frex.api.extended.Uniform.UniformMatrix4f;
 import net.minecraft.util.Identifier;
 
 /**

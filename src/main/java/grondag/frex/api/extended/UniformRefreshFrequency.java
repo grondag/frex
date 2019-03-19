@@ -1,4 +1,4 @@
-package grondag.frex.api;
+package grondag.frex.api.extended;
 
 /**
  * Governs how often shader uniform initializers are called.

@@ -17,17 +17,40 @@ buildscript {
 	dependencies {
 		classpath "net.fabricmc:fabric-loom:0.2.0-SNAPSHOT" //Don't backdate before 0.2.0; features in this version prevent messy workarounds!
 		classpath "com.github.jengelman.gradle.plugins:shadow:4.0.2"
+		classpath 'org.ajoberstar:gradle-git:0.10.1'
 	}
 }
 
+// see https://github.com/passsy/gradle-GitVersioner
+ext.gitVersioner = [
+        defaultBranch           : "master",  // default "master"
+        stableBranches          : ["master"], // default [], the feature branch postfix (-dm4(6)) will not be appended on stable branches, all commits are included into the version number calculation
+        yearFactor              : 1200, 	  // default "1000", increasing every 8.57h
+        snapshotEnabled         : true,      // default false, the "-SNAPSHOT" postfix
+        localChangesCountEnabled: false,       // default false, the (<commitCount>) before -SNAPSHOT
+        shortName: { gitVersion ->            // optional closure to build a short name
+          // allows you to add your own short name logic
+          // All properties from gitVersion are available
+          // can be used for CI `System.getenv("BUILD_NUMBER")`
+
+          // i.e. use short sha1
+          return gitVersion.commit.subSequence(0, 7)
+        }
+]
+
+// import the script which runs the version generation
+apply from: 'https://raw.githubusercontent.com/passsy/gradle-GitVersioner/master/git-versioner.gradle'
+
+apply plugin: 'java'
+apply plugin: 'maven'
 apply plugin: "maven-publish"
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: net.fabricmc.loom.LoomGradlePlugin
 
 repositories {
-    flatDir {
-        dirs '../fabric/build/libs'
-    }
+    //flatDir {
+    //    dirs '../fabric/build/libs'
+    //}
     mavenCentral()
 }
 
@@ -36,7 +59,7 @@ targetCompatibility = 1.8
 
 archivesBaseName = "frex"
 group = "grondag"
-version = "0.0.1"
+version = "${mod_version}.${gitVersionName}-${release_type}"
 
 minecraft {
 }
@@ -62,11 +85,11 @@ sourceSets {
 
 dependencies {
 	minecraft "com.mojang:minecraft:19w11b"
-	mappings "net.fabricmc:yarn:19w11b.3"
+	mappings "net.fabricmc:yarn:19w11b.12"
 	modCompile "net.fabricmc:fabric-loader:0.3.7.109"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modCompile "net.fabricmc:fabric:0.2.3.local"
+	modCompile "net.fabricmc:fabric:0.2.3.111"
 	
 	compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.0'
 	
@@ -93,4 +116,17 @@ shadowJar {
 remapJar {
 	dependsOn shadowJar
 	jar = shadowJar.archivePath
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "https://grondag-repo.appspot.com") {
+                authentication(userName: "admin", password: "${maven_password}")
+            }
+            pom.version = project.version
+            pom.artifactId = project.archivesBaseName
+            pom.groupId = project.group
+        }
+    }
 }
