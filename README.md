@@ -28,7 +28,7 @@ And add FREX to your dependencies
 
 ```
 dependencies {
-	modCompile "grondag:frex:0.1.69-alpha"
+	modCompile "grondag:frex:0.1.72-alpha"
 }
 ```
 
