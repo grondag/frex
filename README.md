@@ -11,7 +11,7 @@ depend on it without directly depending on specific implementation.
 
 Add my maven repo to your build.gradle
 
-```
+```gradle
 repositories {
     maven {
     	name = "grondag"
@@ -26,7 +26,7 @@ repositories {
 
 And add FREX to your dependencies
 
-```
+```gradle
 dependencies {
 	modCompile "grondag:frex:0.1.72-alpha"
 }
