@@ -8,6 +8,7 @@
     "MixinBlockRenderManager",
     "MixinSafeWorldView",
     "MixinSpriteAtlasTexture",
+    "MixinWorld",
 	"MixinWorldRenderer"
       ],
   "injectors": {
