@@ -84,12 +84,12 @@ sourceSets {
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:19w11b"
-	mappings "net.fabricmc:yarn:19w11b.12"
+	minecraft "com.mojang:minecraft:19w13b"
+	mappings "net.fabricmc:yarn:19w13b.1"
 	modCompile "net.fabricmc:fabric-loader:0.3.7.109"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modCompile "net.fabricmc:fabric:0.2.3.111"
+	modCompile "net.fabricmc:fabric:0.2.6.117"
 	
 	compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.0'
 	
