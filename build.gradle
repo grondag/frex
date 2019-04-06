@@ -116,15 +116,32 @@ remapJar {
 	jar = shadowJar.archivePath
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: "https://grondag-repo.appspot.com") {
-                authentication(userName: "admin", password: "${maven_password}")
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            version project.version
+            artifactId project.archivesBaseName
+            groupId project.group
+            
+            from components.java
+
+            artifact sourcesJar {
+                classifier "sources"
             }
-            pom.version = project.version
-            pom.artifactId = project.archivesBaseName
-            pom.groupId = project.group
+            
+            artifact shadowJar {
+                classifier null
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url "https://grondag-repo.appspot.com"
+            credentials {
+	            username "admin"
+	            password "${maven_password}"
+			}
         }
     }
 }
