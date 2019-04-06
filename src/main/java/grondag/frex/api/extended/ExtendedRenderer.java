@@ -16,6 +16,8 @@
 
 package grondag.frex.api.extended;
 
+import java.util.function.BooleanSupplier;
+
 import grondag.frex.api.core.Renderer;
 import net.minecraft.util.Identifier;
 
@@ -28,4 +30,10 @@ public interface ExtendedRenderer extends Renderer {
     Pipeline pipelineById(Identifier id);
     
     boolean registerPipeline(Identifier id, Pipeline pipeline);
+    
+    RenderCondition createCondition(BooleanSupplier supplier);
+    
+    RenderCondition conditionById(Identifier id);
+    
+    boolean registerCondition(Identifier id, RenderCondition pipeline);
 }

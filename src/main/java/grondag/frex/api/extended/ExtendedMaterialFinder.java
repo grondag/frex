@@ -22,6 +22,8 @@ import net.minecraft.block.BlockRenderLayer;
 public interface ExtendedMaterialFinder extends MaterialFinder {
     ExtendedMaterialFinder pipeline(Pipeline pipeline);
     
+    ExtendedMaterialFinder condition(RenderCondition condition);
+    
     @Override
     ExtendedMaterialFinder clear();
 

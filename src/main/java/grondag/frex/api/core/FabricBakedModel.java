@@ -80,9 +80,8 @@ public interface FabricBakedModel {
      * it will probably be easier to use {@link RenderContext#fallbackModelConsumer()} which handles
      * re-seeding per face automatically.<p>
      * 
-     * @param Access to world state. Using {@link TerrainBlockView#getCachedRenderData(BlockPos)} to
+     * @param blockView Access to world state. Using {@link TerrainBlockView#getCachedRenderData(BlockPos)} to
      * retrieve block entity state unless thread safety can be guaranteed.
-     * @param safeBlockEntityAccessor Thread-safe access to block entity data 
      * @param state Block state for model being rendered.
      * @param pos Position of block for model being rendered.
      * @param randomSupplier  Random object seeded per vanilla conventions. Call multiple times to re-seed.
