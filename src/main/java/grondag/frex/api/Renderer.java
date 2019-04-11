@@ -66,11 +66,11 @@ public interface Renderer {
      */
     boolean registerMaterial(Identifier id, RenderMaterial material);
     
-    ShaderBuilder pipelineBuilder();
+    ShaderBuilder shaderBuilder();
     
-    MaterialShader pipelineById(Identifier id);
+    MaterialShader shaderById(Identifier id);
     
-    boolean registerPipeline(Identifier id, MaterialShader pipeline);
+    boolean registerShader(Identifier id, MaterialShader pipeline);
     
     MaterialCondition createCondition(BooleanSupplier supplier, boolean affectBlocks, boolean affectItems);
     
