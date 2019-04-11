@@ -14,8 +14,11 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.core;
+package grondag.frex.api.model;
 
+import grondag.frex.api.mesh.Mesh;
+import grondag.frex.api.mesh.MutableQuadView;
+import grondag.frex.api.mesh.QuadView;
 import grondag.frex.impl.SpriteFinderImpl;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;

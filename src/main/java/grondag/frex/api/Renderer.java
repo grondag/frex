@@ -14,8 +14,16 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.core;
+package grondag.frex.api;
 
+import java.util.function.BooleanSupplier;
+
+import grondag.frex.api.material.MaterialFinder;
+import grondag.frex.api.material.Pipeline;
+import grondag.frex.api.material.PipelineBuilder;
+import grondag.frex.api.material.RenderCondition;
+import grondag.frex.api.material.RenderMaterial;
+import grondag.frex.api.mesh.MeshBuilder;
 import net.minecraft.util.Identifier;
 
 /**
@@ -57,4 +65,16 @@ public interface Renderer {
      * leaving the existing material intact.
      */
     boolean registerMaterial(Identifier id, RenderMaterial material);
+    
+    PipelineBuilder pipelineBuilder();
+    
+    Pipeline pipelineById(Identifier id);
+    
+    boolean registerPipeline(Identifier id, Pipeline pipeline);
+    
+    RenderCondition createCondition(BooleanSupplier supplier, boolean affectBlocks, boolean affectItems);
+    
+    RenderCondition conditionById(Identifier id);
+    
+    boolean registerCondition(Identifier id, RenderCondition pipeline);
 }

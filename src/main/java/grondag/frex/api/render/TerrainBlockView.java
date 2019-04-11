@@ -14,14 +14,16 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.core;
+package grondag.frex.api.render;
 
+import grondag.frex.api.model.DynamicBakedModel;
+import grondag.frex.api.model.DynamicModelBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ExtendedBlockView;
 
 /**
- * BlockView-extending interface to be used by {@link FabricBakedModel} for dynamic model
+ * BlockView-extending interface to be used by {@link DynamicBakedModel} for dynamic model
  * customization. It ensures thread safety and exploits data cached in render 
  * chunks for performance and data consistency.<p>
  * 

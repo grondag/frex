@@ -14,7 +14,7 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.core;
+package grondag.frex.api.mesh;
 
 import net.minecraft.client.render.BufferBuilder;
 

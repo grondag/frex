@@ -1,4 +1,4 @@
-package grondag.frex.api.extended;
+package grondag.frex.api.render;
 
 @FunctionalInterface
 public interface DynamicConsumer<T> {

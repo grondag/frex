@@ -14,7 +14,7 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.core;
+package grondag.frex.api.model;
 
 import net.minecraft.block.entity.BlockEntity;
 

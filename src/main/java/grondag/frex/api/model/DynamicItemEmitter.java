@@ -1,6 +1,6 @@
-package grondag.frex.api.extended;
+package grondag.frex.api.model;
 
-import grondag.frex.api.core.RenderContext;
+import grondag.frex.api.render.RenderContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 

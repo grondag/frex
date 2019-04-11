@@ -18,7 +18,7 @@ package grondag.frex.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 
-import grondag.frex.api.core.TerrainBlockView;
+import grondag.frex.api.render.TerrainBlockView;
 import net.minecraft.world.World;
 
 /** Make {@link World} implement {@link TerrainBlockView}. */

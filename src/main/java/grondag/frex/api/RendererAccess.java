@@ -14,7 +14,7 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.core;
+package grondag.frex.api;
 
 import grondag.frex.impl.RendererAccessImpl;
 

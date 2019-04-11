@@ -14,8 +14,10 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.core;
+package grondag.frex.api.mesh;
 
+import grondag.frex.api.material.RenderMaterial;
+import grondag.frex.api.render.RenderContext;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.Direction;

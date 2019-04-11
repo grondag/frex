@@ -14,8 +14,11 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.core;
+package grondag.frex.api.material;
 
+import grondag.frex.api.Renderer;
+import grondag.frex.api.mesh.MeshBuilder;
+import grondag.frex.api.mesh.MutableQuadView;
 import net.minecraft.block.Block;
 import net.minecraft.util.Identifier;
 

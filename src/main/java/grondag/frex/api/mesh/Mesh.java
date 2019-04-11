@@ -14,9 +14,11 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.core;
+package grondag.frex.api.mesh;
 
 import java.util.function.Consumer;
+
+import grondag.frex.api.Renderer;
 
 /**
  * A bundle of one or more {@link QuadView} instances encoded by the renderer,

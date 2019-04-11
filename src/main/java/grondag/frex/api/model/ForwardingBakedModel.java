@@ -14,12 +14,14 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.core;
+package grondag.frex.api.model;
 
 import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
+import grondag.frex.api.render.RenderContext;
+import grondag.frex.api.render.TerrainBlockView;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
@@ -34,23 +36,23 @@ import net.minecraft.util.math.Direction;
  * Base class for specialized model implementations that need to wrap other baked models.
  * Avoids boilerplate code for pass-through methods. For example usage see {@link DamageModel}.
  */
-public abstract class ForwardingBakedModel implements BakedModel, FabricBakedModel {
+public abstract class ForwardingBakedModel implements BakedModel, DynamicBakedModel {
     /** implementations must set this somehow */
     protected BakedModel wrapped;
     
     @Override
     public void emitBlockQuads(TerrainBlockView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context) {
-        ((FabricBakedModel)wrapped).emitBlockQuads(blockView, state, pos, randomSupplier, context);
+        ((DynamicBakedModel)wrapped).emitBlockQuads(blockView, state, pos, randomSupplier, context);
     }
 
     @Override
     public boolean isVanillaAdapter() {
-        return ((FabricBakedModel)wrapped).isVanillaAdapter();
+        return ((DynamicBakedModel)wrapped).isVanillaAdapter();
     }
 
     @Override
     public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
-        ((FabricBakedModel)wrapped).emitItemQuads(stack, randomSupplier, context);
+        ((DynamicBakedModel)wrapped).emitItemQuads(stack, randomSupplier, context);
     }
 
     @Override

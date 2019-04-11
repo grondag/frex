@@ -21,9 +21,9 @@ import java.util.function.Supplier;
 
 import org.spongepowered.asm.mixin.Mixin;
 
-import grondag.frex.api.core.FabricBakedModel;
-import grondag.frex.api.core.RenderContext;
-import grondag.frex.api.core.TerrainBlockView;
+import grondag.frex.api.model.DynamicBakedModel;
+import grondag.frex.api.render.RenderContext;
+import grondag.frex.api.render.TerrainBlockView;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.item.ItemStack;
@@ -33,7 +33,7 @@ import net.minecraft.util.math.BlockPos;
  * Avoids instanceof checks and enables consistent code path for all baked models.
  */
 @Mixin(BakedModel.class)
-public interface MixinBakedModel extends FabricBakedModel {
+public interface MixinBakedModel extends DynamicBakedModel {
     @Override
     public default boolean isVanillaAdapter() {
         return true;

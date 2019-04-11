@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import grondag.frex.api.core.FabricBakedModel;
+import grondag.frex.api.model.DynamicBakedModel;
 import grondag.frex.impl.DamageModel;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.Tessellator;
@@ -65,7 +65,7 @@ public abstract class MixinBlockRenderManager {
             at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/render/block/BlockModels;getModel(Lnet/minecraft/block/BlockState;)Lnet/minecraft/client/render/model/BakedModel;"))
     private void hookTesselateDamage(BlockState blockState, BlockPos blockPos, Sprite sprite, ExtendedBlockView blockView, CallbackInfo ci) {
         MutablePair<DamageModel, BakedModel> damageState = DAMAGE_STATE.get();
-        if(damageState.right != null && !((FabricBakedModel)damageState.right).isVanillaAdapter()) {
+        if(damageState.right != null && !((DynamicBakedModel)damageState.right).isVanillaAdapter()) {
             damageState.left.prepare(damageState.right, sprite, blockState, blockPos);
             this.renderer.tesselate(blockView, damageState.left, blockState, blockPos, Tessellator.getInstance().getBufferBuilder(), true, this.random, blockState.getRenderingSeed(blockPos));
             ci.cancel();

@@ -24,8 +24,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import grondag.frex.api.core.DynamicModelBlockEntity;
-import grondag.frex.api.core.TerrainBlockView;
+import grondag.frex.api.model.DynamicModelBlockEntity;
+import grondag.frex.api.render.TerrainBlockView;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.world.SafeWorldView;
 import net.minecraft.util.math.BlockPos;

@@ -14,7 +14,7 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.extended;
+package grondag.frex.api.material;
 
 /**
  * Governs how often shader uniform initializers are called.

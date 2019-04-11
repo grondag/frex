@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import grondag.frex.api.extended.RenderReloadCallback;
+import grondag.frex.api.RenderReloadCallback;
 import net.minecraft.client.render.WorldRenderer;
 
 @Mixin(WorldRenderer.class)

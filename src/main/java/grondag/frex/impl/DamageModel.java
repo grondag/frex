@@ -19,14 +19,14 @@ package grondag.frex.impl;
 import java.util.Random;
 import java.util.function.Supplier;
 
-import grondag.frex.api.core.FabricBakedModel;
-import grondag.frex.api.core.ForwardingBakedModel;
-import grondag.frex.api.core.MutableQuadView;
-import grondag.frex.api.core.RenderContext;
-import grondag.frex.api.core.RenderContext.QuadTransform;
-import grondag.frex.api.core.RenderMaterial;
-import grondag.frex.api.core.RendererAccess;
-import grondag.frex.api.core.TerrainBlockView;
+import grondag.frex.api.RendererAccess;
+import grondag.frex.api.material.RenderMaterial;
+import grondag.frex.api.mesh.MutableQuadView;
+import grondag.frex.api.model.DynamicBakedModel;
+import grondag.frex.api.model.ForwardingBakedModel;
+import grondag.frex.api.render.RenderContext;
+import grondag.frex.api.render.TerrainBlockView;
+import grondag.frex.api.render.RenderContext.QuadTransform;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.texture.Sprite;
@@ -52,7 +52,7 @@ public class DamageModel extends ForwardingBakedModel {
     @Override
     public void emitBlockQuads(TerrainBlockView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context) {
         context.pushTransform(damageTransform);
-        ((FabricBakedModel)wrapped).emitBlockQuads(blockView, state, pos, randomSupplier, context);
+        ((DynamicBakedModel)wrapped).emitBlockQuads(blockView, state, pos, randomSupplier, context);
         context.popTransform();
     }
     

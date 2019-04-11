@@ -19,8 +19,8 @@ package grondag.frex.impl;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import grondag.frex.api.core.QuadView;
-import grondag.frex.api.core.SpriteFinder;
+import grondag.frex.api.mesh.QuadView;
+import grondag.frex.api.model.SpriteFinder;
 import net.minecraft.client.texture.MissingSprite;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;

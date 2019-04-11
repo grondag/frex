@@ -16,8 +16,8 @@
 
 package grondag.frex.impl;
 
-import grondag.frex.api.core.Renderer;
-import grondag.frex.api.core.RendererAccess;
+import grondag.frex.api.Renderer;
+import grondag.frex.api.RendererAccess;
 
 public final class RendererAccessImpl implements RendererAccess{
     public static final RendererAccessImpl INSTANCE = new RendererAccessImpl();

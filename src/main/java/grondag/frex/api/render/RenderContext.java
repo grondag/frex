@@ -14,10 +14,15 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.core;
+package grondag.frex.api.render;
 
 import java.util.function.Consumer;
 
+import grondag.frex.api.mesh.Mesh;
+import grondag.frex.api.mesh.MeshBuilder;
+import grondag.frex.api.mesh.MutableQuadView;
+import grondag.frex.api.mesh.QuadEmitter;
+import grondag.frex.api.model.DynamicBakedModel;
 import net.minecraft.client.render.model.BakedModel;
 
 /**
@@ -71,7 +76,7 @@ public interface RenderContext {
     
     /**
      * Removes the transformation added by the last call to {@link #pushTransform(Consumer)}.
-     * MUST be called before exiting from {@link FabricBakedModel} .emit... methods.
+     * MUST be called before exiting from {@link DynamicBakedModel} .emit... methods.
      */
     void popTransform();
     

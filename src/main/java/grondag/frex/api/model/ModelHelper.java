@@ -14,13 +14,14 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.core;
+package grondag.frex.api.model;
 
 import java.util.Arrays;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
+import grondag.frex.api.mesh.Mesh;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.render.model.json.ModelTransformation;

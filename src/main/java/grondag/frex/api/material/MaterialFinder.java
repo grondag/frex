@@ -14,8 +14,11 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.core;
+package grondag.frex.api.material;
 
+import grondag.frex.api.Renderer;
+import grondag.frex.api.mesh.QuadEmitter;
+import grondag.frex.api.render.RenderContext;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderLayer;
 
@@ -89,5 +92,10 @@ public interface MaterialFinder {
      * Note that color will still be modified by diffuse shading and ambient occlusion,
      * unless disabled via {@link #disableAo(int, boolean)} and {@link #disableDiffuse(int, boolean)}.
      */
+    
     MaterialFinder emissive(int spriteIndex, boolean isEmissive);
+    
+    MaterialFinder pipeline(Pipeline pipeline);
+    
+    MaterialFinder condition(RenderCondition condition);
 }

@@ -14,26 +14,21 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.extended;
+package grondag.frex.api;
 
-import java.util.function.BooleanSupplier;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 
-import grondag.frex.api.core.Renderer;
-import net.minecraft.util.Identifier;
+public interface RenderReloadCallback {
+    public static final Event<RenderReloadCallback> EVENT = EventFactory.createArrayBacked(RenderReloadCallback.class,
+        (listeners) -> {
+            return () -> {
+                for (RenderReloadCallback event : listeners) {
+                    event.reload();
+                }
+            };
+        }
+    );
 
-public interface ExtendedRenderer extends Renderer {
-    @Override
-    ExtendedMaterialFinder materialFinder();
-
-    PipelineBuilder pipelineBuilder();
-    
-    Pipeline pipelineById(Identifier id);
-    
-    boolean registerPipeline(Identifier id, Pipeline pipeline);
-    
-    RenderCondition createCondition(BooleanSupplier supplier);
-    
-    RenderCondition conditionById(Identifier id);
-    
-    boolean registerCondition(Identifier id, RenderCondition pipeline);
+    void reload();
 }

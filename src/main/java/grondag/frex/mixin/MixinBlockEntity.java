@@ -19,7 +19,7 @@ package grondag.frex.mixin;
 import net.minecraft.block.entity.BlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
 
-import grondag.frex.api.core.DynamicModelBlockEntity;
+import grondag.frex.api.model.DynamicModelBlockEntity;
 
 @Mixin(BlockEntity.class)
 public class MixinBlockEntity implements DynamicModelBlockEntity {
