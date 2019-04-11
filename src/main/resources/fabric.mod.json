@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "frex",
   "version": "0.0.2",
-  "name": "Fabric Rendering Extension API",
+  "name": "FREX",
   "description": "Advanced rendering features for Fabric mods",
   "authors": [
     "Grondag"
@@ -15,7 +15,7 @@
   "license": "Apache-2.0",
   "icon": "assets/frex/frex_icon.png",
 
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "main": [
       "grondag.frex.Frex"
@@ -27,5 +27,9 @@
   "requires": {
     "fabricloader": ">=0.4.0",
     "fabric": "*"
+  },
+  "custom": {
+    "modmenu:api": true,
+    "modmenu:clientsideOnly": true
   }
 }
