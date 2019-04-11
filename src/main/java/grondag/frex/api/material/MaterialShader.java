@@ -16,6 +16,6 @@
 
 package grondag.frex.api.material;
 
-public interface Pipeline {
+public interface MaterialShader {
     public int spriteDepth();
 }

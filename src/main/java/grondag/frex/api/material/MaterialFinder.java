@@ -95,7 +95,7 @@ public interface MaterialFinder {
     
     MaterialFinder emissive(int spriteIndex, boolean isEmissive);
     
-    MaterialFinder pipeline(Pipeline pipeline);
+    MaterialFinder shader(MaterialShader pipeline);
     
-    MaterialFinder condition(RenderCondition condition);
+    MaterialFinder condition(MaterialCondition condition);
 }

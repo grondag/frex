@@ -19,9 +19,9 @@ package grondag.frex.api;
 import java.util.function.BooleanSupplier;
 
 import grondag.frex.api.material.MaterialFinder;
-import grondag.frex.api.material.Pipeline;
-import grondag.frex.api.material.PipelineBuilder;
-import grondag.frex.api.material.RenderCondition;
+import grondag.frex.api.material.MaterialShader;
+import grondag.frex.api.material.ShaderBuilder;
+import grondag.frex.api.material.MaterialCondition;
 import grondag.frex.api.material.RenderMaterial;
 import grondag.frex.api.mesh.MeshBuilder;
 import net.minecraft.util.Identifier;
@@ -66,15 +66,15 @@ public interface Renderer {
      */
     boolean registerMaterial(Identifier id, RenderMaterial material);
     
-    PipelineBuilder pipelineBuilder();
+    ShaderBuilder pipelineBuilder();
     
-    Pipeline pipelineById(Identifier id);
+    MaterialShader pipelineById(Identifier id);
     
-    boolean registerPipeline(Identifier id, Pipeline pipeline);
+    boolean registerPipeline(Identifier id, MaterialShader pipeline);
     
-    RenderCondition createCondition(BooleanSupplier supplier, boolean affectBlocks, boolean affectItems);
+    MaterialCondition createCondition(BooleanSupplier supplier, boolean affectBlocks, boolean affectItems);
     
-    RenderCondition conditionById(Identifier id);
+    MaterialCondition conditionById(Identifier id);
     
-    boolean registerCondition(Identifier id, RenderCondition pipeline);
+    boolean registerCondition(Identifier id, MaterialCondition pipeline);
 }

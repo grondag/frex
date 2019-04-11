@@ -1,5 +1,5 @@
 package grondag.frex.api.material;
 
-public interface RenderCondition {
+public interface MaterialCondition {
 
 }

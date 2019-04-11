@@ -51,8 +51,8 @@ import net.minecraft.util.Identifier;
  * supports shaders. Their names are listed below as string constants with
  * explanations of function.
  */
-public interface PipelineBuilder {
-    PipelineBuilder spriteDepth(int depth);
+public interface ShaderBuilder {
+    ShaderBuilder spriteDepth(int depth);
     
     /**
      * Accepts a resource id for GLSL 120 vertex shader source.
@@ -63,7 +63,7 @@ public interface PipelineBuilder {
      * changes some graphics settings.) This allows shader code distribution via
      * resource packs and enables shader debugging without a game restart.
      */
-    PipelineBuilder vertexSource(Identifier vertexSource);
+    ShaderBuilder vertexSource(Identifier vertexSource);
 
     /**
      * Accepts a Supplier for GLSL 120 fragment shader source.
@@ -74,53 +74,53 @@ public interface PipelineBuilder {
      * changes some graphics settings.) This allows shader code distribution via
      * resource packs and enables shader debugging without a game restart.
      */
-    PipelineBuilder fragmentSource(Identifier fragmentSource);
+    ShaderBuilder fragmentSource(Identifier fragmentSource);
     
     /**
      * Creates a new uniform. See {@link ShaderManager} header for additional info.
      */
-    PipelineBuilder uniform1f(String name, UniformRefreshFrequency frequency, Consumer<Uniform1f> initializer);
+    ShaderBuilder uniform1f(String name, UniformRefreshFrequency frequency, Consumer<Uniform1f> initializer);
 
     /**
      * Creates a new uniform. See {@link ShaderManager} header for additional info.
      */
-    PipelineBuilder uniform2f(String name, UniformRefreshFrequency frequency, Consumer<Uniform2f> initializer);
+    ShaderBuilder uniform2f(String name, UniformRefreshFrequency frequency, Consumer<Uniform2f> initializer);
 
     /**
      * Creates a new uniform. See {@link ShaderManager} header for additional info.
      */
-    PipelineBuilder uniform3f(String name, UniformRefreshFrequency frequency, Consumer<Uniform3f> initializer);
+    ShaderBuilder uniform3f(String name, UniformRefreshFrequency frequency, Consumer<Uniform3f> initializer);
 
     /**
      * Creates a new uniform. See {@link ShaderManager} header for additional info.
      */
-    PipelineBuilder uniform4f(String name, UniformRefreshFrequency frequency, Consumer<Uniform4f> initializer);
+    ShaderBuilder uniform4f(String name, UniformRefreshFrequency frequency, Consumer<Uniform4f> initializer);
 
     /**
      * Creates a new uniform. See {@link ShaderManager} header for additional info.
      */
-    PipelineBuilder uniform1i(String name, UniformRefreshFrequency frequency, Consumer<Uniform1i> initializer);
+    ShaderBuilder uniform1i(String name, UniformRefreshFrequency frequency, Consumer<Uniform1i> initializer);
 
     /**
      * Creates a new uniform. See {@link ShaderManager} header for additional info.
      */
-    PipelineBuilder uniform2i(String name, UniformRefreshFrequency frequency, Consumer<Uniform2i> initializer);
+    ShaderBuilder uniform2i(String name, UniformRefreshFrequency frequency, Consumer<Uniform2i> initializer);
 
     /**
      * Creates a new uniform. See {@link ShaderManager} header for additional info.
      */
-    PipelineBuilder uniform3i(String name, UniformRefreshFrequency frequency, Consumer<Uniform3i> initializer);
+    ShaderBuilder uniform3i(String name, UniformRefreshFrequency frequency, Consumer<Uniform3i> initializer);
 
     /**
      * Creates a new uniform. See {@link ShaderManager} header for additional info.
      */
-    PipelineBuilder uniform4i(String name, UniformRefreshFrequency frequency, Consumer<Uniform4i> initializer);
+    ShaderBuilder uniform4i(String name, UniformRefreshFrequency frequency, Consumer<Uniform4i> initializer);
 
     /**
      * Creates a new uniform for this pipeline. See {@link UniformUpdateFrequency}
      * for additional info.
      */
-    PipelineBuilder uniformMatrix4f(String name, UniformRefreshFrequency frequency, Consumer<UniformMatrix4f> initializer);
+    ShaderBuilder uniformMatrix4f(String name, UniformRefreshFrequency frequency, Consumer<UniformMatrix4f> initializer);
 
-    Pipeline build();
+    MaterialShader build();
 }
