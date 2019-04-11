@@ -1,16 +1,31 @@
 {
+  "schemaVersion": 1,
   "id": "frex",
-  "name": "Fabric Render API Extensions",
-  "description": "API for rendering features not yet included in the Fabric API",
-  "version": "0.0.1",
-  "side": "universal",
-  "initializer": "grondag.frex.Frex",
-  "requires": {
-    "fabric": "*"
+  "version": "0.0.2",
+  "name": "Fabric Rendering Extension API",
+  "description": "Advanced rendering features for Fabric mods",
+  "authors": [
+    "Grondag"
+  ],
+  "contact": {
+    "homepage": "https://minecraft.curseforge.com/projects/frex",
+    "sources": "https://github.com/grondag/frex"
   },
-  "mixins": {
-    "client": [
-      "frex.client.json"
+
+  "license": "Apache-2.0",
+  "icon": "assets/frex/frex_icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "grondag.frex.Frex"
     ]
+  },
+  "mixins": [
+    "frex.client.json"
+  ],
+  "requires": {
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
   }
 }

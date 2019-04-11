@@ -84,10 +84,10 @@ sourceSets {
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:19w13b"
-	mappings "net.fabricmc:yarn:19w13b.1"
-	modCompile "net.fabricmc:fabric-loader:0.3.7.109"
-	modCompile "net.fabricmc:fabric:0.2.6.117"
+	minecraft "com.mojang:minecraft:1.14 Pre-Release 1"
+	mappings "net.fabricmc:yarn:1.14 Pre-Release 1+build.3"
+	modCompile "net.fabricmc:fabric-loader:0.4.0+build.119"
+	modCompile "net.fabricmc:fabric:0.2.7+build.122"
 	
 	compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.0'
 	
