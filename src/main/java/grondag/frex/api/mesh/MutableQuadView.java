@@ -16,6 +16,8 @@
 
 package grondag.frex.api.mesh;
 
+import org.apiguardian.api.API;
+
 import grondag.frex.api.Renderer;
 import grondag.frex.api.material.MaterialFinder;
 import grondag.frex.api.material.RenderMaterial;
@@ -33,6 +35,7 @@ import net.minecraft.util.math.Direction;
  * 
  * Only the renderer should implement or extend this interface.
  */
+@API(status = API.Status.STABLE)
 public interface MutableQuadView extends QuadView {
     /**
      * Causes texture to appear with no rotation.

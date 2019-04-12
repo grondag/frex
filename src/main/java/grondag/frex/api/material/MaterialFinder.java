@@ -16,6 +16,8 @@
 
 package grondag.frex.api.material;
 
+import org.apiguardian.api.API;
+
 import grondag.frex.api.Renderer;
 import grondag.frex.api.mesh.QuadEmitter;
 import grondag.frex.api.render.RenderContext;
@@ -28,6 +30,7 @@ import net.minecraft.block.BlockRenderLayer;
  *
  * Must be obtained via {@link Renderer#materialFinder()}.
  */
+@API(status = API.Status.STABLE)
 public interface MaterialFinder {
     /**
      * Returns the standard material encoding all
@@ -95,7 +98,9 @@ public interface MaterialFinder {
     
     MaterialFinder emissive(int spriteIndex, boolean isEmissive);
     
+    @API(status = API.Status.EXPERIMENTAL)
     MaterialFinder shader(MaterialShader pipeline);
     
+    @API(status = API.Status.EXPERIMENTAL)
     MaterialFinder condition(MaterialCondition condition);
 }

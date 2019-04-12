@@ -16,6 +16,8 @@
 
 package grondag.frex.api.model;
 
+import org.apiguardian.api.API;
+
 import net.minecraft.block.entity.BlockEntity;
 
 /**
@@ -31,6 +33,7 @@ import net.minecraft.block.entity.BlockEntity;
  * and well-checked for unusual states.<p>
  */
 @FunctionalInterface
+@API(status = API.Status.STABLE)
 public interface DynamicModelBlockEntity {
     /**
      * @return The model state data provided by this block entity. Can be null.

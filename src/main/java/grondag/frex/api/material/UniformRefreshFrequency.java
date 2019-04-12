@@ -16,6 +16,8 @@
 
 package grondag.frex.api.material;
 
+import org.apiguardian.api.API;
+
 /**
  * Governs how often shader uniform initializers are called.
  * <p>
@@ -23,6 +25,7 @@ package grondag.frex.api.material;
  * In all cases, initializers will only be called if a shader using the uniform
  * is activated and values are only uploaded if they have changed.
  */
+@API(status = API.Status.EXPERIMENTAL)
 public enum UniformRefreshFrequency {
     /**
      * Uniform initializer only called 1X a time of program load or reload.

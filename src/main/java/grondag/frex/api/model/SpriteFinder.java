@@ -16,6 +16,8 @@
 
 package grondag.frex.api.model;
 
+import org.apiguardian.api.API;
+
 import grondag.frex.api.mesh.Mesh;
 import grondag.frex.api.mesh.MutableQuadView;
 import grondag.frex.api.mesh.QuadView;
@@ -30,6 +32,7 @@ import net.minecraft.client.texture.SpriteAtlasTexture;
  * the sprites that were baked into the mesh. In other words, this class 
  * supplies the sprite parameter for {@link QuadView#toBakedQuad(int, Sprite, boolean)}.
  */
+@API(status = API.Status.STABLE)
 public interface SpriteFinder {
     /**
      * Retrieves or creates the finder for the given atlas.

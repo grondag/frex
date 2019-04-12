@@ -18,6 +18,8 @@ package grondag.frex.api;
 
 import java.util.function.BooleanSupplier;
 
+import org.apiguardian.api.API;
+
 import grondag.frex.api.material.MaterialFinder;
 import grondag.frex.api.material.MaterialShader;
 import grondag.frex.api.material.ShaderBuilder;
@@ -31,6 +33,7 @@ import net.minecraft.util.Identifier;
  * for model lighting, buffering and rendering. Such plug-ins implement the
  * enhanced model rendering interfaces specified by the Fabric API.<p>
  */
+@API(status = API.Status.STABLE)
 public interface Renderer {
     /**
      * Obtain a new {@link MeshBuilder} instance used to create 
@@ -66,15 +69,21 @@ public interface Renderer {
      */
     boolean registerMaterial(Identifier id, RenderMaterial material);
     
+    @API(status = API.Status.EXPERIMENTAL)
     ShaderBuilder shaderBuilder();
     
+    @API(status = API.Status.EXPERIMENTAL)
     MaterialShader shaderById(Identifier id);
     
+    @API(status = API.Status.EXPERIMENTAL)
     boolean registerShader(Identifier id, MaterialShader pipeline);
     
+    @API(status = API.Status.EXPERIMENTAL)
     MaterialCondition createCondition(BooleanSupplier supplier, boolean affectBlocks, boolean affectItems);
     
+    @API(status = API.Status.EXPERIMENTAL)
     MaterialCondition conditionById(Identifier id);
     
+    @API(status = API.Status.EXPERIMENTAL)
     boolean registerCondition(Identifier id, MaterialCondition pipeline);
 }

@@ -16,6 +16,8 @@
 
 package grondag.frex.api.mesh;
 
+import org.apiguardian.api.API;
+
 import grondag.frex.api.material.RenderMaterial;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.texture.Sprite;
@@ -29,6 +31,7 @@ import net.minecraft.util.math.Direction;
  * 
  * Only the renderer should implement or extend this interface.
  */
+@API(status = API.Status.STABLE)
 public interface QuadView {
     /**
      * Reads baked vertex data and outputs standard baked quad 

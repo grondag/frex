@@ -19,6 +19,8 @@ package grondag.frex.api.model;
 import java.util.Random;
 import java.util.function.Supplier;
 
+import org.apiguardian.api.API;
+
 import grondag.frex.api.Renderer;
 import grondag.frex.api.render.DynamicConsumer;
 import grondag.frex.api.render.RenderContext;
@@ -39,6 +41,7 @@ import net.minecraft.world.ExtendedBlockView;
  * interface with {@link #isVanillaAdapter()} == true and to produce standard vertex data. 
  * This means any BakedModel instance can be safely cast to this interface without an instanceof check.
  */
+@API(status = API.Status.STABLE)
 public interface DynamicBakedModel {
     /**
      * When true, signals renderer this producer is implemented through {@link BakedModel#getQuads(BlockState, net.minecraft.util.math.Direction, Random)}.
@@ -123,10 +126,12 @@ public interface DynamicBakedModel {
      */
     void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context);
     
+    @API(status = API.Status.EXPERIMENTAL)
     default void emitBlockQuads(TerrainBlockView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context, DynamicConsumer<DynamicBlockEmitter> dynamicConsumer) {
         this.emitBlockQuads(blockView, state, pos, randomSupplier, context);
     }
     
+    @API(status = API.Status.EXPERIMENTAL)
     default void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context, DynamicConsumer<DynamicItemEmitter> dynamicConsumer) {
         this.emitItemQuads(stack, randomSupplier, context);
     }

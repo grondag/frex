@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
+import org.apiguardian.api.API;
+
 import grondag.frex.api.render.RenderContext;
 import grondag.frex.api.render.TerrainBlockView;
 import net.minecraft.block.BlockState;
@@ -36,6 +38,7 @@ import net.minecraft.util.math.Direction;
  * Base class for specialized model implementations that need to wrap other baked models.
  * Avoids boilerplate code for pass-through methods. For example usage see {@link DamageModel}.
  */
+@API(status = API.Status.STABLE)
 public abstract class ForwardingBakedModel implements BakedModel, DynamicBakedModel {
     /** implementations must set this somehow */
     protected BakedModel wrapped;

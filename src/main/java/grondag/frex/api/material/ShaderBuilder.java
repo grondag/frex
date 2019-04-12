@@ -18,6 +18,8 @@ package grondag.frex.api.material;
 
 import java.util.function.Consumer;
 
+import org.apiguardian.api.API;
+
 import grondag.frex.api.material.Uniform.Uniform1f;
 import grondag.frex.api.material.Uniform.Uniform1i;
 import grondag.frex.api.material.Uniform.Uniform2f;
@@ -51,6 +53,7 @@ import net.minecraft.util.Identifier;
  * supports shaders. Their names are listed below as string constants with
  * explanations of function.
  */
+@API(status = API.Status.EXPERIMENTAL)
 public interface ShaderBuilder {
     ShaderBuilder spriteDepth(int depth);
     

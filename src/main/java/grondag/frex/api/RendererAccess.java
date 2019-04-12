@@ -16,11 +16,14 @@
 
 package grondag.frex.api;
 
+import org.apiguardian.api.API;
+
 import grondag.frex.impl.RendererAccessImpl;
 
 /**
  * Registration and access for rendering extensions.
  */
+@API(status = API.Status.STABLE)
 public interface RendererAccess {
     RendererAccess INSTANCE = RendererAccessImpl.INSTANCE;
 

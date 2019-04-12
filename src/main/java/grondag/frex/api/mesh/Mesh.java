@@ -18,6 +18,8 @@ package grondag.frex.api.mesh;
 
 import java.util.function.Consumer;
 
+import org.apiguardian.api.API;
+
 import grondag.frex.api.Renderer;
 
 /**
@@ -30,6 +32,7 @@ import grondag.frex.api.Renderer;
  * 
  * Only the renderer should implement or extend this interface.
  */
+@API(status = API.Status.STABLE)
 public interface Mesh {
     /**
      * Use to access all of the quads encoded in this mesh. The quad instances

@@ -16,6 +16,8 @@
 
 package grondag.frex.api.material;
 
+import org.apiguardian.api.API;
+
 import grondag.frex.api.Renderer;
 import grondag.frex.api.mesh.MeshBuilder;
 import grondag.frex.api.mesh.MutableQuadView;
@@ -75,6 +77,7 @@ import net.minecraft.util.Identifier;
  * special materials could be implemented by multiple renderers, however there is 
  * no requirement that special materials be cross-compatible.
  */
+@API(status = API.Status.STABLE)
 public interface RenderMaterial {
     /**
      * This will be identical to the material that would be obtained by calling {@link MaterialFinder#find()}

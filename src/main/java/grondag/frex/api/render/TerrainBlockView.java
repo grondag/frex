@@ -16,6 +16,8 @@
 
 package grondag.frex.api.render;
 
+import org.apiguardian.api.API;
+
 import grondag.frex.api.model.DynamicBakedModel;
 import grondag.frex.api.model.DynamicModelBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -50,6 +52,7 @@ import net.minecraft.world.ExtendedBlockView;
  * 
  * This interface is only guaranteed to be present in the client environment.
  */
+@API(status = API.Status.STABLE)
 public interface TerrainBlockView extends ExtendedBlockView {
     /**
      * For models associated with Block Entities that implement {@link DynamicModelBlockEntity}

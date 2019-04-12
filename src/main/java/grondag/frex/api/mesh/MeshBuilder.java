@@ -16,6 +16,8 @@
 
 package grondag.frex.api.mesh;
 
+import org.apiguardian.api.API;
+
 import net.minecraft.client.render.BufferBuilder;
 
 /**
@@ -26,6 +28,7 @@ import net.minecraft.client.render.BufferBuilder;
  * Decouples models from the vertex format(s) used by
  * ModelRenderer to allow compatibility across diverse implementations.<p>
  */
+@API(status = API.Status.STABLE)
 public interface MeshBuilder {
     /**
      * Returns the {@link QuadEmitter} used to append quad to this mesh. 

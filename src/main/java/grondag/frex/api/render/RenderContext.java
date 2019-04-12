@@ -18,6 +18,8 @@ package grondag.frex.api.render;
 
 import java.util.function.Consumer;
 
+import org.apiguardian.api.API;
+
 import grondag.frex.api.mesh.Mesh;
 import grondag.frex.api.mesh.MeshBuilder;
 import grondag.frex.api.mesh.MutableQuadView;
@@ -28,6 +30,7 @@ import net.minecraft.client.render.model.BakedModel;
 /**
  * This defines the instance made available to models for buffering vertex data at render time.
  */
+@API(status = API.Status.STABLE)
 public interface RenderContext {
     /**
      * Used by models to send vertex data previously baked via {@link MeshBuilder}. 

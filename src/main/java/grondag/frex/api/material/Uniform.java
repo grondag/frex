@@ -16,6 +16,7 @@
 
 package grondag.frex.api.material;
 
+import org.apiguardian.api.API;
 import org.joml.Matrix4f;
 
 /**
@@ -25,6 +26,7 @@ import org.joml.Matrix4f;
  * 
  * See {@link ShaderManager} and {@link UniformRefreshFrequency}
  */
+@API(status = API.Status.EXPERIMENTAL)
 public interface Uniform {
     /**
      * {@link UniformMatrix4f} with current model view matrix. Binding: u_modelView.

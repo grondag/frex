@@ -19,6 +19,8 @@ package grondag.frex.api.model;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apiguardian.api.API;
+
 import com.google.common.collect.ImmutableList;
 
 import grondag.frex.api.mesh.Mesh;
@@ -32,6 +34,7 @@ import net.minecraft.util.math.Direction;
 /**
  * Collection of utilities for model implementations.
  */
+@API(status = API.Status.STABLE)
 public abstract class ModelHelper {
     private ModelHelper() {}
     

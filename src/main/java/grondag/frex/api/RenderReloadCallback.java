@@ -16,9 +16,12 @@
 
 package grondag.frex.api;
 
+import org.apiguardian.api.API;
+
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 
+@API(status = API.Status.STABLE)
 public interface RenderReloadCallback {
     public static final Event<RenderReloadCallback> EVENT = EventFactory.createArrayBacked(RenderReloadCallback.class,
         (listeners) -> {
