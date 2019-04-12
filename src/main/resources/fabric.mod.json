@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "frex",
-  "version": "0.0.2",
+  "version": "0.2.160",
   "name": "FREX",
   "description": "Advanced rendering features for Fabric mods",
   "authors": [

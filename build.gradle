@@ -1,19 +1,14 @@
-// Much of this stolen with permission from https://github.com/CottonMC/cotton/blob/master/build.gradle
+plugins {
+	id 'fabric-loom' version '0.2.0-SNAPSHOT'
+	id 'java'
+	id 'maven'
+	id 'maven-publish'
+	id 'com.github.johnrengelman.shadow' version '5.0.0'
+}
 
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 buildscript {
-	repositories {
-		mavenCentral()
-		jcenter()
-		maven {
-			name = "Fabric"
-			url = "http://maven.modmuss50.me/"
-		}
-		maven {
-			url "https://plugins.gradle.org/m2/"
-		}
-	}
 	dependencies {
 		classpath "net.fabricmc:fabric-loom:0.2.0-SNAPSHOT" //Don't backdate before 0.2.0; features in this version prevent messy workarounds!
 		classpath "com.github.jengelman.gradle.plugins:shadow:4.0.2"
@@ -41,11 +36,7 @@ ext.gitVersioner = [
 // import the script which runs the version generation
 apply from: 'https://raw.githubusercontent.com/passsy/gradle-GitVersioner/master/git-versioner.gradle'
 
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: "maven-publish"
-apply plugin: "com.github.johnrengelman.shadow"
-apply plugin: net.fabricmc.loom.LoomGradlePlugin
+
 
 repositories {
     //flatDir {
@@ -125,12 +116,22 @@ publishing {
             
             from components.java
 
-            artifact sourcesJar {
-                classifier "sources"
+          //  artifact sourcesJar {
+          //      classifier "sources"
+          //  }
+            
+          //  artifact shadowJar {
+          //      classifier null
+          //  }
+            
+            artifact(jar) {
+                builtBy remapJar
+                classifier null
             }
             
-            artifact shadowJar {
-                classifier null
+            artifact(sourcesJar) {
+             	classifier "sources"
+                builtBy remapSourcesJar
             }
         }
     }
