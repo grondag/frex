@@ -1,6 +1,6 @@
 pluginManagement {
     repositories {
-    mavenCentral()
+      mavenCentral()
         jcenter()
         maven {
             name = 'Fabric'
