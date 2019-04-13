@@ -38,7 +38,7 @@ configurations {
 
 shadowJar {
     version = autoVersion
-    classifier = null
+    classifier = "full"
     configurations = [project.configurations.included]
 }
 
@@ -56,10 +56,6 @@ tasks.assemble.dependsOn tasks.remapShadowJar
 task sourcesJar(type: Jar, dependsOn: classes) {
 	classifier = "sources"
 	from sourceSets.main.allSource
-}
-
-tasks.jar.configure {
-  classifier = 'bare'
 }
 
 // ensure that the encoding is set to UTF-8, no matter what the system default is
