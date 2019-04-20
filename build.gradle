@@ -92,9 +92,9 @@ def mcVersion = "1.14 Pre-Release 5"
 
 dependencies {
 	minecraft "com.mojang:minecraft:$mcVersion"
-	mappings "net.fabricmc:yarn:$mcVersion+build.2"
-	modCompile "net.fabricmc:fabric-loader:0.4.1+build.127"
-	modCompile "net.fabricmc:fabric:0.2.7+build.125"
+	mappings "net.fabricmc:yarn:$mcVersion+build.3"
+	modCompile "net.fabricmc:fabric-loader:0.4.1+build.128"
+	modCompile "net.fabricmc:fabric:0.2.7+build.126"
 
 	compile "org.apiguardian:apiguardian-api:1.0.0"
 	compile "com.google.code.findbugs:jsr305:3.0.2"
