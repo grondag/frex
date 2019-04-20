@@ -15,8 +15,8 @@ targetCompatibility = 1.8
 def versionInfo = ZoltuGitVersioning.versionInfo
 def autoVersion = "${versionInfo.major}.${versionInfo.minor}.${versionInfo.commitCount}"
 
-archivesBaseName = project.archives_base_name
-group = project.maven_group
+archivesBaseName = "frex"
+group = "grondag"
 version = autoVersion;
 
 minecraft {
@@ -88,17 +88,19 @@ sourceSets {
     }
 }
 
-dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}"
-	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
-	modCompile "net.fabricmc:fabric:${project.fabric_version}"
+def mcVersion = "1.14 Pre-Release 5"
 
-	compile "org.apiguardian:apiguardian-api:${apiguardian_version}"
-	compile "com.google.code.findbugs:jsr305:${findbugs_version}"
+dependencies {
+	minecraft "com.mojang:minecraft:$mcVersion"
+	mappings "net.fabricmc:yarn:$mcVersion+build.2"
+	modCompile "net.fabricmc:fabric-loader:0.4.1+build.127"
+	modCompile "net.fabricmc:fabric:0.2.7+build.125"
+
+	compile "org.apiguardian:apiguardian-api:1.0.0"
+	compile "com.google.code.findbugs:jsr305:3.0.2"
 	
-	compile "org.joml:joml:1.9.9"
-	included "org.joml:joml:1.9.9"
+	compile "org.joml:joml:1.9.14"
+	included "org.joml:joml:1.9.14"
 }
 
 publishing {
