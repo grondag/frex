@@ -16,10 +16,9 @@
 
 package grondag.frex;
 
-import net.fabricmc.api.ModInitializer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class Frex implements ModInitializer {
-    @Override
-    public void onInitialize() {
-    }
+public class Frex {
+    public static Logger LOG = LogManager.getLogger("FREX");
 }

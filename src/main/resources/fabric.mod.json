@@ -9,6 +9,7 @@
   ],
   "contact": {
     "homepage": "https://minecraft.curseforge.com/projects/frex",
+    "issues": "https://github.com/grondag/frex/issues",
     "sources": "https://github.com/grondag/frex"
   },
 
@@ -16,12 +17,6 @@
   "icon": "assets/frex/frex_icon.png",
 
   "environment": "client",
-  "entrypoints": {
-    "main": [
-      "grondag.frex.Frex"
-    ]
-  },
-  
   "mixins": [
     "frex.client.json"
   ],
