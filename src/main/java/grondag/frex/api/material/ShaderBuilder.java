@@ -28,6 +28,7 @@ import grondag.frex.api.material.Uniform.Uniform3f;
 import grondag.frex.api.material.Uniform.Uniform3i;
 import grondag.frex.api.material.Uniform.Uniform4f;
 import grondag.frex.api.material.Uniform.Uniform4i;
+import grondag.frex.api.material.Uniform.UniformIntArray;
 import grondag.frex.api.material.Uniform.UniformMatrix4f;
 import net.minecraft.util.Identifier;
 
@@ -55,6 +56,9 @@ import net.minecraft.util.Identifier;
  */
 @API(status = API.Status.EXPERIMENTAL)
 public interface ShaderBuilder {
+    
+    @API(status = API.Status.DEPRECATED)
+    @Deprecated
     ShaderBuilder spriteDepth(int depth);
     
     /**
@@ -99,6 +103,11 @@ public interface ShaderBuilder {
      */
     ShaderBuilder uniform4f(String name, UniformRefreshFrequency frequency, Consumer<Uniform4f> initializer);
 
+    /**
+     * Creates a new uniform. See {@link ShaderManager} header for additional info.
+     */
+    ShaderBuilder uniformIntArray(String name, UniformRefreshFrequency frequency, Consumer<UniformIntArray> initializer, int size);
+    
     /**
      * Creates a new uniform. See {@link ShaderManager} header for additional info.
      */

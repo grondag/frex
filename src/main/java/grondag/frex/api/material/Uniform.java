@@ -89,6 +89,11 @@ public interface Uniform {
     }
 
     @FunctionalInterface
+    public interface UniformIntArray extends Uniform {
+        void set(int[] v);
+    }
+    
+    @FunctionalInterface
     public interface Uniform1i extends Uniform {
         void set(int v0);
     }
