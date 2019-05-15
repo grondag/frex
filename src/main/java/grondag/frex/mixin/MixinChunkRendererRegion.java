@@ -27,13 +27,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import grondag.frex.api.model.DynamicModelBlockEntity;
 import grondag.frex.api.render.TerrainBlockView;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.world.SafeWorldView;
+import net.minecraft.client.render.chunk.ChunkRendererRegion;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
 
-@Mixin(SafeWorldView.class)
-public abstract class MixinSafeWorldView implements TerrainBlockView {
+@Mixin(ChunkRendererRegion.class)
+public abstract class MixinChunkRendererRegion implements TerrainBlockView {
     private HashMap<BlockPos, Object> fabric_renderDataObjects;
 
     @Inject(at = @At("RETURN"), method = "<init>")

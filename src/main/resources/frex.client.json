@@ -6,7 +6,7 @@
     "MixinBakedModel",
     "MixinBlockEntity",
     "MixinBlockRenderManager",
-    "MixinSafeWorldView",
+    "MixinChunkRendererRegion",
     "MixinSpriteAtlasTexture",
     "MixinWorld",
 	"MixinWorldRenderer"
