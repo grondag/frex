@@ -38,7 +38,7 @@ configurations {
 
 shadowJar {
     version = autoVersion
-    classifier = "full"
+    classifier = null
     configurations = [project.configurations.included]
 }
 
@@ -66,6 +66,7 @@ tasks.withType(JavaCompile) {
 }
 
 jar {
+	classifier = "slim"
 	from "LICENSE"
 }
 
@@ -111,6 +112,9 @@ publishing {
 			}
 			artifact(sourcesJar) {
 				builtBy remapSourcesJar
+			}
+			artifact(shadowJar) {
+				builtBy remapShadowJar
 			}
         }
     }
