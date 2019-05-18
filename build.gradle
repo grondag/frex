@@ -89,14 +89,14 @@ sourceSets {
     }
 }
 
-def mcVersion = "1.14.1"
+def mcVersion = "1.14.2 Pre-Release 2"
 
 dependencies {
 	minecraft "com.mojang:minecraft:$mcVersion"
-	mappings "net.fabricmc:yarn:$mcVersion+build.5"
+	mappings "net.fabricmc:yarn:$mcVersion+build.4"
 	modCompile "net.fabricmc:fabric-loader:0.4.7+build.147"
-	modCompile "net.fabricmc.fabric-api:fabric-api:0.3.0-pre+build.156"
-
+	modCompile "net.fabricmc.fabric-api:fabric-api:0.3.0-pre+build.164"
+	
 	compile "org.apiguardian:apiguardian-api:1.0.0"
 	compile "com.google.code.findbugs:jsr305:3.0.2"
 	

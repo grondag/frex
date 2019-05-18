@@ -15,13 +15,10 @@ bin
 eclipse
 
 ## gradle
-gradlew*
-gradle
-.gradle
+
 build
 run
-gradle.properties
-
+.gradle
 
 ##idea
 *.iml
@@ -29,7 +26,7 @@ gradle.properties
 *.iws
 
 ## Jars
-*.jar
+
 
 ### OSX (adds a lot of garbage)###
 .DS_Store
@@ -47,3 +44,6 @@ discarded textures
 *.nps
 /.apt_generated/
 notes.txt
+.mixin.out/audit/mixin_implementation_report.csv
+.mixin.out/audit/mixin_implementation_report.txt
+ 
