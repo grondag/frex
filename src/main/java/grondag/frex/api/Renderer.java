@@ -24,8 +24,6 @@ import grondag.frex.api.material.MaterialFinder;
 import grondag.frex.api.material.MaterialShader;
 import grondag.frex.api.material.ShaderBuilder;
 import grondag.frex.api.material.MaterialCondition;
-import grondag.frex.api.material.RenderMaterial;
-import grondag.frex.api.mesh.MeshBuilder;
 import net.minecraft.util.Identifier;
 
 /**
@@ -34,15 +32,7 @@ import net.minecraft.util.Identifier;
  * enhanced model rendering interfaces specified by the Fabric API.<p>
  */
 @API(status = API.Status.STABLE)
-public interface Renderer {
-    /**
-     * Obtain a new {@link MeshBuilder} instance used to create 
-     * baked models with enhanced features.<p>
-     * 
-     * Renderer does not retain a reference to returned instances and they should be re-used for 
-     * multiple models when possible to avoid memory allocation overhead.
-     */
-    MeshBuilder meshBuilder();
+public interface Renderer extends net.fabricmc.fabric.api.renderer.v1.Renderer {
     
     /**
      * Obtain a new {@link MaterialFinder} instance used to retrieve 
@@ -51,24 +41,9 @@ public interface Renderer {
      * Renderer does not retain a reference to returned instances and they should be re-used for 
      * multiple materials when possible to avoid memory allocation overhead.
      */
+    @Override
     MaterialFinder materialFinder();
 
-    /**
-     * Return a material previously registered via {@link #registerMaterial(Identifier, RenderMaterial)}.
-     * Will return null if no material was found matching the given identifier.
-     */
-    RenderMaterial materialById(Identifier id);
-    
-    /**
-     * Register a material for re-use by other mods or models within a mod.
-     * The registry does not persist registrations - mods must create and register 
-     * all materials at game initialization.<p>
-     * 
-     * Returns false if a material with the given identifier is already present,
-     * leaving the existing material intact.
-     */
-    boolean registerMaterial(Identifier id, RenderMaterial material);
-    
     @API(status = API.Status.EXPERIMENTAL)
     ShaderBuilder shaderBuilder();
     

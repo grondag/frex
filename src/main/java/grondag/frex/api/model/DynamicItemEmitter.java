@@ -2,7 +2,7 @@ package grondag.frex.api.model;
 
 import org.apiguardian.api.API;
 
-import grondag.frex.api.render.RenderContext;
+import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
