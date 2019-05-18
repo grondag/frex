@@ -20,6 +20,7 @@ import org.apiguardian.api.API;
 
 import grondag.frex.api.Renderer;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
+import net.minecraft.block.BlockRenderLayer;
 
 /**
  * Finds standard {@link RenderMaterial} instances used to communicate
@@ -29,7 +30,28 @@ import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
  */
 @API(status = API.Status.STABLE)
 public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.material.MaterialFinder {
-    
+
+    @Override
+    MaterialFinder clear();
+
+    @Override
+    MaterialFinder spriteDepth(int depth);
+
+    @Override
+    MaterialFinder blendMode(int spriteIndex,BlockRenderLayer blendMode);
+
+    @Override
+    MaterialFinder disableColorIndex(int spriteIndex, boolean disable);
+
+    @Override
+    MaterialFinder disableDiffuse(int spriteIndex, boolean disable);
+
+    @Override
+    MaterialFinder disableAo(int spriteIndex, boolean disable);
+
+    @Override
+    MaterialFinder emissive(int spriteIndex, boolean isEmissive);
+
     @API(status = API.Status.EXPERIMENTAL)
     MaterialFinder shader(MaterialShader pipeline);
     
