@@ -27,7 +27,7 @@ ext.getVersionCode = { ->
 
 archivesBaseName = "frex"
 group = "grondag"
-version = "0.6.7." + project.getVersionCode();
+version = "0.7.0+build." + project.getVersionCode();
 
 minecraft {
 }
@@ -99,13 +99,13 @@ sourceSets {
     }
 }
 
-def mcVersion = "1.14.2 Pre-Release 2"
+def mcVersion = "1.14.2"
 
 dependencies {
 	minecraft "com.mojang:minecraft:$mcVersion"
-	mappings "net.fabricmc:yarn:$mcVersion+build.4"
-	modCompile "net.fabricmc:fabric-loader:0.4.7+build.148"
-	modCompile "net.fabricmc.fabric-api:fabric-api:0.3.0-pre+build.165"
+	mappings "net.fabricmc:yarn:$mcVersion+build.2"
+    modCompile "net.fabricmc:fabric-loader:0.4.8+build.154"
+    modCompile "net.fabricmc.fabric-api:fabric-api:0.3.0+build.175"
 	
 	compile "org.apiguardian:apiguardian-api:1.0.0"
 	compile "com.google.code.findbugs:jsr305:3.0.2"

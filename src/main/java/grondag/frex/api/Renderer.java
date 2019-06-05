@@ -23,7 +23,9 @@ import org.apiguardian.api.API;
 import grondag.frex.api.material.MaterialFinder;
 import grondag.frex.api.material.MaterialShader;
 import grondag.frex.api.material.ShaderBuilder;
+import grondag.frex.Frex;
 import grondag.frex.api.material.MaterialCondition;
+import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.minecraft.util.Identifier;
 
 /**
@@ -33,6 +35,15 @@ import net.minecraft.util.Identifier;
  */
 @API(status = API.Status.STABLE)
 public interface Renderer extends net.fabricmc.fabric.api.renderer.v1.Renderer {
+    
+    /** Will throw exception if not implemented. Check {@link Frex#isAvailable()} before calling. */
+    static Renderer get() {
+        if(Frex.isAvailable()) {
+            return (Renderer) RendererAccess.INSTANCE.getRenderer();
+        } else {
+            throw new IllegalStateException("A mod tried to obtain a FREX renderer but no FREX implementation is active.");
+        }
+    }
     
     /**
      * Obtain a new {@link MaterialFinder} instance used to retrieve 
