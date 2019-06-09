@@ -48,7 +48,7 @@ private MaterialLoaderImpl() {}
         try(Resource res = rm.getResource(id)) {
             result = MaterialDeserializer.deserialize(new InputStreamReader(res.getInputStream(), StandardCharsets.UTF_8));
         } catch (Exception e) {
-            Frex.LOG.warn("Unable to load render material " + idIn.toString() + " due to unhandled exception: ", e); 
+            Frex.LOG.warn("Unable to load render material " + idIn.toString() + " due to exception: ", e.getMessage()); 
         }
         
         return result;
