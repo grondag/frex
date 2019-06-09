@@ -56,6 +56,9 @@ public interface Renderer extends net.fabricmc.fabric.api.renderer.v1.Renderer {
     MaterialFinder materialFinder();
 
     @API(status = API.Status.EXPERIMENTAL)
+    int maxSpriteDepth();
+    
+    @API(status = API.Status.EXPERIMENTAL)
     ShaderBuilder shaderBuilder();
     
     @API(status = API.Status.EXPERIMENTAL)
