@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 import grondag.frex.Frex;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.fabricmc.fabric.api.renderer.v1.Renderer;
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
@@ -30,6 +31,8 @@ import net.minecraft.util.Identifier;
 
 public final class MaterialLoaderImpl {
 private MaterialLoaderImpl() {}
+    private static final ObjectOpenHashSet<Identifier> CAUGHT = new ObjectOpenHashSet<>();
+    
     public static synchronized RenderMaterial loadMaterial(Identifier idIn) {
         Renderer r = RendererAccess.INSTANCE.getRenderer();
         RenderMaterial result = r.materialById(idIn);
@@ -48,7 +51,9 @@ private MaterialLoaderImpl() {}
         try(Resource res = rm.getResource(id)) {
             result = MaterialDeserializer.deserialize(new InputStreamReader(res.getInputStream(), StandardCharsets.UTF_8));
         } catch (Exception e) {
-            Frex.LOG.warn("Unable to load render material " + idIn.toString() + " due to exception: ", e.getMessage()); 
+            if(CAUGHT.add(idIn)) {
+                Frex.LOG.info("Unable to load render material " + idIn.toString() + " due to exception " + e.toString()); 
+            }
         }
         
         return result;
