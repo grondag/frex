@@ -1,13 +1,15 @@
+import net.fabricmc.loom.task.RemapJar
+
 plugins {
-	id 'fabric-loom' version '0.2.4-SNAPSHOT'
-	//id 'java'
-	//id 'maven'
+	id 'fabric-loom' version '0.2.2-SNAPSHOT'
+	id 'java'
+	id 'maven'
 	id 'maven-publish'
-	//id 'com.github.johnrengelman.shadow' version '4.0.3'
+	id 'com.github.johnrengelman.shadow' version '4.0.3'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 ext.getVersionCode = { ->
     try {
@@ -32,16 +34,31 @@ minecraft {
 
 processResources {
 	inputs.property "version", version
-	
 	from(sourceSets.main.resources.srcDirs) {
 		include "fabric.mod.json"
 		expand "version": version
 	}
-	
-	from(sourceSets.main.resources.srcDirs) {
-		exclude "fabric.mod.json"
-	}
 }
+
+configurations {
+    included {
+        transitive = false
+    }
+}
+
+shadowJar {
+    version = version
+    classifier = null
+    configurations = [project.configurations.included]
+}
+
+task remapShadowJar(type: RemapJar) {
+    jar = shadowJar.archivePath
+}
+
+tasks.remapShadowJar.dependsOn tasks.shadowJar
+
+tasks.assemble.dependsOn tasks.remapShadowJar
 
 // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 // if it is present.
@@ -59,6 +76,7 @@ tasks.withType(JavaCompile) {
 }
 
 jar {
+	classifier = "slim"
 	from "LICENSE"
 }
 
@@ -93,17 +111,20 @@ dependencies {
 	compile "com.google.code.findbugs:jsr305:3.0.2"
 	
 	compile "org.joml:joml:1.9.14"
-	include "org.joml:joml:1.9.14"
+	included "org.joml:joml:1.9.14"
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-			artifact(jar.archivePath) {
-			    builtBy remapJar
+			artifact(jar) {
+				builtBy remapJar
 			}
 			artifact(sourcesJar) {
 				builtBy remapSourcesJar
+			}
+			artifact(shadowJar) {
+				builtBy remapShadowJar
 			}
         }
     }
