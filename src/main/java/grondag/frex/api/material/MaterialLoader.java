@@ -39,7 +39,7 @@ public interface MaterialLoader {
      * Material files should be in assets/<mod-id>/materials and have a .json suffix.<p>
      * 
      * @param id domain and path of material json. See notes above.
-     * @return  Loaded material if successful, standard material if not.
+     * @return  Loaded material if successful, null if file not found or specified features are unsupported.
      */
     public static RenderMaterial loadMaterial(Identifier id) {
         return MaterialLoaderImpl.loadMaterial(id);

@@ -43,13 +43,12 @@ private MaterialLoaderImpl() {}
     private static RenderMaterial loadMaterialInner(Identifier idIn) {
         Identifier id = new Identifier(idIn.getNamespace(), "materials/" + idIn.getPath() + ".json");
         
-        RenderMaterial result;
+        RenderMaterial result = null;
         ResourceManager rm = MinecraftClient.getInstance().getResourceManager();
         try(Resource res = rm.getResource(id)) {
             result = MaterialDeserializer.deserialize(new InputStreamReader(res.getInputStream(), StandardCharsets.UTF_8));
         } catch (Exception e) {
             Frex.LOG.warn("Unable to load render material " + idIn.toString() + " due to unhandled exception: ", e); 
-            result = RendererAccess.INSTANCE.getRenderer().materialFinder().find();
         }
         
         return result;

@@ -23,10 +23,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import grondag.frex.Frex;
-import grondag.frex.api.Renderer;
-import grondag.frex.api.material.MaterialFinder;
 import grondag.frex.api.material.ShaderBuilder;
+import net.fabricmc.fabric.api.renderer.v1.Renderer;
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
+import net.fabricmc.fabric.api.renderer.v1.material.MaterialFinder;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 import net.minecraft.block.BlockRenderLayer;
 import net.minecraft.util.Identifier;
@@ -35,56 +35,70 @@ import net.minecraft.util.JsonHelper;
 public class MaterialDeserializer {
     private MaterialDeserializer() {}
     
+    private static final Renderer RENDERER = RendererAccess.INSTANCE.getRenderer();
+    private static final MaterialFinder FINDER = RENDERER.materialFinder();
+    
+    private static final boolean FREX;
+    private static final grondag.frex.api.Renderer FREX_RENDERER;
+    private static final grondag.frex.api.material.MaterialFinder FREX_FINDER;
+    private static final int MAX_DEPTH;
+    
+    static {
+        FREX = Frex.isAvailable();
+        FREX_RENDERER = FREX ? (grondag.frex.api.Renderer)RENDERER : null;
+        MAX_DEPTH = FREX ? 1 : FREX_RENDERER.maxSpriteDepth();
+        FREX_FINDER = FREX ? (grondag.frex.api.material.MaterialFinder)FINDER : null;
+    }
+    
     public static RenderMaterial deserialize(Reader reader) {
-        net.fabricmc.fabric.api.renderer.v1.material.MaterialFinder finder = RendererAccess.INSTANCE.getRenderer().materialFinder();
+        MaterialFinder finder = FINDER.clear();
         JsonObject json = JsonHelper.deserialize(reader);
 
-        if(Frex.isAvailable()) {
-            if(json.has("spriteDepth")) {
-                finder.spriteDepth(JsonHelper.getInt(json, "spriteDepth", 1));
-            }
-            
-            if(json.has("fragmentSource") && json.has("vertexSource")) {
-                ShaderBuilder sb = Renderer.get().shaderBuilder();
+        if(json.has("fragmentSource") && json.has("vertexSource")) {
+            if(FREX) {
+                ShaderBuilder sb = FREX_RENDERER.shaderBuilder();
                 sb.fragmentSource(new Identifier(JsonHelper.getString(json, "fragmentSource")));
                 sb.vertexSource(new Identifier(JsonHelper.getString(json, "vertexSource")));
-                ((MaterialFinder)finder).shader(sb.build());
+                FREX_FINDER.shader(sb.build());
+            } else {
+                return null;
             }
         }
         
         if(json.has("layers")) {
             JsonArray layers = JsonHelper.asArray(json.get("layers"), "layers");
-            layers.forEach(e -> readLayer(e.getAsJsonObject(), finder));
+            if(!layers.isJsonNull()) {
+                final int depth = layers.size();
+                if(depth > MAX_DEPTH) return null;
+                
+                for(int i = 0; i < MAX_DEPTH; i++) {
+                    readLayer(layers.get(i).getAsJsonObject(), finder, i);
+                }
+            }
         }
         
         return finder.find();
     }
     
-    private static void readLayer(JsonObject layer, net.fabricmc.fabric.api.renderer.v1.material.MaterialFinder finder) {
-        if(layer.has("spriteIndex")) {
-            int spriteIndex = JsonHelper.getInt(layer, "spriteIndex", 0);
-            
-            if(spriteIndex > 1 && !Frex.isAvailable()) return;
-            
-            if(layer.has("disableAo")) {
-                finder.disableAo(spriteIndex, JsonHelper.getBoolean(layer, "disableAo", true));
-            }
-            
-            if(layer.has("disableColorIndex")) {
-                finder.disableColorIndex(spriteIndex, JsonHelper.getBoolean(layer, "disableColorIndex", true));
-            }
-            
-            if(layer.has("disableDiffuse")) {
-                finder.disableDiffuse(spriteIndex, JsonHelper.getBoolean(layer, "disableDiffuse", true));
-            }
-            
-            if(layer.has("emissive")) {
-                finder.emissive(spriteIndex, JsonHelper.getBoolean(layer, "emissive", true));
-            }
-            
-            if(layer.has("blendMode")) {
-                finder.blendMode(spriteIndex, readBlendMode(JsonHelper.getString(layer, "blendMode")));
-            }
+    private static void readLayer(JsonObject layer, MaterialFinder finder, int spriteIndex) {
+        if(layer.has("disableAo")) {
+            finder.disableAo(spriteIndex, JsonHelper.getBoolean(layer, "disableAo", true));
+        }
+        
+        if(layer.has("disableColorIndex")) {
+            finder.disableColorIndex(spriteIndex, JsonHelper.getBoolean(layer, "disableColorIndex", true));
+        }
+        
+        if(layer.has("disableDiffuse")) {
+            finder.disableDiffuse(spriteIndex, JsonHelper.getBoolean(layer, "disableDiffuse", true));
+        }
+        
+        if(layer.has("emissive")) {
+            finder.emissive(spriteIndex, JsonHelper.getBoolean(layer, "emissive", true));
+        }
+        
+        if(layer.has("blendMode")) {
+            finder.blendMode(spriteIndex, readBlendMode(JsonHelper.getString(layer, "blendMode")));
         }
     }
     
