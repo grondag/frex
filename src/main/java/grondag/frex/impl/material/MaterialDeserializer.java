@@ -40,14 +40,12 @@ public class MaterialDeserializer {
     
     private static final boolean FREX;
     private static final grondag.frex.api.Renderer FREX_RENDERER;
-    private static final grondag.frex.api.material.MaterialFinder FREX_FINDER;
     private static final int MAX_DEPTH;
     
     static {
         FREX = Frex.isAvailable();
         FREX_RENDERER = FREX ? (grondag.frex.api.Renderer)RENDERER : null;
-        MAX_DEPTH = FREX ? 1 : FREX_RENDERER.maxSpriteDepth();
-        FREX_FINDER = FREX ? (grondag.frex.api.material.MaterialFinder)FINDER : null;
+        MAX_DEPTH = FREX ? FREX_RENDERER.maxSpriteDepth() : 1;
     }
     
     public static RenderMaterial deserialize(Reader reader) {
@@ -59,7 +57,7 @@ public class MaterialDeserializer {
                 ShaderBuilder sb = FREX_RENDERER.shaderBuilder();
                 sb.fragmentSource(new Identifier(JsonHelper.getString(json, "fragmentSource")));
                 sb.vertexSource(new Identifier(JsonHelper.getString(json, "vertexSource")));
-                FREX_FINDER.shader(sb.build());
+                ((grondag.frex.api.material.MaterialFinder)FINDER).shader(sb.build());
             } else {
                 return null;
             }
@@ -71,7 +69,7 @@ public class MaterialDeserializer {
                 final int depth = layers.size();
                 if(depth > MAX_DEPTH) return null;
                 
-                for(int i = 0; i < MAX_DEPTH; i++) {
+                for(int i = 0; i < depth; i++) {
                     readLayer(layers.get(i).getAsJsonObject(), finder, i);
                 }
             }
