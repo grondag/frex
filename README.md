@@ -1,6 +1,6 @@
-# FREX - Fabric Rendering API Extensions
+# FREX - Rendering Extensions for the Fabric Rendering API
 
-Extensions to the Fabric rendering API.  These may or may not be proposed and accepted for inclusion in the Fabric API.  
+Extensions for the Fabric rendering API.  These may or may not be proposed and accepted for inclusion in the Fabric API.  
 
 Also includes a shaded copy of [JOML](https://github.com/JOML-CI/JOML) for use by renderer implementations and rendering mods.
 
