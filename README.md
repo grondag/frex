@@ -7,6 +7,8 @@ Also includes a shaded copy of [JOML](https://github.com/JOML-CI/JOML) for use b
 Packaged as a separate mod so that rendering implementations and mods that consume these extensions can
 depend on it without directly depending on specific implementation.
 
+More information on using FREX is available on the [Renderosity Wiki](https://github.com/grondag/renderosity/wiki).
+
 # Using FREX
 
 Add my maven repo to your build.gradle
@@ -28,8 +30,11 @@ And add FREX to your dependencies
 
 ```gradle
 dependencies {
-	modCompile "grondag:frex:0.3.+"
+	modCompile "grondag:frex:0.7.+"
+	include "grondag:frex:0.7.+"
 }
 ```
+
+The ```include``` is not necessary if you are depending on another mod that also includes FREX.  Currently, [Canvas](https://github.com/grondag/canvas) and [JMX](https://github.com/grondag/json-model-extensions) both include FREX.
 
 Note that version is subject to change - look at the repo to find latest.
