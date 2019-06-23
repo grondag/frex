@@ -1,7 +1,7 @@
-import net.fabricmc.loom.task.RemapJar
+import net.fabricmc.loom.task.RemapJarTask
 
 plugins {
-	id 'fabric-loom' version '0.2.2-SNAPSHOT'
+	id 'fabric-loom' version '0.2.4-SNAPSHOT'
 	id 'java'
 	id 'maven'
 	id 'maven-publish'
@@ -27,7 +27,7 @@ ext.getVersionCode = { ->
 
 archivesBaseName = "frex"
 group = "grondag"
-version = "0.7.1+build." + project.getVersionCode();
+version = "0.7.2+build." + project.getVersionCode();
 
 minecraft {
 }
@@ -52,8 +52,9 @@ shadowJar {
     configurations = [project.configurations.included]
 }
 
-task remapShadowJar(type: RemapJar) {
-    jar = shadowJar.archivePath
+task remapShadowJar(type: RemapJarTask) {
+    input = shadowJar.archivePath
+    output = shadowJar.archivePath
 }
 
 tasks.remapShadowJar.dependsOn tasks.shadowJar
@@ -104,8 +105,8 @@ def mcVersion = "1.14.2"
 dependencies {
 	minecraft "com.mojang:minecraft:$mcVersion"
 	mappings "net.fabricmc:yarn:$mcVersion+build.2"
-    modCompile "net.fabricmc:fabric-loader:0.4.8+build.154"
-    modCompile "net.fabricmc.fabric-api:fabric-api:0.3.0+build.175"
+    modCompile "net.fabricmc:fabric-loader:0.4.8+build.155"
+    modCompile "net.fabricmc.fabric-api:fabric-api:0.3.0+build.185"
 	
 	compile "org.apiguardian:apiguardian-api:1.0.0"
 	compile "com.google.code.findbugs:jsr305:3.0.2"
