@@ -18,20 +18,15 @@ package grondag.frex.api;
 
 import org.apiguardian.api.API;
 
+import net.fabricmc.fabric.api.client.render.InvalidateRenderStateCallback;
 import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
 
-@API(status = API.Status.STABLE)
-public interface RenderReloadCallback {
-    public static final Event<RenderReloadCallback> EVENT = EventFactory.createArrayBacked(RenderReloadCallback.class,
-        (listeners) -> {
-            return () -> {
-                for (RenderReloadCallback event : listeners) {
-                    event.reload();
-                }
-            };
-        }
-    );
+/** 
+ * Use Fabric API instead
+ */
+@API(status = API.Status.DEPRECATED)
+public interface RenderReloadCallback extends InvalidateRenderStateCallback {
+    public static final Event<InvalidateRenderStateCallback> EVENT = InvalidateRenderStateCallback.EVENT;
 
-    void reload();
+    default void reload() {this.onInvalidate();};
 }

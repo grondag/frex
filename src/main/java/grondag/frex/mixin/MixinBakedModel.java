@@ -16,15 +16,34 @@
 
 package grondag.frex.mixin;
 
+import java.util.Random;
+import java.util.function.Supplier;
+
 import org.spongepowered.asm.mixin.Mixin;
 
 import grondag.frex.api.model.DynamicBakedModel;
+import grondag.frex.api.model.DynamicBlockEmitter;
+import grondag.frex.api.model.DynamicItemEmitter;
+import grondag.frex.api.render.DynamicConsumer;
+import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ExtendedBlockView;
 
 /**
  * Avoids instanceof checks and enables consistent code path for all baked models.
  */
 @Mixin(BakedModel.class)
 public interface MixinBakedModel extends DynamicBakedModel {
+    @Override
+    default void emitBlockQuads(ExtendedBlockView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context, DynamicConsumer<DynamicBlockEmitter> dynamicConsumer) {
+        this.emitBlockQuads(blockView, state, pos, randomSupplier, context);
+    }
     
+    @Override
+    default void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context, DynamicConsumer<DynamicItemEmitter> dynamicConsumer) {
+        this.emitItemQuads(stack, randomSupplier, context);
+    }
 }

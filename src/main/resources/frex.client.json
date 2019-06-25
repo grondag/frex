@@ -3,8 +3,7 @@
   "package": "grondag.frex.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-  	"MixinBakedModel",
-	"MixinWorldRenderer"
+  	"MixinBakedModel"
       ],
   "injectors": {
     "defaultRequire": 1

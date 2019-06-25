@@ -41,12 +41,8 @@ import net.minecraft.world.ExtendedBlockView;
 @API(status = API.Status.STABLE)
 public interface DynamicBakedModel extends FabricBakedModel {
     @API(status = API.Status.EXPERIMENTAL)
-    default void emitBlockQuads(ExtendedBlockView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context, DynamicConsumer<DynamicBlockEmitter> dynamicConsumer) {
-        this.emitBlockQuads(blockView, state, pos, randomSupplier, context);
-    }
+    void emitBlockQuads(ExtendedBlockView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context, DynamicConsumer<DynamicBlockEmitter> dynamicConsumer);
     
     @API(status = API.Status.EXPERIMENTAL)
-    default void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context, DynamicConsumer<DynamicItemEmitter> dynamicConsumer) {
-        this.emitItemQuads(stack, randomSupplier, context);
-    }
+    void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context, DynamicConsumer<DynamicItemEmitter> dynamicConsumer);
 }
