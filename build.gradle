@@ -78,7 +78,7 @@ def mcVersion = "1.14.3"
 dependencies {
 	minecraft "com.mojang:minecraft:$mcVersion"
 	mappings "net.fabricmc:yarn:$mcVersion+build.1"
-    modImplementation "net.fabricmc:fabric-loader:0.4.8+build.155"
+    modCompile "net.fabricmc:fabric-loader:0.4.8+build.155"
     modCompile "net.fabricmc.fabric-api:fabric-api:0.3.0+build.187"
 	
 	compile "org.apiguardian:apiguardian-api:1.0.0"
