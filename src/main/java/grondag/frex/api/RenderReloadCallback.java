@@ -28,5 +28,6 @@ import net.fabricmc.fabric.api.event.Event;
 public interface RenderReloadCallback extends InvalidateRenderStateCallback {
     public static final Event<InvalidateRenderStateCallback> EVENT = InvalidateRenderStateCallback.EVENT;
 
+    @Deprecated
     default void reload() {this.onInvalidate();};
 }
