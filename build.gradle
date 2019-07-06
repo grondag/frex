@@ -1,11 +1,6 @@
-import net.fabricmc.loom.task.RemapJarTask
-
 plugins {
 	id 'fabric-loom' version '0.2.4-SNAPSHOT'
-	id 'java'
-	id 'maven'
 	id 'maven-publish'
-	id 'com.github.johnrengelman.shadow' version '4.0.3'
 }
 
 sourceCompatibility = 1.8
@@ -27,39 +22,23 @@ ext.getVersionCode = { ->
 
 archivesBaseName = "frex"
 group = "grondag"
-version = "0.7.4+build." + project.getVersionCode();
+version = "0.8.0+build." + project.getVersionCode();
 
 minecraft {
 }
 
 processResources {
 	inputs.property "version", version
+	
 	from(sourceSets.main.resources.srcDirs) {
 		include "fabric.mod.json"
 		expand "version": version
 	}
+	
+	from(sourceSets.main.resources.srcDirs) {
+		exclude "fabric.mod.json"
+	}
 }
-
-configurations {
-    included {
-        transitive = false
-    }
-}
-
-shadowJar {
-    version = version
-    classifier = null
-    configurations = [project.configurations.included]
-}
-
-task remapShadowJar(type: RemapJarTask) {
-    input = shadowJar.archivePath
-    output = shadowJar.archivePath
-}
-
-tasks.remapShadowJar.dependsOn tasks.shadowJar
-
-tasks.assemble.dependsOn tasks.remapShadowJar
 
 // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 // if it is present.
@@ -77,7 +56,6 @@ tasks.withType(JavaCompile) {
 }
 
 jar {
-	classifier = "slim"
 	from "LICENSE"
 }
 
@@ -110,22 +88,23 @@ dependencies {
 	
 	compile "org.apiguardian:apiguardian-api:1.0.0"
 	compile "com.google.code.findbugs:jsr305:3.0.2"
-	
-	compile "org.joml:joml:1.9.15"
-	included "org.joml:joml:1.9.15"
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-			artifact(jar) {
+			artifact ("${project.buildDir.absolutePath}/libs/${archivesBaseName}-${project.version}.jar") { 
+				classifier null
 				builtBy remapJar
 			}
+
+			artifact ("${project.buildDir.absolutePath}/libs/${archivesBaseName}-${project.version}-dev.jar") { 
+				classifier "dev"
+				builtBy remapJar
+			}
+			
 			artifact(sourcesJar) {
 				builtBy remapSourcesJar
-			}
-			artifact(shadowJar) {
-				builtBy remapShadowJar
 			}
         }
     }

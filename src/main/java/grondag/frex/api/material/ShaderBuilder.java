@@ -30,7 +30,6 @@ import grondag.frex.api.material.Uniform.Uniform4f;
 import grondag.frex.api.material.Uniform.Uniform4i;
 import grondag.frex.api.material.Uniform.UniformArrayf;
 import grondag.frex.api.material.Uniform.UniformArrayi;
-import grondag.frex.api.material.Uniform.UniformMatrix4f;
 import net.minecraft.util.Identifier;
 
 /**
@@ -133,13 +132,6 @@ public interface ShaderBuilder {
      * Creates a new uniform. See {@link ShaderManager} header for additional info.
      */
     ShaderBuilder uniformArrayi(String name, UniformRefreshFrequency frequency, Consumer<UniformArrayi> initializer, int size);
-
-    
-    /**
-     * Creates a new uniform for this pipeline. See {@link UniformUpdateFrequency}
-     * for additional info.
-     */
-    ShaderBuilder uniformMatrix4f(String name, UniformRefreshFrequency frequency, Consumer<UniformMatrix4f> initializer);
 
     MaterialShader build();
 }
