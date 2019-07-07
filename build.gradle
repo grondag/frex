@@ -22,7 +22,7 @@ ext.getVersionCode = { ->
 
 archivesBaseName = "frex"
 group = "grondag"
-version = "0.8.0+build." + project.getVersionCode();
+version = "0.8.1+build." + project.getVersionCode();
 
 minecraft {
 }

@@ -20,29 +20,37 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apiguardian.api.API;
 
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 
-public class Frex {
+public class Frex implements ClientModInitializer {
     public static Logger LOG = LogManager.getLogger("FREX");
     
-    private static int checkVal = -1;
+    private static final boolean isAvailable;
     
-    // UGLY: use mod.json custom properties or something else less awful
-    @API(status = API.Status.STABLE)
-    public static boolean isAvailable() {
-        if(checkVal == -1) {
-            // can't rely on renderer being available yet
-//            Renderer renderer = RendererAccess.INSTANCE.getRenderer();
-//            checkVal = renderer != null && renderer instanceof grondag.frex.api.Renderer ? 1 : 0;
-            FabricLoader.getInstance().getAllMods().forEach(m -> {
-                if(m.getMetadata().getId().equals("canvas")) {
-                    checkVal = 1;
-                }
-            });
-            if(checkVal == -1) {
-                checkVal = 0;
+    static {
+    	boolean result = false;
+    	for(ModContainer mod : FabricLoader.getInstance().getAllMods()) {
+            if(mod.getMetadata().containsCustomElement("frex:contains_frex_renderer")) {
+            	result = true;
+            	break;
             }
         }
-        return checkVal == 1;
+    	isAvailable = result;
     }
+    
+    /** 
+     * TODO: replace with something that indicates renderer feature set
+     */
+    @API(status = API.Status.DEPRECATED)
+    public static boolean isAvailable() {
+    	return isAvailable;
+    }
+
+	@Override
+	public void onInitializeClient() {
+        FabricLoader.getInstance().getEntrypoints("frex", FrexInitializer.class).forEach(
+                api -> api.onInitalizeFrex());		
+	}
 }
