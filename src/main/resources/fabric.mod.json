@@ -17,6 +17,9 @@
   "icon": "assets/frex/frex_icon.png",
 
   "environment": "client",
+  "entrypoints": {
+    "client": [ "grondag.frex.Frex" ]
+  },
   "mixins": [
     "frex.client.json"
   ],
