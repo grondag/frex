@@ -20,9 +20,13 @@ ext.getVersionCode = { ->
     }
 }
 
-archivesBaseName = "frex"
-group = "grondag"
-version = project.frex_version + project.getVersionCode();
+archivesBaseName = 'frex'
+group = 'grondag'
+if (project.hasProperty('frex_version')){
+	version = project.getProperty('frex_version') + '.' + project.getVersionCode() + '+' + project.minecraft_version
+} else {
+	version = '999.999.999+LOCAL'
+}
 
 minecraft {
 }
