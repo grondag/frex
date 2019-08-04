@@ -22,11 +22,20 @@ ext.getVersionCode = { ->
 
 archivesBaseName = 'frex'
 group = 'grondag'
-if (project.hasProperty('frex_version')){
-	version = project.getProperty('frex_version') + '.' + project.getVersionCode() + '+' + project.minecraft_version
+version_tag = 'frex_version'
+
+if (grgit == null) {
+	version = '99.0.0-nogit'
+} else if (project.hasProperty(version_tag)) {
+	if(grgit.status().isClean()) {
+		version = project.getProperty(version_tag) + '.' + grgit.log().size() + '+' + project.minecraft_version
+	} else {
+		version = project.getProperty(version_tag) + '.' + (grgit.log().size() + 1) + '-snapshot+' + project.minecraft_version
+	}
 } else {
-	version = '999.999.999+LOCAL'
+	version = '99.0.0-local'
 }
+
 
 minecraft {
 }
