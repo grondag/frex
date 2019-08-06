@@ -89,18 +89,17 @@ dependencies {
 }
 
 publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			artifact(remapJar) {
-				builtBy remapJar
-			}
-			artifact(sourcesJar) {
-				builtBy remapSourcesJar
-			}
+publications {
+	mavenJava(MavenPublication) {
+		artifact(remapJar) {
+			builtBy remapJar
+		}
+		artifact(sourcesJar) {
+			builtBy remapSourcesJar
 		}
 	}
+}
 
-	// select the repositories you want to publish to
 	repositories {
 		mavenLocal()
 		maven {
