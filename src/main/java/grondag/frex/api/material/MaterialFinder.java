@@ -19,6 +19,7 @@ package grondag.frex.api.material;
 import org.apiguardian.api.API;
 
 import grondag.frex.api.Renderer;
+import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 import net.minecraft.block.BlockRenderLayer;
 
@@ -38,7 +39,11 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
     MaterialFinder spriteDepth(int depth);
 
     @Override
-    MaterialFinder blendMode(int spriteIndex,BlockRenderLayer blendMode);
+    @Deprecated
+    MaterialFinder blendMode(int spriteIndex, BlockRenderLayer blendMode);
+    
+    @Override
+    MaterialFinder blendMode(int spriteIndex, BlendMode blendMode);
 
     @Override
     MaterialFinder disableColorIndex(int spriteIndex, boolean disable);

@@ -26,9 +26,9 @@ import grondag.frex.Frex;
 import grondag.frex.api.material.ShaderBuilder;
 import net.fabricmc.fabric.api.renderer.v1.Renderer;
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
+import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 import net.fabricmc.fabric.api.renderer.v1.material.MaterialFinder;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
-import net.minecraft.block.BlockRenderLayer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 
@@ -100,18 +100,18 @@ public class MaterialDeserializer {
         }
     }
     
-    private static BlockRenderLayer readBlendMode(String val) {
+    private static BlendMode readBlendMode(String val) {
         val = val.toLowerCase(Locale.ROOT);
         switch(val) {
         case "solid":
         default:
-            return BlockRenderLayer.SOLID;
+            return BlendMode.SOLID;
         case "cutout":
-            return BlockRenderLayer.CUTOUT;
+            return BlendMode.CUTOUT;
         case "cutout_mipped":
-            return BlockRenderLayer.CUTOUT_MIPPED;
+            return BlendMode.CUTOUT_MIPPED;
         case "translucent":
-            return BlockRenderLayer.TRANSLUCENT;
+            return BlendMode.TRANSLUCENT;
         }
     }
 }

@@ -30,7 +30,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ExtendedBlockView;
+import net.minecraft.world.BlockRenderView;
 
 /**
  * Avoids instanceof checks and enables consistent code path for all baked models.
@@ -38,7 +38,7 @@ import net.minecraft.world.ExtendedBlockView;
 @Mixin(BakedModel.class)
 public interface MixinBakedModel extends DynamicBakedModel {
     @Override
-    default void emitBlockQuads(ExtendedBlockView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context, DynamicConsumer<DynamicBlockEmitter> dynamicConsumer) {
+    default void emitBlockQuads(BlockRenderView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context, DynamicConsumer<DynamicBlockEmitter> dynamicConsumer) {
         this.emitBlockQuads(blockView, state, pos, randomSupplier, context);
     }
     
