@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2019 grondag
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -21,7 +21,7 @@ import org.apiguardian.api.API;
 import grondag.frex.api.Renderer;
 import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
-import net.minecraft.block.BlockRenderLayer;
+import net.minecraft.client.render.RenderLayer;
 
 /**
  * Finds standard {@link RenderMaterial} instances used to communicate
@@ -32,34 +32,34 @@ import net.minecraft.block.BlockRenderLayer;
 @API(status = API.Status.STABLE)
 public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.material.MaterialFinder {
 
-    @Override
-    MaterialFinder clear();
+	@Override
+	MaterialFinder clear();
 
-    @Override
-    MaterialFinder spriteDepth(int depth);
+	@Override
+	MaterialFinder spriteDepth(int depth);
 
-    @Override
-    @Deprecated
-    MaterialFinder blendMode(int spriteIndex, BlockRenderLayer blendMode);
-    
-    @Override
-    MaterialFinder blendMode(int spriteIndex, BlendMode blendMode);
+	@Override
+	@Deprecated
+	MaterialFinder blendMode(int spriteIndex, RenderLayer blendMode);
 
-    @Override
-    MaterialFinder disableColorIndex(int spriteIndex, boolean disable);
+	@Override
+	MaterialFinder blendMode(int spriteIndex, BlendMode blendMode);
 
-    @Override
-    MaterialFinder disableDiffuse(int spriteIndex, boolean disable);
+	@Override
+	MaterialFinder disableColorIndex(int spriteIndex, boolean disable);
 
-    @Override
-    MaterialFinder disableAo(int spriteIndex, boolean disable);
+	@Override
+	MaterialFinder disableDiffuse(int spriteIndex, boolean disable);
 
-    @Override
-    MaterialFinder emissive(int spriteIndex, boolean isEmissive);
+	@Override
+	MaterialFinder disableAo(int spriteIndex, boolean disable);
 
-    @API(status = API.Status.EXPERIMENTAL)
-    MaterialFinder shader(MaterialShader pipeline);
-    
-    @API(status = API.Status.EXPERIMENTAL)
-    MaterialFinder condition(MaterialCondition condition);
+	@Override
+	MaterialFinder emissive(int spriteIndex, boolean isEmissive);
+
+	@API(status = API.Status.EXPERIMENTAL)
+	MaterialFinder shader(MaterialShader pipeline);
+
+	@API(status = API.Status.EXPERIMENTAL)
+	MaterialFinder condition(MaterialCondition condition);
 }
