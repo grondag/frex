@@ -111,7 +111,7 @@ sourceSets {
 
 publishing {
 	publications {
-		mavenJava(MavenPublication) {
+		gpr(MavenPublication) {
 			artifactId = artifact_name;
 			artifact(remapJar) {
 				builtBy remapJar
@@ -125,16 +125,13 @@ publishing {
 
 	repositories {
 		mavenLocal()
-		maven {
-            url "https://grondag-repo.appspot.com"
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/grondag/frex")
             credentials {
-				if (project.hasProperty('maven_user')){
-					username = project.getProperty('maven_user')
-				}
-				if (project.hasProperty('maven_password')){
-					password = project.getProperty('maven_password')
-				}
-			}
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("PASSWORD")
+            }
         }
 	}
 }
