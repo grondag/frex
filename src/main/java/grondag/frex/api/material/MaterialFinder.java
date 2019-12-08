@@ -18,10 +18,10 @@ package grondag.frex.api.material;
 
 import org.apiguardian.api.API;
 
-import grondag.frex.api.Renderer;
 import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
-import net.minecraft.client.render.RenderLayer;
+
+import grondag.frex.api.Renderer;
 
 /**
  * Finds standard {@link RenderMaterial} instances used to communicate
@@ -37,10 +37,6 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 
 	@Override
 	MaterialFinder spriteDepth(int depth);
-
-	@Override
-	@Deprecated
-	MaterialFinder blendMode(int spriteIndex, RenderLayer blendMode);
 
 	@Override
 	MaterialFinder blendMode(int spriteIndex, BlendMode blendMode);
