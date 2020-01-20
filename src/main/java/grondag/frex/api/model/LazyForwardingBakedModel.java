@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2019 grondag
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -22,8 +22,6 @@ import java.util.function.Supplier;
 
 import org.apiguardian.api.API;
 
-import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
-import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
@@ -35,73 +33,81 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockRenderView;
 
+import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
+import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
+
 /**
  * Improved base class for specialized model implementations that need to wrap other baked models.
  * Avoids boilerplate code for pass-through methods.}.
  */
 @API(status = API.Status.STABLE)
 public abstract class LazyForwardingBakedModel implements BakedModel, DynamicBakedModel {
-    protected BakedModel lazyWrapped;
-    
-    /** MUST BE THREAD-SAFE AND INVARIANT */
-    protected abstract BakedModel createWrapped();
-    
-    protected BakedModel wrapped() {
-        BakedModel wrapped = lazyWrapped;
-        if(wrapped == null) {
-            wrapped = createWrapped();
-            lazyWrapped = wrapped;
-        }
-        return wrapped;
-    }
-    
-    @Override
-    public void emitBlockQuads(BlockRenderView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context) {
-        ((FabricBakedModel)wrapped()).emitBlockQuads(blockView, state, pos, randomSupplier, context);
-    }
+	protected BakedModel lazyWrapped;
 
-    @Override
-    public boolean isVanillaAdapter() {
-        return ((FabricBakedModel)wrapped()).isVanillaAdapter();
-    }
+	/** MUST BE THREAD-SAFE AND INVARIANT */
+	protected abstract BakedModel createWrapped();
 
-    @Override
-    public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
-        ((FabricBakedModel)wrapped()).emitItemQuads(stack, randomSupplier, context);
-    }
+	protected BakedModel wrapped() {
+		BakedModel wrapped = lazyWrapped;
+		if(wrapped == null) {
+			wrapped = createWrapped();
+			lazyWrapped = wrapped;
+		}
+		return wrapped;
+	}
 
-    @Override
-    public List<BakedQuad> getQuads(BlockState blockState, Direction face, Random rand) {
-        return wrapped().getQuads(blockState, face, rand);
-    }
+	@Override
+	public void emitBlockQuads(BlockRenderView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context) {
+		((FabricBakedModel)wrapped()).emitBlockQuads(blockView, state, pos, randomSupplier, context);
+	}
 
-    @Override
-    public boolean useAmbientOcclusion() {
-        return wrapped().useAmbientOcclusion();
-    }
+	@Override
+	public boolean isVanillaAdapter() {
+		return ((FabricBakedModel)wrapped()).isVanillaAdapter();
+	}
 
-    @Override
-    public boolean hasDepthInGui() {
-        return wrapped().hasDepthInGui();
-    }
+	@Override
+	public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
+		((FabricBakedModel)wrapped()).emitItemQuads(stack, randomSupplier, context);
+	}
 
-    @Override
-    public boolean isBuiltin() {
-        return wrapped().isBuiltin();
-    }
+	@Override
+	public List<BakedQuad> getQuads(BlockState blockState, Direction face, Random rand) {
+		return wrapped().getQuads(blockState, face, rand);
+	}
 
-    @Override
-    public Sprite getSprite() {
-        return wrapped().getSprite();
-    }
+	@Override
+	public boolean useAmbientOcclusion() {
+		return wrapped().useAmbientOcclusion();
+	}
 
-    @Override
-    public ModelTransformation getTransformation() {
-        return wrapped().getTransformation();
-    }
+	@Override
+	public boolean hasDepth() {
+		return wrapped().hasDepth();
+	}
 
-    @Override
-    public ModelItemPropertyOverrideList getItemPropertyOverrides() {
-        return wrapped().getItemPropertyOverrides();
-    }
+	@Override
+	public boolean isSideLit() {
+		return wrapped().isSideLit();
+	}
+
+	@Override
+	public boolean isBuiltin() {
+		return wrapped().isBuiltin();
+	}
+
+	@Override
+	public Sprite getSprite() {
+		return wrapped().getSprite();
+	}
+
+	@Override
+	public ModelTransformation getTransformation() {
+		return wrapped().getTransformation();
+	}
+
+	@Override
+	public ModelItemPropertyOverrideList getItemPropertyOverrides() {
+		return wrapped().getItemPropertyOverrides();
+	}
 }
