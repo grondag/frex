@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2019 grondag
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -25,32 +25,34 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 
 public class Frex implements ClientModInitializer {
-    public static Logger LOG = LogManager.getLogger("FREX");
-    
-    private static final boolean isAvailable;
-    
-    static {
-    	boolean result = false;
-    	for(ModContainer mod : FabricLoader.getInstance().getAllMods()) {
-            if(mod.getMetadata().containsCustomElement("frex:contains_frex_renderer")) {
-            	result = true;
-            	break;
-            }
-        }
-    	isAvailable = result;
-    }
-    
-    /** 
-     * TODO: replace with something that indicates renderer feature set
-     */
-    @API(status = API.Status.DEPRECATED)
-    public static boolean isAvailable() {
-    	return isAvailable;
-    }
+	public static Logger LOG = LogManager.getLogger("FREX");
+
+	private static final boolean isAvailable;
+
+	static {
+		boolean result = false;
+
+		for(final ModContainer mod : FabricLoader.getInstance().getAllMods()) {
+			if(mod.getMetadata().containsCustomValue("frex:contains_frex_renderer")) {
+				result = true;
+				break;
+			}
+		}
+
+		isAvailable = result;
+	}
+
+	/**
+	 * TODO: replace with something that indicates renderer feature set
+	 */
+	@API(status = API.Status.DEPRECATED)
+	public static boolean isAvailable() {
+		return isAvailable;
+	}
 
 	@Override
 	public void onInitializeClient() {
-        FabricLoader.getInstance().getEntrypoints("frex", FrexInitializer.class).forEach(
-                api -> api.onInitalizeFrex());		
+		FabricLoader.getInstance().getEntrypoints("frex", FrexInitializer.class).forEach(
+				api -> api.onInitalizeFrex());
 	}
 }
