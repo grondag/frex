@@ -88,14 +88,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	@Override
 	MaterialFinder emissive(int spriteIndex, boolean isEmissive);
 
-	@Deprecated
-	@API(status = API.Status.DEPRECATED)
-	MaterialFinder shader(MaterialShader pipeline);
+	MaterialFinder shader(int spriteIndex, MaterialShader shader);
 
-	@Deprecated
-	@API(status = API.Status.EXPERIMENTAL)
-	MaterialFinder shader(int spriteIndex, MaterialShader pipeline);
-
-	@API(status = API.Status.EXPERIMENTAL)
 	MaterialFinder condition(MaterialCondition condition);
 }
