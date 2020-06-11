@@ -21,6 +21,7 @@ import java.util.Locale;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.apiguardian.api.API;
 
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
@@ -34,6 +35,7 @@ import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 import grondag.frex.Frex;
 import grondag.frex.api.material.ShaderBuilder;
 
+@API(status = API.Status.INTERNAL)
 public class MaterialDeserializer {
 	private MaterialDeserializer() {}
 
@@ -75,7 +77,7 @@ public class MaterialDeserializer {
 				final ShaderBuilder sb = FREX_RENDERER.shaderBuilder();
 				sb.fragmentSource(new Identifier(JsonHelper.getString(layer, "fragmentSource")));
 				sb.vertexSource(new Identifier(JsonHelper.getString(layer, "vertexSource")));
-				((grondag.frex.api.material.MaterialFinder)FINDER).shader(spriteIndex, sb.build());
+				((grondag.frex.api.material.MaterialFinder)finder).shader(spriteIndex, sb.build());
 			}
 		}
 

@@ -20,9 +20,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apiguardian.api.API;
 
+import net.minecraft.resource.ResourceType;
+
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
+
+import grondag.frex.impl.material.MaterialMapImpl;
 
 public class Frex implements ClientModInitializer {
 	public static Logger LOG = LogManager.getLogger("FREX");
@@ -52,6 +57,8 @@ public class Frex implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(MaterialMapImpl.INSTANCE);
+
 		FabricLoader.getInstance().getEntrypoints("frex", FrexInitializer.class).forEach(
 				api -> api.onInitalizeFrex());
 	}
