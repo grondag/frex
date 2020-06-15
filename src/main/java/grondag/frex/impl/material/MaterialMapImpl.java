@@ -34,12 +34,13 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import net.fabricmc.fabric.api.renderer.v1.Renderer;
+import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 import net.fabricmc.fabric.api.resource.ResourceReloadListenerKeys;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 
 import grondag.frex.Frex;
-import grondag.frex.api.Renderer;
 import grondag.frex.api.material.MaterialMap;
 
 
@@ -66,7 +67,8 @@ public class MaterialMapImpl implements SimpleSynchronousResourceReloadListener 
 	@Override
 	public void apply(ResourceManager manager) {
 		if (defaultMaterial == null) {
-			defaultMaterial = Renderer.get().materialById(RenderMaterial.MATERIAL_STANDARD);
+			final Renderer r = RendererAccess.INSTANCE.getRenderer();
+			defaultMaterial = r.materialById(RenderMaterial.MATERIAL_STANDARD);
 			defaultMaterialMap = new SingleMaterialMap(defaultMaterial);
 		}
 
