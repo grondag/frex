@@ -45,8 +45,9 @@ public class MaterialMapDeserializer {
 		final JsonObject json = JsonHelper.deserialize(reader);
 		final String idString = idForLog.toString();
 
-		RenderMaterial defaultMaterial = MaterialMapImpl.DEFAULT_MATERIAL;
-		MaterialMap defaultMap = MaterialMapImpl.DEFAULT_MATERIAL_MAP;
+		final MaterialMap globalDefaultMap = MaterialMapImpl.defaultMaterialMap();
+		RenderMaterial defaultMaterial = MaterialMapImpl.defaultMaterial();
+		MaterialMap defaultMap = globalDefaultMap;
 
 		try {
 			if (json.has("defaultMaterial")) {
@@ -77,7 +78,7 @@ public class MaterialMapDeserializer {
 					result = loadMaterialMap(idString + "#" + stateId, variants.getAsJsonObject(stateId), defaultMap, defaultMaterial);
 				}
 
-				if (result != MaterialMapImpl.DEFAULT_MATERIAL_MAP) {
+				if (result != globalDefaultMap) {
 					map.put(state, result);
 				}
 			}

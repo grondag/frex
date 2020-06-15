@@ -38,5 +38,7 @@ public interface MaterialMap {
 		return MaterialMapImpl.INSTANCE.get(state);
 	}
 
-	MaterialMap DEFAULT_MATERIAL_MAP = MaterialMapImpl.DEFAULT_MATERIAL_MAP;
+	static MaterialMap defaultMaterialMap() {
+		return MaterialMapImpl.defaultMaterialMap();
+	}
 }

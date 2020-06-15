@@ -49,7 +49,8 @@ public class MaterialMapImpl implements SimpleSynchronousResourceReloadListener 
 	private MaterialMapImpl() { }
 
 	public MaterialMap get(BlockState state) {
-		return MAP.getOrDefault(state, DEFAULT_MATERIAL_MAP);
+		assert defaultMaterialMap != null;
+		return MAP.getOrDefault(state, defaultMaterialMap);
 	}
 
 	@Override
@@ -64,6 +65,11 @@ public class MaterialMapImpl implements SimpleSynchronousResourceReloadListener 
 
 	@Override
 	public void apply(ResourceManager manager) {
+		if (defaultMaterial == null) {
+			defaultMaterial = Renderer.get().materialById(RenderMaterial.MATERIAL_STANDARD);
+			defaultMaterialMap = new SingleMaterialMap(defaultMaterial);
+		}
+
 		MAP.clear();
 		final Iterator<Block> blocks = Registry.BLOCK.iterator();
 
@@ -86,8 +92,19 @@ public class MaterialMapImpl implements SimpleSynchronousResourceReloadListener 
 		}
 	}
 
-	static final RenderMaterial DEFAULT_MATERIAL = Renderer.get().materialById(RenderMaterial.MATERIAL_STANDARD);
-	public static final MaterialMap DEFAULT_MATERIAL_MAP = new SingleMaterialMap(DEFAULT_MATERIAL);
+	private static RenderMaterial defaultMaterial;
+	private static MaterialMap defaultMaterialMap;
+
+
+	public static RenderMaterial defaultMaterial() {
+		assert defaultMaterial != null;
+		return defaultMaterial;
+	}
+
+	public static MaterialMap defaultMaterialMap() {
+		assert defaultMaterialMap != null;
+		return defaultMaterialMap;
+	}
 
 	private static final IdentityHashMap<BlockState, MaterialMap> MAP = new IdentityHashMap<>();
 	private static List<Identifier> DEPS = ImmutableList.of(ResourceReloadListenerKeys.MODELS, ResourceReloadListenerKeys.TEXTURES);
