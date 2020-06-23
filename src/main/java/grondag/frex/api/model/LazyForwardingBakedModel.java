@@ -41,7 +41,7 @@ import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
  * Avoids boilerplate code for pass-through methods.}.
  */
 @API(status = API.Status.STABLE)
-public abstract class LazyForwardingBakedModel implements BakedModel, DynamicBakedModel {
+public abstract class LazyForwardingBakedModel implements BakedModel, FabricBakedModel {
 	protected BakedModel lazyWrapped;
 
 	/** MUST BE THREAD-SAFE AND INVARIANT */

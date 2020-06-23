@@ -20,10 +20,6 @@
   "entrypoints": {
     "client": [ "grondag.frex.Frex" ]
   },
-  "mixins": [
-    "frex.client.json"
-  ],
-  
   "depends": {
     "fabricloader": "\u003e\u003d0.8.4",
     "minecraft": "~1.16-alpha",
