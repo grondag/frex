@@ -1,15 +1,28 @@
-package grondag.frex.api.fkuid;
+/*******************************************************************************
+ * Copyright 2020 grondag
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy
+ * of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ ******************************************************************************/
+
+package grondag.frex.api.fluid;
 
 import java.util.Random;
 import java.util.function.Supplier;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.TransparentBlock;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
@@ -23,8 +36,6 @@ import net.minecraft.world.BlockRenderView;
 import net.minecraft.world.BlockView;
 
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
-import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
-import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
@@ -32,61 +43,37 @@ import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 /**
  * Implementation of {@link FluidQuadSupplier}  with vanilla-like geometry.
  */
-public abstract class AbstractFluidModel implements  FluidQuadSupplier, FluidRenderHandler {
-	public static final RenderMaterial WATER_MATERIAL = RendererAccess.INSTANCE.getRenderer().materialFinder()
-			.blendMode(0, BlendMode.TRANSLUCENT).disableAo(0, true).disableColorIndex(0, true).find();
-
-	public static final RenderMaterial LAVA_MATERIAL = RendererAccess.INSTANCE.getRenderer().materialFinder()
-			.blendMode(0, BlendMode.SOLID).disableAo(0, true).disableColorIndex(0, true).emissive(0, true).find();
-
-	public static final Sprite[] lavaSprites() {
-		final Sprite[] result = new Sprite[2];
-		result[0] = MinecraftClient.getInstance().getBakedModelManager().getBlockModels().getModel(Blocks.LAVA.getDefaultState()).getSprite();
-		result[1] = ModelLoader.LAVA_FLOW.getSprite();
-		return result;
-	}
-
-	public static final Sprite[] waterSprites() {
-		final Sprite[] result = new Sprite[2];
-		result[0] = MinecraftClient.getInstance().getBakedModelManager().getBlockModels().getModel(Blocks.WATER.getDefaultState()).getSprite();
-		result[1] = ModelLoader.WATER_FLOW.getSprite();
-		return result;
-	}
-
+public abstract class AbstractFluidModel implements FluidQuadSupplier, FluidRenderHandler {
 	protected final RenderMaterial material;
-	protected final Fluid fluid;
 	protected final boolean blendColors;
 
-	protected AbstractFluidModel(Fluid fluid, RenderMaterial material,  boolean blendColors) {
-		this.fluid = fluid;
+	protected AbstractFluidModel(RenderMaterial material,  boolean blendColors) {
 		this.material = material;
 		this.blendColors = blendColors;
 	}
 
-
 	@Override
-	public void emitBlockQuads(BlockRenderView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context) {
-		render(blockView, pos, context.getEmitter(), state.getFluidState());
-	}
+	public void emitBlockQuads(BlockRenderView world, BlockState state, BlockPos centerPos, Supplier<Random> randomSupplier, RenderContext context) {
+		final QuadEmitter qe = context.getEmitter();
+		final FluidState fluidState = state.getFluidState();
+		final BlockState blockState = world.getBlockState(centerPos);
+		final Sprite[] sprites = getFluidSprites(world, centerPos, fluidState);
+		final BlockPos.Mutable searchPos = SEARCH_POS.get();
 
-	protected boolean render(BlockRenderView world, BlockPos pos, QuadEmitter qe, FluidState state) {
-		final BlockState blockState = world.getBlockState(pos);
-		final Sprite[] sprites = getFluidSprites(world, pos, state);
-
-		final int centerColor = getFluidColor(world, pos, state) | 0xFF000000;
+		final int centerColor = getFluidColor(world, centerPos, fluidState) | 0xFF000000;
 
 		final int nwColor, swColor, neColor, seColor;
 
 		if (blendColors) {
-			final int n = getFluidColor(world, pos.offset(Direction.NORTH), state);
-			final int w = getFluidColor(world, pos.offset(Direction.WEST), state);
-			final int s = getFluidColor(world, pos.offset(Direction.SOUTH), state);
-			final int e = getFluidColor(world, pos.offset(Direction.EAST), state);
+			final int n = getFluidColor(world, centerPos.offset(Direction.NORTH), fluidState);
+			final int w = getFluidColor(world, centerPos.offset(Direction.WEST), fluidState);
+			final int s = getFluidColor(world, centerPos.offset(Direction.SOUTH), fluidState);
+			final int e = getFluidColor(world, centerPos.offset(Direction.EAST), fluidState);
 
-			final int ne = getFluidColor(world, pos.offset(Direction.NORTH).offset(Direction.EAST), state);
-			final int nw = getFluidColor(world, pos.offset(Direction.NORTH).offset(Direction.WEST), state);
-			final int se = getFluidColor(world, pos.offset(Direction.SOUTH).offset(Direction.EAST), state);
-			final int sw = getFluidColor(world, pos.offset(Direction.SOUTH).offset(Direction.WEST), state);
+			final int ne = getFluidColor(world, centerPos.offset(Direction.NORTH).offset(Direction.EAST), fluidState);
+			final int nw = getFluidColor(world, centerPos.offset(Direction.NORTH).offset(Direction.WEST), fluidState);
+			final int se = getFluidColor(world, centerPos.offset(Direction.SOUTH).offset(Direction.EAST), fluidState);
+			final int sw = getFluidColor(world, centerPos.offset(Direction.SOUTH).offset(Direction.WEST), fluidState);
 
 			nwColor = colorMix4(centerColor, n, w, nw) | 0xFF000000;
 			swColor = colorMix4(centerColor, s, w, sw) | 0xFF000000;
@@ -99,37 +86,35 @@ public abstract class AbstractFluidModel implements  FluidQuadSupplier, FluidRen
 			seColor = centerColor;
 		}
 
-		final boolean isUpVisible = !isSameFluid(world, pos, Direction.UP, state);
-		final boolean isDownVisible = notBlockedNotSame(world, pos, state, blockState, Direction.DOWN) && !isBlockedAtOffset(world, pos, Direction.DOWN, 0.8888889F);
-		final boolean isNorthVisible = notBlockedNotSame(world, pos, state, blockState, Direction.NORTH);
-		final boolean isSouthVisible = notBlockedNotSame(world, pos, state, blockState, Direction.SOUTH);
-		final boolean isWestVisible = notBlockedNotSame(world, pos, state, blockState, Direction.WEST);
-		final boolean isEastVisible = notBlockedNotSame(world, pos, state, blockState, Direction.EAST);
+		final Fluid fluid = fluidState.getFluid();
+		final boolean isUpVisible = !isSameFluid(world, centerPos, Direction.UP, fluid);
+		final boolean isDownVisible = notBlockedNotSame(world, centerPos, fluid, blockState, Direction.DOWN)
+				&& !isBlockedAtOffset(world, searchPos.set(centerPos, Direction.DOWN), Direction.DOWN, 0.8888889F);
+		final boolean isNorthVisible = notBlockedNotSame(world, centerPos, fluid, blockState, Direction.NORTH);
+		final boolean isSouthVisible = notBlockedNotSame(world, centerPos, fluid, blockState, Direction.SOUTH);
+		final boolean isWestVisible = notBlockedNotSame(world, centerPos, fluid, blockState, Direction.WEST);
+		final boolean isEastVisible = notBlockedNotSame(world, centerPos, fluid, blockState, Direction.EAST);
 
-		if (!isUpVisible && !isDownVisible && !isEastVisible && !isWestVisible && !isNorthVisible && !isSouthVisible) {
-			return false;
-		} else {
-			boolean didSomethingHappen = false;
-
-			float centerNwHeight = nwHeight(world, pos, state.getFluid());
-			float southNwHeight = nwHeight(world, pos.south(), state.getFluid());
-			float southEastNwHeight = nwHeight(world, pos.east().south(), state.getFluid());
-			float eastNwHeight = nwHeight(world, pos.east(), state.getFluid());
+		if (isUpVisible || isDownVisible || isEastVisible || isWestVisible || isNorthVisible || isSouthVisible) {
+			final Sprite stillSprite = sprites[0];
+			float centerNwHeight = nwHeight(world, centerPos, fluidState.getFluid());
+			float southNwHeight = nwHeight(world, centerPos.south(), fluidState.getFluid());
+			float southEastNwHeight = nwHeight(world, centerPos.east().south(), fluidState.getFluid());
+			float eastNwHeight = nwHeight(world, centerPos.east(), fluidState.getFluid());
 			final float downBasedOffset = isDownVisible ? 0.001F : 0.0F;
 
-			if (isUpVisible && !isBlockedAtOffset(world, pos, Direction.UP, Math.min(Math.min(centerNwHeight, southNwHeight), Math.min(southEastNwHeight, eastNwHeight)))) {
-				didSomethingHappen = true;
+			if (isUpVisible && !isBlockedAtOffset(world, searchPos.set(centerPos, Direction.UP), Direction.UP, Math.min(Math.min(centerNwHeight, southNwHeight), Math.min(southEastNwHeight, eastNwHeight)))) {
 				centerNwHeight -= 0.001F;
 				southNwHeight -= 0.001F;
 				southEastNwHeight -= 0.001F;
 				eastNwHeight -= 0.001F;
-				final Vec3d velocity = state.getVelocity(world, pos);
+				final Vec3d velocity = fluidState.getVelocity(world, centerPos);
 				Sprite topSprite;
 
 				float u0, u1, u2, u3, v0, v1, v2, v3;
 
 				if (velocity.x == 0.0D && velocity.z == 0.0D) {
-					topSprite = sprites[0];
+					topSprite = stillSprite;
 					u0 = topSprite.getFrameU(0.0D);
 					v0 = topSprite.getFrameV(0.0D);
 					u1 = u0;
@@ -156,8 +141,8 @@ public abstract class AbstractFluidModel implements  FluidQuadSupplier, FluidRen
 				final float uCentroid = (u0 + u1 + u2 + u3) / 4.0F;
 				final float vCentroid = (v0 + v1 + v2 + v3) / 4.0F;
 
-				final float dx = sprites[0].getWidth() / (sprites[0].getMaxU() - sprites[0].getMinU());
-				final float dy = sprites[0].getHeight() / (sprites[0].getMaxV() - sprites[0].getMinV());
+				final float dx = stillSprite.getWidth() / (stillSprite.getMaxU() - stillSprite.getMinU());
+				final float dy = stillSprite.getHeight() / (stillSprite.getMaxV() - stillSprite.getMinV());
 				final float centerScale = 4.0F / Math.max(dy, dx);
 
 				u0 = MathHelper.lerp(centerScale, u0, uCentroid);
@@ -176,7 +161,7 @@ public abstract class AbstractFluidModel implements  FluidQuadSupplier, FluidRen
 				.material(material).emit();
 
 				// backface
-				if (state.method_15756(world, pos.up())) {
+				if (fluidState.method_15756(world, centerPos.up())) {
 					qe.pos(0, 0, centerNwHeight, 0).sprite(0, 0, u0, v0).spriteColor(0, 0, nwColor)
 					.pos(1, 1, eastNwHeight, 0).sprite(1, 0, u3, v3).spriteColor(1, 0, neColor)
 					.pos(2, 1, southEastNwHeight, 1).sprite(2, 0, u2, v2).spriteColor(2, 0, seColor)
@@ -188,31 +173,25 @@ public abstract class AbstractFluidModel implements  FluidQuadSupplier, FluidRen
 			if (isDownVisible) {
 				float u0, u1, v1, v0;
 
-				u0 = sprites[0].getMinU();
-				u1 = sprites[0].getMaxU();
-				v1 = sprites[0].getMinV();
-				v0 = sprites[0].getMaxV();
+				u0 = stillSprite.getMinU();
+				u1 = stillSprite.getMaxU();
+				v1 = stillSprite.getMinV();
+				v0 = stillSprite.getMaxV();
 
 				qe.pos(0, 0, downBasedOffset, 1).sprite(0, 0, u0, v0).spriteColor(0, 0, swColor)
 				.pos(1, 0, downBasedOffset, 0).sprite(1, 0, u0, v1).spriteColor(1, 0, nwColor)
 				.pos(2, 1, downBasedOffset, 0).sprite(2, 0, u1, v1).spriteColor(2, 0, neColor)
 				.pos(3, 1, downBasedOffset, 1).sprite(3, 0, u1, v0).spriteColor(3, 0, seColor)
 				.material(material).emit();
-				didSomethingHappen = true;
 			}
 
 			for(int sideIndex = 0; sideIndex < 4; ++sideIndex) {
-				float y0, y1;
-
-				float x0;
-				float z0;
-				float x1;
-				float z1;
+				float y0, y1, x0, x1, z0, z1;
 				Direction face;
-				boolean isSideVisible;
 				int c0, c1;
 
 				if (sideIndex == 0) {
+					if (!isNorthVisible) continue;
 					y0 = centerNwHeight;
 					y1 = eastNwHeight;
 					c0 = nwColor;
@@ -222,8 +201,9 @@ public abstract class AbstractFluidModel implements  FluidQuadSupplier, FluidRen
 					z0 = 0.0010000000474974513F;
 					z1 = 0.0010000000474974513F;
 					face = Direction.NORTH;
-					isSideVisible = isNorthVisible;
 				} else if (sideIndex == 1) {
+					if (!isSouthVisible) continue;
+					face = Direction.SOUTH;
 					y0 = southEastNwHeight;
 					y1 = southNwHeight;
 					c0 = seColor;
@@ -232,9 +212,9 @@ public abstract class AbstractFluidModel implements  FluidQuadSupplier, FluidRen
 					x1 = 0;
 					z0 = 1.0F - 0.0010000000474974513F;
 					z1 = 1.0F - 0.0010000000474974513F;
-					face = Direction.SOUTH;
-					isSideVisible = isSouthVisible;
 				} else if (sideIndex == 2) {
+					if (!isWestVisible) continue;
+					face = Direction.WEST;
 					y0 = southNwHeight;
 					y1 = centerNwHeight;
 					c0 = swColor;
@@ -243,9 +223,9 @@ public abstract class AbstractFluidModel implements  FluidQuadSupplier, FluidRen
 					x1 = 0.0010000000474974513F;
 					z0 = 1.0F;
 					z1 = 0;
-					face = Direction.WEST;
-					isSideVisible = isWestVisible;
 				} else {
+					if (!isEastVisible) continue;
+					face = Direction.EAST;
 					y0 = eastNwHeight;
 					y1 = southEastNwHeight;
 					c0 = neColor;
@@ -254,20 +234,15 @@ public abstract class AbstractFluidModel implements  FluidQuadSupplier, FluidRen
 					x1 = 1.0F - 0.0010000000474974513F;
 					z0 = 0;
 					z1 = 1F;
-					face = Direction.EAST;
-					isSideVisible = isEastVisible;
 				}
 
-				if (isSideVisible && !isBlockedAtOffset(world, pos, face, Math.max(y0, y1))) {
-					didSomethingHappen = true;
-					final BlockPos blockPos = pos.offset(face);
-
+				if (!isBlockedAtOffset(world, searchPos.set(centerPos, face), face, Math.max(y0, y1))) {
 					final boolean overlay;
 					final Sprite sideSprite;
 
 					if (needsOverlay()) {
-						final Block block = world.getBlockState(blockPos).getBlock();
-						if (block instanceof TransparentBlock || block instanceof LeavesBlock) {
+						final Block sideBlock = world.getBlockState(searchPos.set(centerPos, face)).getBlock();
+						if (sideBlock instanceof TransparentBlock || sideBlock instanceof LeavesBlock) {
 							sideSprite = overlaySprite();
 							overlay = true;
 						} else {
@@ -302,8 +277,6 @@ public abstract class AbstractFluidModel implements  FluidQuadSupplier, FluidRen
 					}
 				}
 			}
-
-			return didSomethingHappen;
 		}
 	}
 
@@ -315,13 +288,13 @@ public abstract class AbstractFluidModel implements  FluidQuadSupplier, FluidRen
 		return null;
 	}
 
-	public static boolean isSameFluid(BlockView world, BlockPos pos, Direction side, FluidState state) {
+	private static boolean isSameFluid(BlockView world, BlockPos pos, Direction side, Fluid fluid) {
 		final BlockPos blockPos = pos.offset(side);
 		final FluidState fluidState = world.getFluidState(blockPos);
-		return fluidState.getFluid().matchesType(state.getFluid());
+		return fluidState.getFluid().matchesType(fluid);
 	}
 
-	public static boolean isBlockedAtOffset(BlockView blockView, Direction direction, float offset, BlockPos blockPos, BlockState blockState) {
+	private static boolean isBlockedAtOffset(BlockView blockView, Direction direction, float offset, BlockPos blockPos, BlockState blockState) {
 		if (blockState.isOpaque()) {
 			final VoxelShape voxelShape = VoxelShapes.cuboid(0.0D, 0.0D, 0.0D, 1.0D, offset, 1.0D);
 			final VoxelShape voxelShape2 = blockState.getCullingShape(blockView, blockPos);
@@ -331,21 +304,20 @@ public abstract class AbstractFluidModel implements  FluidQuadSupplier, FluidRen
 		}
 	}
 
-	public static boolean isBlockedAtOffset(BlockView world, BlockPos pos, Direction direction, float offset) {
-		final BlockPos blockPos = pos.offset(direction);
-		final BlockState blockState = world.getBlockState(blockPos);
-		return isBlockedAtOffset(world, direction, offset, blockPos, blockState);
+	private static boolean isBlockedAtOffset(BlockView world, BlockPos offsetPos, Direction direction, float offset) {
+		final BlockState blockState = world.getBlockState(offsetPos);
+		return isBlockedAtOffset(world, direction, offset, offsetPos, blockState);
 	}
 
-	public static boolean isSideBlocked(BlockView blockView, BlockPos blockPos, BlockState blockState, Direction direction) {
+	private static boolean isSideBlocked(BlockView blockView, BlockPos blockPos, BlockState blockState, Direction direction) {
 		return isBlockedAtOffset(blockView, direction.getOpposite(), 1.0F, blockPos, blockState);
 	}
 
-	public static boolean notBlockedNotSame(BlockRenderView blockRenderView, BlockPos blockPos, FluidState fluidState, BlockState blockState, Direction direction) {
-		return !isSideBlocked(blockRenderView, blockPos, blockState, direction) && !isSameFluid(blockRenderView, blockPos, direction, fluidState);
+	private static boolean notBlockedNotSame(BlockRenderView blockRenderView, BlockPos blockPos, Fluid fluid, BlockState blockState, Direction direction) {
+		return !isSideBlocked(blockRenderView, blockPos, blockState, direction) && !isSameFluid(blockRenderView, blockPos, direction, fluid);
 	}
 
-	public float nwHeight(BlockView world, BlockPos pos, Fluid fluid) {
+	private static float nwHeight(BlockView world, BlockPos pos, Fluid fluid) {
 		int i = 0;
 		float f = 0.0F;
 
@@ -375,10 +347,10 @@ public abstract class AbstractFluidModel implements  FluidQuadSupplier, FluidRen
 
 	public static int colorMix4(int a, int b, int c,  int d) {
 		final int blue = (((a & 0xFF) + (b & 0xFF) + (c & 0xFF) + (d & 0xFF) + 1) >> 2) & 0xFF;
-
 		final int green = (((a & 0xFF00) + (b & 0xFF00) + (c & 0xFF00) + (d & 0xFF00) + 0x100) >> 2) & 0xFF00;
 		final int red = (((a & 0xFF0000) + (b & 0xFF0000) + (c & 0xFF0000) + (d & 0xFF0000) + 0x10000) >> 2) & 0xFF0000;
-
 		return red | green | blue;
 	}
+
+	private static final ThreadLocal<BlockPos.Mutable> SEARCH_POS = ThreadLocal.withInitial(BlockPos.Mutable::new);
 }

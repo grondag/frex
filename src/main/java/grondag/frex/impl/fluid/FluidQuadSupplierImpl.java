@@ -27,7 +27,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import grondag.frex.Frex;
-import grondag.frex.api.fkuid.FluidQuadSupplier;
+import grondag.frex.api.fluid.FluidQuadSupplier;
 
 public class FluidQuadSupplierImpl {
 	private static final Object2ObjectOpenHashMap<Identifier, Function<Fluid, FluidQuadSupplier>> FACTORIES = new Object2ObjectOpenHashMap<>();

@@ -14,7 +14,7 @@
  * the License.
  ******************************************************************************/
 
-package grondag.frex.api.fkuid;
+package grondag.frex.api.fluid;
 
 import java.util.Random;
 import java.util.function.BiFunction;
