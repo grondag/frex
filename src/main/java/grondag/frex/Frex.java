@@ -23,10 +23,12 @@ import org.apiguardian.api.API;
 import net.minecraft.resource.ResourceType;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.rendering.v1.InvalidateRenderStateCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 
+import grondag.frex.impl.fluid.FluidQuadSupplierImpl;
 import grondag.frex.impl.material.MaterialMapImpl;
 
 public class Frex implements ClientModInitializer {
@@ -61,5 +63,7 @@ public class Frex implements ClientModInitializer {
 
 		FabricLoader.getInstance().getEntrypoints("frex", FrexInitializer.class).forEach(
 				api -> api.onInitalizeFrex());
+
+		InvalidateRenderStateCallback.EVENT.register(FluidQuadSupplierImpl::reload);
 	}
 }
