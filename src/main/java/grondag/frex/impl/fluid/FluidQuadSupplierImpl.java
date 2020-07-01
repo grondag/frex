@@ -35,14 +35,14 @@ public class FluidQuadSupplierImpl {
 	private static BiFunction<Fluid, Function<Fluid, FluidQuadSupplier>, FluidQuadSupplier> handler;
 
 	public static void reload() {
-		assert handler != null;
-
 		SUPPLIERS.clear();
 
-		Registry.FLUID.forEach(fluid -> {
-			final Function<Fluid, FluidQuadSupplier> factory = FACTORIES.get(Registry.FLUID.getId(fluid));
-			SUPPLIERS.put(fluid, handler.apply(fluid, factory));
-		});
+		if(handler != null) {
+			Registry.FLUID.forEach(fluid -> {
+				final Function<Fluid, FluidQuadSupplier> factory = FACTORIES.get(Registry.FLUID.getId(fluid));
+				SUPPLIERS.put(fluid, handler.apply(fluid, factory));
+			});
+		}
 	}
 
 	public static FluidQuadSupplier get(Fluid forFluid) {
