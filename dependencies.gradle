@@ -5,13 +5,9 @@ repositories {
     	name = "Fabric"
     	url "https://maven.fabricmc.net/"
 	}
- 	maven {
-    	name = "grondag"
-    	url = "https://grondag-repo.appspot.com"
-    	credentials {
-            username "guest"
-            password ""
-		}
+    maven {
+    	name = "dblsaiko"
+    	uril = "https://maven.dblsaiko.net/"
     }
 }
 
