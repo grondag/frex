@@ -11,17 +11,13 @@ More information on using FREX is available on the [Renderosity Wiki](https://gi
 
 # Using FREX
 
-Add my maven repo to your build.gradle
+Add the maven repo where my libraries live to your build.gradle
 
 ```gradle
 repositories {
     maven {
-    	name = "grondag"
-    	url = "https://grondag-repo.appspot.com"
-    	credentials {
-            username "guest"
-            password ""
-		}
+    	name = "dblsaiko"
+    	url = "https://maven.dblsaiko.net/"
     }
 }
 ```
