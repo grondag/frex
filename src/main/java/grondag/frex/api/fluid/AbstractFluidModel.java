@@ -52,6 +52,8 @@ public abstract class AbstractFluidModel implements FluidQuadSupplier, FluidRend
 		this.blendColors = blendColors;
 	}
 
+	// PERF: caching - would still need to colorize at buffer time
+	// or at least pass in normalized UVs so don't have to de-interpolate in renderer
 	@Override
 	public void emitBlockQuads(BlockRenderView world, BlockState state, BlockPos centerPos, Supplier<Random> randomSupplier, RenderContext context) {
 		final QuadEmitter qe = context.getEmitter();
@@ -113,6 +115,7 @@ public abstract class AbstractFluidModel implements FluidQuadSupplier, FluidRend
 			float eastNwHeight = nwHeight(world, searchPos.set(centerPos, Direction.EAST), fluid);
 			final float downBasedOffset = isDownVisible ? 0.001F : 0.0F;
 
+			// PERF: move additional up-visible check outside block and don't enter if results in NOOP
 			if (isUpVisible && !isSideBlocked(world, searchPos.set(centerPos, Direction.UP), Direction.UP, Math.min(Math.min(centerNwHeight, southNwHeight), Math.min(southEastNwHeight, eastNwHeight)))) {
 				centerNwHeight -= 0.001F;
 				southNwHeight -= 0.001F;
