@@ -34,9 +34,6 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import net.fabricmc.fabric.api.renderer.v1.Renderer;
-import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
-import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 import net.fabricmc.fabric.api.resource.ResourceReloadListenerKeys;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 
@@ -50,8 +47,7 @@ public class MaterialMapImpl implements SimpleSynchronousResourceReloadListener 
 	private MaterialMapImpl() { }
 
 	public MaterialMap get(BlockState state) {
-		assert defaultMaterialMap != null;
-		return MAP.getOrDefault(state, defaultMaterialMap);
+		return MAP.getOrDefault(state, DEFAULT_MAP);
 	}
 
 	@Override
@@ -66,12 +62,6 @@ public class MaterialMapImpl implements SimpleSynchronousResourceReloadListener 
 
 	@Override
 	public void apply(ResourceManager manager) {
-		if (defaultMaterial == null) {
-			final Renderer r = RendererAccess.INSTANCE.getRenderer();
-			defaultMaterial = r.materialById(RenderMaterial.MATERIAL_STANDARD);
-			defaultMaterialMap = new SingleMaterialMap(defaultMaterial);
-		}
-
 		MAP.clear();
 		final Iterator<Block> blocks = Registry.BLOCK.iterator();
 
@@ -94,19 +84,7 @@ public class MaterialMapImpl implements SimpleSynchronousResourceReloadListener 
 		}
 	}
 
-	private static RenderMaterial defaultMaterial;
-	private static MaterialMap defaultMaterialMap;
-
-
-	public static RenderMaterial defaultMaterial() {
-		assert defaultMaterial != null;
-		return defaultMaterial;
-	}
-
-	public static MaterialMap defaultMaterialMap() {
-		assert defaultMaterialMap != null;
-		return defaultMaterialMap;
-	}
+	public static final MaterialMap DEFAULT_MAP = new SingleMaterialMap(null);
 
 	private static final IdentityHashMap<BlockState, MaterialMap> MAP = new IdentityHashMap<>();
 	private static List<Identifier> DEPS = ImmutableList.of(ResourceReloadListenerKeys.MODELS, ResourceReloadListenerKeys.TEXTURES);

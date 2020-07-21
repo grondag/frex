@@ -26,10 +26,8 @@ import grondag.frex.api.material.MaterialMap;
 
 class MultiMaterialMap implements MaterialMap {
 	private final IdentityHashMap<Sprite, RenderMaterial> spriteMap;
-	private final RenderMaterial defaultMaterial;
 
-	MultiMaterialMap(RenderMaterial defaultMaterial, IdentityHashMap<Sprite, RenderMaterial> spriteMap) {
-		this.defaultMaterial = defaultMaterial;
+	MultiMaterialMap(IdentityHashMap<Sprite, RenderMaterial> spriteMap) {
 		this.spriteMap = spriteMap;
 	}
 
@@ -40,6 +38,6 @@ class MultiMaterialMap implements MaterialMap {
 
 	@Override
 	public RenderMaterial getMapped(Sprite sprite) {
-		return spriteMap.getOrDefault(sprite, defaultMaterial);
+		return spriteMap.get(sprite);
 	}
 }

@@ -32,13 +32,16 @@ public interface MaterialMap {
 	 */
 	boolean needsSprite();
 
-	RenderMaterial getMapped(@Nullable Sprite sprite);
+	/**
+	 * Returns null if sprite is unmapped or if this is the default material map.
+	 */
+	@Nullable RenderMaterial getMapped(@Nullable Sprite sprite);
 
 	static MaterialMap get(BlockState state) {
 		return MaterialMapImpl.INSTANCE.get(state);
 	}
 
 	static MaterialMap defaultMaterialMap() {
-		return MaterialMapImpl.defaultMaterialMap();
+		return MaterialMapImpl.DEFAULT_MAP;
 	}
 }

@@ -19,6 +19,8 @@ package grondag.frex.impl.material;
 import java.io.InputStreamReader;
 import java.util.IdentityHashMap;
 
+import javax.annotation.Nullable;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apiguardian.api.API;
@@ -42,14 +44,14 @@ import grondag.frex.api.material.MaterialMap;
 public class MaterialMapDeserializer {
 
 	public static void deserialize(Block block, Identifier idForLog, InputStreamReader reader, IdentityHashMap<BlockState, MaterialMap> map) {
-		final JsonObject json = JsonHelper.deserialize(reader);
-		final String idString = idForLog.toString();
-
-		final MaterialMap globalDefaultMap = MaterialMapImpl.defaultMaterialMap();
-		RenderMaterial defaultMaterial = MaterialMapImpl.defaultMaterial();
-		MaterialMap defaultMap = globalDefaultMap;
-
 		try {
+			final JsonObject json = JsonHelper.deserialize(reader);
+			final String idString = idForLog.toString();
+
+			final MaterialMap globalDefaultMap = MaterialMapImpl.DEFAULT_MAP;
+			@Nullable RenderMaterial defaultMaterial = null;
+			MaterialMap defaultMap = globalDefaultMap;
+
 			if (json.has("defaultMaterial")) {
 				defaultMaterial = loadMaterial(idString, json.get("defaultMaterial").getAsString(), defaultMaterial);
 				defaultMap = new SingleMaterialMap(defaultMaterial);
@@ -87,7 +89,7 @@ public class MaterialMapDeserializer {
 		}
 	}
 
-	private static MaterialMap loadMaterialMap(String idForLog, JsonObject mapObject, MaterialMap defaultMap, RenderMaterial defaultMaterial) {
+	private static MaterialMap loadMaterialMap(String idForLog, JsonObject mapObject, MaterialMap defaultMap, @Nullable RenderMaterial defaultMaterial) {
 		if (mapObject == null || mapObject.isJsonNull()) {
 			return  defaultMap;
 		}
@@ -128,12 +130,11 @@ public class MaterialMapDeserializer {
 					spriteMap.put(sprite, loadMaterial(idForLog, obj.get("material").getAsString(), defaultMaterial));
 				}
 
-				return spriteMap.isEmpty() ? defaultMap : new MultiMaterialMap(defaultMaterial, spriteMap);
+				return spriteMap.isEmpty() ? defaultMap : (defaultMaterial == null ? new MultiMaterialMap(spriteMap) : new DefaultedMultiMaterialMap(defaultMaterial, spriteMap));
 
 			} else {
 				return defaultMap;
 			}
-
 		} catch (final Exception e) {
 			Frex.LOG.warn("Unable to load material map " + idForLog + " because of exception. Using default material map." , e);
 			return defaultMap;

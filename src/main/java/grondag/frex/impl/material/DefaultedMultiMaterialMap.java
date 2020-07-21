@@ -16,7 +16,7 @@
 
 package grondag.frex.impl.material;
 
-import javax.annotation.Nullable;
+import java.util.IdentityHashMap;
 
 import net.minecraft.client.texture.Sprite;
 
@@ -24,20 +24,22 @@ import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 
 import grondag.frex.api.material.MaterialMap;
 
-class SingleMaterialMap implements MaterialMap {
-	private final RenderMaterial material;
+class DefaultedMultiMaterialMap implements MaterialMap {
+	private final IdentityHashMap<Sprite, RenderMaterial> spriteMap;
+	private final RenderMaterial defaultMaterial;
 
-	SingleMaterialMap(RenderMaterial material) {
-		this.material = material;
+	DefaultedMultiMaterialMap(RenderMaterial defaultMaterial, IdentityHashMap<Sprite, RenderMaterial> spriteMap) {
+		this.defaultMaterial = defaultMaterial;
+		this.spriteMap = spriteMap;
 	}
 
 	@Override
 	public boolean needsSprite() {
-		return false;
+		return true;
 	}
 
 	@Override
-	public @Nullable RenderMaterial getMapped(Sprite sprite) {
-		return material;
+	public RenderMaterial getMapped(Sprite sprite) {
+		return spriteMap.getOrDefault(sprite, defaultMaterial);
 	}
 }
