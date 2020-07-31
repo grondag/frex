@@ -56,20 +56,21 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @deprecated
-	 * In FREX the blend mode explicitly applies only to the base
-	 * quad, not any decal layers and Indigo does not support sprite
-	 * depth at all so the spriteIndex parameter is unnecessary.
-	 * Use {@link #blendMode(BlendMode)} instead.
+	 * For 1+ layers anything other than CUTOUT or CUTOUT_MIPPED
+	 * will be handled as as translucent decal layer that is not
+	 * perspective-sorted and does not set the depth buffer. Such
+	 * layers should be always be backed by solid pixels in the
+	 * the base layer.<p>
+	 *
+	 * 1+ CUTOUT layers should not share any pixels with other
+	 * layers, otherwise Z-fighting or overwrite will occur.
 	 */
-	@Deprecated
 	@Override
 	MaterialFinder blendMode(int spriteIndex, BlendMode blendMode);
 
 	/**
-	 * Defines how sprite pixels will be blended with the scene.
-	 * Affects only the base sprite at index 0 - decal sprites are
-	 * always blended as if translucent.
+	 * Defines how base sprite pixels will be blended with the scene.
+	 * Decal sprites are blended as if translucent by default.
 	 *
 	 * @param blendMode
 	 * @return
