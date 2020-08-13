@@ -24,8 +24,8 @@
     "frex.client.json"
   ],
   "depends": {
-    "fabricloader": "\u003e\u003d0.8.4",
-    "minecraft": "~1.16-alpha",
+    "fabricloader": "\u003e\u003d0.9.1",
+    "minecraft": "~1.16.2",
     "fabric": "*"
   },
   "custom": {
