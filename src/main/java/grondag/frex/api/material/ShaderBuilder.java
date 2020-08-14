@@ -69,7 +69,7 @@ public interface ShaderBuilder {
 	ShaderBuilder vertexSource(Identifier vertexSource);
 
 	/**
-	 * Accepts a Supplier for GLSL 120 fragment shader source.
+	 * Accepts a resource id for GLSL 120 fragment shader source.
 	 * Renderer will strip redundant header declarations.<p>
 	 *
 	 * Renderers should re-query sources and recompile shaders on resource reload
