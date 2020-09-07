@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2019 grondag
+ * Copyright 2019, 2020 grondag
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -16,12 +16,9 @@
 
 package grondag.frex.api.material;
 
-import org.apiguardian.api.API;
-
-import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
-import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
-
 import grondag.frex.api.Renderer;
+import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
+import org.apiguardian.api.API;
 
 /**
  * Finds standard {@link RenderMaterial} instances used to communicate
@@ -92,4 +89,9 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	MaterialFinder shader(int spriteIndex, MaterialShader shader);
 
 	MaterialFinder condition(MaterialCondition condition);
+
+	MaterialFinder copyFrom(RenderMaterial material);
+
+	@Override
+	RenderMaterial find();
 }
