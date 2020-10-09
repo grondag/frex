@@ -16,13 +16,15 @@
 
 package grondag.frex.impl.material;
 
+import javax.annotation.Nullable;
+
 import java.io.InputStreamReader;
 import java.util.IdentityHashMap;
 
-import javax.annotation.Nullable;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import grondag.frex.Frex;
+import grondag.frex.api.material.MaterialMap;
 import org.apiguardian.api.API;
 
 import net.minecraft.block.Block;
@@ -36,9 +38,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
-
-import grondag.frex.Frex;
-import grondag.frex.api.material.MaterialMap;
 
 @API(status = API.Status.INTERNAL)
 public class MaterialMapDeserializer {
@@ -101,7 +100,7 @@ public class MaterialMapDeserializer {
 			}
 
 			if (mapObject.has("spriteMap")) {
-				final SpriteAtlasTexture blockAtlas = MinecraftClient.getInstance().getBakedModelManager().method_24153(SpriteAtlasTexture.BLOCK_ATLAS_TEX);
+				final SpriteAtlasTexture blockAtlas = MinecraftClient.getInstance().getBakedModelManager().method_24153(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
 				final Sprite missingSprite = blockAtlas.getSprite(MissingSprite.getMissingSpriteId());
 
 				final JsonArray jsonArray = mapObject.getAsJsonArray("spriteMap");
