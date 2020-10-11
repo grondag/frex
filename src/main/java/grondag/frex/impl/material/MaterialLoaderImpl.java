@@ -19,10 +19,13 @@ package grondag.frex.impl.material;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
+import grondag.frex.Frex;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.apiguardian.api.API;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
@@ -30,8 +33,6 @@ import net.minecraft.util.Identifier;
 import net.fabricmc.fabric.api.renderer.v1.Renderer;
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
-
-import grondag.frex.Frex;
 
 @API(status = API.Status.INTERNAL)
 public final class MaterialLoaderImpl {
@@ -64,5 +65,26 @@ public final class MaterialLoaderImpl {
 		}
 
 		return result;
+	}
+
+	static Sprite loadSprite(String idForLog, String spriteId, SpriteAtlasTexture atlas, Sprite missingSprite) {
+		final Sprite sprite = atlas.getSprite(new Identifier(spriteId));
+
+		if (sprite == null || sprite == missingSprite) {
+			Frex.LOG.warn("Unable to find sprite " + spriteId + " for material map " + idForLog + ". Using default material.");
+			return null;
+		}
+
+		return sprite;
+	}
+
+	static RenderMaterial loadMaterial(String idForLog, String materialString, RenderMaterial defaultValue) {
+		try {
+			final RenderMaterial result = MaterialLoaderImpl.loadMaterial(new Identifier(materialString));
+			return result == null ? defaultValue : result;
+		} catch (final Exception e) {
+			Frex.LOG.warn("Unable to load material " + materialString + " for material map " + idForLog + " because of exception. Using default material." , e);
+			return defaultValue;
+		}
 	}
 }

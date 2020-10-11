@@ -25,10 +25,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
+import grondag.frex.Frex;
+import grondag.frex.api.material.MaterialMap;
 import org.apiguardian.api.API;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.particle.ParticleType;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
@@ -37,9 +40,6 @@ import net.minecraft.util.registry.Registry;
 import net.fabricmc.fabric.api.resource.ResourceReloadListenerKeys;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 
-import grondag.frex.Frex;
-import grondag.frex.api.material.MaterialMap;
-
 
 
 @API(status = API.Status.INTERNAL)
@@ -47,7 +47,11 @@ public class MaterialMapImpl implements SimpleSynchronousResourceReloadListener 
 	private MaterialMapImpl() { }
 
 	public MaterialMap get(BlockState state) {
-		return MAP.getOrDefault(state, DEFAULT_MAP);
+		return BLOCK_MAP.getOrDefault(state, DEFAULT_MAP);
+	}
+
+	public MaterialMap get(ParticleType<?> particleType) {
+		return PARTICLE_MAP.getOrDefault(particleType, DEFAULT_MAP);
 	}
 
 	@Override
@@ -62,11 +66,18 @@ public class MaterialMapImpl implements SimpleSynchronousResourceReloadListener 
 
 	@Override
 	public void apply(ResourceManager manager) {
-		MAP.clear();
+		BLOCK_MAP.clear();
 		final Iterator<Block> blocks = Registry.BLOCK.iterator();
 
 		while(blocks.hasNext()) {
 			loadBlock(manager, blocks.next());
+		}
+
+		PARTICLE_MAP.clear();
+		final Iterator<ParticleType<?>> particles = Registry.PARTICLE_TYPE.iterator();
+
+		while(particles.hasNext()) {
+			loadParticle(manager, particles.next());
 		}
 	}
 
@@ -76,7 +87,7 @@ public class MaterialMapImpl implements SimpleSynchronousResourceReloadListener 
 		final Identifier id = new Identifier(blockId.getNamespace(), "materialmaps/block/" + blockId.getPath() + ".json");
 
 		try(Resource res = manager.getResource(id)) {
-			MaterialMapDeserializer.deserialize(block, id, new InputStreamReader(res.getInputStream(), StandardCharsets.UTF_8), MAP);
+			BlockMaterialMapDeserializer.deserialize(block, id, new InputStreamReader(res.getInputStream(), StandardCharsets.UTF_8), BLOCK_MAP);
 		} catch (final FileNotFoundException e) {
 			// eat these, material maps are not required
 		} catch (final Exception e) {
@@ -84,9 +95,24 @@ public class MaterialMapImpl implements SimpleSynchronousResourceReloadListener 
 		}
 	}
 
+	private void loadParticle(ResourceManager manager, ParticleType<?> particleType) {
+		final Identifier particleId = Registry.PARTICLE_TYPE.getId(particleType);
+
+		final Identifier id = new Identifier(particleId.getNamespace(), "materialmaps/particle/" + particleId.getPath() + ".json");
+
+		try(Resource res = manager.getResource(id)) {
+			ParticleMaterialMapDeserializer.deserialize(particleType, id, new InputStreamReader(res.getInputStream(), StandardCharsets.UTF_8), PARTICLE_MAP);
+		} catch (final FileNotFoundException e) {
+			// eat these, material maps are not required
+		} catch (final Exception e) {
+			Frex.LOG.info("Unable to load particle material map " + id.toString() + " due to exception " + e.toString());
+		}
+	}
+
 	public static final MaterialMap DEFAULT_MAP = new SingleMaterialMap(null);
 
-	private static final IdentityHashMap<BlockState, MaterialMap> MAP = new IdentityHashMap<>();
+	private static final IdentityHashMap<BlockState, MaterialMap> BLOCK_MAP = new IdentityHashMap<>();
+	private static final IdentityHashMap<ParticleType<?>, MaterialMap> PARTICLE_MAP = new IdentityHashMap<>();
 	private static List<Identifier> DEPS = ImmutableList.of(ResourceReloadListenerKeys.MODELS, ResourceReloadListenerKeys.TEXTURES);
 	private static final Identifier id =new Identifier("frex:material_map");
 

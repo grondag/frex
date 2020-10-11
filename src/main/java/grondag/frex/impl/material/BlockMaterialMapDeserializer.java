@@ -40,7 +40,7 @@ import net.minecraft.util.JsonHelper;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 
 @API(status = API.Status.INTERNAL)
-public class MaterialMapDeserializer {
+public class BlockMaterialMapDeserializer {
 
 	public static void deserialize(Block block, Identifier idForLog, InputStreamReader reader, IdentityHashMap<BlockState, MaterialMap> map) {
 		try {
@@ -52,7 +52,7 @@ public class MaterialMapDeserializer {
 			MaterialMap defaultMap = globalDefaultMap;
 
 			if (json.has("defaultMaterial")) {
-				defaultMaterial = loadMaterial(idString, json.get("defaultMaterial").getAsString(), defaultMaterial);
+				defaultMaterial = MaterialLoaderImpl.loadMaterial(idString, json.get("defaultMaterial").getAsString(), defaultMaterial);
 				defaultMap = new SingleMaterialMap(defaultMaterial);
 			}
 
@@ -84,7 +84,7 @@ public class MaterialMapDeserializer {
 				}
 			}
 		} catch (final Exception e) {
-			Frex.LOG.warn("Unable to load material map for " + idForLog.toString() + " due to unhandled exception:", e);
+			Frex.LOG.warn("Unable to load block material map for " + idForLog.toString() + " due to unhandled exception:", e);
 		}
 	}
 
@@ -95,7 +95,7 @@ public class MaterialMapDeserializer {
 
 		try {
 			if (mapObject.has("defaultMaterial")) {
-				defaultMaterial = loadMaterial(idForLog, mapObject.get("defaultMaterial").getAsString(), defaultMaterial);
+				defaultMaterial = MaterialLoaderImpl.loadMaterial(idForLog, mapObject.get("defaultMaterial").getAsString(), defaultMaterial);
 				defaultMap = new SingleMaterialMap(defaultMaterial);
 			}
 
@@ -115,7 +115,7 @@ public class MaterialMapDeserializer {
 						continue;
 					}
 
-					final Sprite sprite = loadSprite(idForLog, obj.get("sprite").getAsString(), blockAtlas, missingSprite);
+					final Sprite sprite = MaterialLoaderImpl.loadSprite(idForLog, obj.get("sprite").getAsString(), blockAtlas, missingSprite);
 
 					if (sprite == null) {
 						continue;
@@ -126,7 +126,7 @@ public class MaterialMapDeserializer {
 						continue;
 					}
 
-					spriteMap.put(sprite, loadMaterial(idForLog, obj.get("material").getAsString(), defaultMaterial));
+					spriteMap.put(sprite, MaterialLoaderImpl.loadMaterial(idForLog, obj.get("material").getAsString(), defaultMaterial));
 				}
 
 				return spriteMap.isEmpty() ? defaultMap : (defaultMaterial == null ? new MultiMaterialMap(spriteMap) : new DefaultedMultiMaterialMap(defaultMaterial, spriteMap));
@@ -137,27 +137,6 @@ public class MaterialMapDeserializer {
 		} catch (final Exception e) {
 			Frex.LOG.warn("Unable to load material map " + idForLog + " because of exception. Using default material map." , e);
 			return defaultMap;
-		}
-	}
-
-	private static Sprite loadSprite(String idForLog, String spriteId, SpriteAtlasTexture blockAtlas, Sprite missingSprite) {
-		final Sprite sprite = blockAtlas.getSprite(new Identifier(spriteId));
-
-		if (sprite == null || sprite == missingSprite) {
-			Frex.LOG.warn("Unable to find sprite " + spriteId + " for material map " + idForLog + ". Using default material.");
-			return null;
-		}
-
-		return sprite;
-	}
-
-	private static RenderMaterial loadMaterial(String idForLog, String materialString, RenderMaterial defaultValue) {
-		try {
-			final RenderMaterial result = MaterialLoaderImpl.loadMaterial(new Identifier(materialString));
-			return result == null ? defaultValue : result;
-		} catch (final Exception e) {
-			Frex.LOG.warn("Unable to load material " + materialString + " for material map " + idForLog + " because of exception. Using default material." , e);
-			return defaultValue;
 		}
 	}
 }

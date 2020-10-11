@@ -18,12 +18,13 @@ package grondag.frex.api.material;
 
 import javax.annotation.Nullable;
 
+import grondag.frex.impl.material.MaterialMapImpl;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.texture.Sprite;
+import net.minecraft.particle.ParticleType;
 
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
-
-import grondag.frex.impl.material.MaterialMapImpl;
 
 public interface MaterialMap {
 	/**
@@ -39,6 +40,10 @@ public interface MaterialMap {
 
 	static MaterialMap get(BlockState state) {
 		return MaterialMapImpl.INSTANCE.get(state);
+	}
+
+	static MaterialMap getForParticle(ParticleType<?> particleType) {
+		return MaterialMapImpl.INSTANCE.get(particleType);
 	}
 
 	static MaterialMap defaultMaterialMap() {
