@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2019, 2020 grondag
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -12,13 +12,14 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
  * License for the specific language governing permissions and limitations under
  * the License.
- ******************************************************************************/
+ */
 
 package grondag.frex.api.material;
 
 import grondag.frex.api.Renderer;
-import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 import org.apiguardian.api.API;
+
+import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 
 /**
  * Finds standard {@link RenderMaterial} instances used to communicate
@@ -48,6 +49,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	 * @param depth 1 up to  {@link Renderer#maxSpriteDepth()}
 	 */
 	@Override
+	@Deprecated
 	MaterialFinder spriteDepth(int depth);
 
 	/**
@@ -63,6 +65,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	 * layers, otherwise Z-fighting or overwrite will occur.
 	 */
 	@Override
+	@Deprecated
 	MaterialFinder blendMode(int spriteIndex, BlendMode blendMode);
 
 	/**
@@ -72,21 +75,47 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	 * @param blendMode
 	 * @return
 	 */
+	@Deprecated
 	MaterialFinder blendMode(BlendMode blendMode);
 
 	@Override
-	MaterialFinder disableColorIndex(int spriteIndex, boolean disable);
+	@Deprecated
+	default MaterialFinder disableColorIndex(int spriteIndex, boolean disable) {
+		return disableColorIndex(0, disable);
+	}
+
+	MaterialFinder disableColorIndex(boolean disable);
 
 	@Override
-	MaterialFinder disableDiffuse(int spriteIndex, boolean disable);
+	@Deprecated
+	default MaterialFinder disableDiffuse(int spriteIndex, boolean disable) {
+		return disableDiffuse(0, disable);
+	}
+
+	MaterialFinder disableDiffuse(boolean disable);
 
 	@Override
-	MaterialFinder disableAo(int spriteIndex, boolean disable);
+	@Deprecated
+	default MaterialFinder disableAo(int spriteIndex, boolean disable) {
+		return disableAo(0, disable);
+	}
+
+	MaterialFinder disableAo(boolean disable);
 
 	@Override
-	MaterialFinder emissive(int spriteIndex, boolean isEmissive);
+	@Deprecated
+	default MaterialFinder emissive(int spriteIndex, boolean isEmissive) {
+		return emissive(0, isEmissive);
+	}
 
-	MaterialFinder shader(int spriteIndex, MaterialShader shader);
+	MaterialFinder emissive(boolean isEmissive);
+
+	@Deprecated
+	default MaterialFinder shader(int spriteIndex, MaterialShader shader) {
+		return shader(0, shader);
+	}
+
+	MaterialFinder shader(MaterialShader shader);
 
 	MaterialFinder condition(MaterialCondition condition);
 
