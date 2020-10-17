@@ -17,7 +17,6 @@
 package grondag.frex.api.material;
 
 import grondag.frex.api.Renderer;
-import org.apiguardian.api.API;
 
 import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 
@@ -27,7 +26,6 @@ import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
  *
  * Must be obtained via {@link Renderer#materialFinder()}.
  */
-@API(status = API.Status.STABLE)
 public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.material.MaterialFinder {
 	@Override
 	MaterialFinder clear();

@@ -17,12 +17,14 @@
 package grondag.frex.impl.material;
 
 import grondag.frex.api.material.CompoundMaterial;
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.util.Identifier;
 
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 
+@Internal
 public class CompoundMaterialImpl implements CompoundMaterial {
 	@Override
 	public int depth() {

@@ -21,7 +21,6 @@ import grondag.frex.impl.fluid.FluidQuadSupplierImpl;
 import grondag.frex.impl.material.MaterialMapImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apiguardian.api.API;
 
 import net.minecraft.resource.ResourceType;
 
@@ -52,7 +51,7 @@ public class Frex implements ClientModInitializer {
 	/**
 	 * TODO: replace with something that indicates renderer feature set
 	 */
-	@API(status = API.Status.DEPRECATED)
+	@Deprecated
 	public static boolean isAvailable() {
 		return isAvailable;
 	}

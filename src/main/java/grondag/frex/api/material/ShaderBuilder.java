@@ -28,7 +28,7 @@ import grondag.frex.api.material.Uniform.Uniform4f;
 import grondag.frex.api.material.Uniform.Uniform4i;
 import grondag.frex.api.material.Uniform.UniformArrayf;
 import grondag.frex.api.material.Uniform.UniformArrayi;
-import org.apiguardian.api.API;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 import net.minecraft.util.Identifier;
 
@@ -54,7 +54,7 @@ import net.minecraft.util.Identifier;
  * supports shaders. Their names are listed below as string constants with
  * explanations of function.
  */
-@API(status = API.Status.EXPERIMENTAL)
+@Experimental
 public interface ShaderBuilder {
 	/**
 	 * Accepts a resource id for GLSL 120 vertex shader source.

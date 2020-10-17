@@ -22,13 +22,13 @@ import java.util.IdentityHashMap;
 import com.google.gson.JsonObject;
 import grondag.frex.Frex;
 import grondag.frex.api.material.MaterialMap;
-import org.apiguardian.api.API;
+import org.jetbrains.annotations.ApiStatus.Internal;
 
 import net.minecraft.particle.ParticleType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 
-@API(status = API.Status.INTERNAL)
+@Internal
 public class ParticleMaterialMapDeserializer {
 	public static void deserialize(ParticleType<?> particleType, Identifier idForLog, InputStreamReader reader, IdentityHashMap<ParticleType<?>, MaterialMap> map) {
 		try {

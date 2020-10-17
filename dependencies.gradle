@@ -17,8 +17,4 @@ dependencies {
 	// mappings "grondag:cordage:${project.cordage_mappings}"
 	modApi "net.fabricmc:fabric-loader:${project.loader_version}"
 	modApi "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	
-	// dev env annotation support
-	compileOnly "org.apiguardian:apiguardian-api:1.0.0"
-	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 }

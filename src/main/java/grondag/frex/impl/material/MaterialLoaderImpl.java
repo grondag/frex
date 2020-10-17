@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 
 import grondag.frex.Frex;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import org.apiguardian.api.API;
+import org.jetbrains.annotations.ApiStatus.Internal;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.texture.Sprite;
@@ -34,7 +34,7 @@ import net.fabricmc.fabric.api.renderer.v1.Renderer;
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 
-@API(status = API.Status.INTERNAL)
+@Internal
 public final class MaterialLoaderImpl {
 	private MaterialLoaderImpl() {}
 

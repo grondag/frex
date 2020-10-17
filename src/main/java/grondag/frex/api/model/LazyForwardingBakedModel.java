@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
-import org.apiguardian.api.API;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
@@ -40,7 +38,6 @@ import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
  * Improved base class for specialized model implementations that need to wrap other baked models.
  * Avoids boilerplate code for pass-through methods.}.
  */
-@API(status = API.Status.STABLE)
 public abstract class LazyForwardingBakedModel implements BakedModel, FabricBakedModel {
 	protected BakedModel lazyWrapped;
 

@@ -23,7 +23,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import grondag.frex.Frex;
 import grondag.frex.api.material.ShaderBuilder;
-import org.apiguardian.api.API;
+import org.jetbrains.annotations.ApiStatus.Internal;
 
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
@@ -34,7 +34,7 @@ import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 import net.fabricmc.fabric.api.renderer.v1.material.MaterialFinder;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 
-@API(status = API.Status.INTERNAL)
+@Internal
 public class MaterialDeserializer {
 	private MaterialDeserializer() {}
 

@@ -17,7 +17,7 @@
 package grondag.frex.api.material;
 
 import grondag.frex.impl.material.MaterialLoaderImpl;
-import org.apiguardian.api.API;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 import net.minecraft.util.Identifier;
 
@@ -34,7 +34,7 @@ import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
  *
  * Renderer Authors: This interface is implemented by FREX - you do not need to implement it.
  */
-@API(status = API.Status.EXPERIMENTAL)
+@Experimental
 public interface MaterialLoader {
 	/**
 	 * Material files should be in assets/<mod-id>/materials and have a .json suffix.<p>

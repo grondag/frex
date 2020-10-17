@@ -18,6 +18,7 @@ package grondag.frex.mixin;
 
 import grondag.frex.Frex;
 import grondag.frex.api.event.WorldRenderEvent;
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -30,6 +31,7 @@ import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
 
+@Internal
 @Mixin(WorldRenderer.class)
 public class MixinWorldRenderer {
 	@Inject(at = @At("HEAD"), method = "render")

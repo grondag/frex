@@ -16,9 +16,9 @@
 
 package grondag.frex.api.material;
 
-import org.apiguardian.api.API;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
-@API(status = API.Status.EXPERIMENTAL)
+@Experimental
 public interface MaterialShader {
 
 }

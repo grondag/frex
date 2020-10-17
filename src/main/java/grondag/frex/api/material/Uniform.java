@@ -16,7 +16,7 @@
 
 package grondag.frex.api.material;
 
-import org.apiguardian.api.API;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * Interfaces for uniform initialization. Called by renderer when uniform should
@@ -25,7 +25,7 @@ import org.apiguardian.api.API;
  *
  * See {@link ShaderManager} and {@link UniformRefreshFrequency}
  */
-@API(status = API.Status.EXPERIMENTAL)
+@Experimental
 public interface Uniform {
 	@FunctionalInterface
 	public interface Uniform1f extends Uniform {

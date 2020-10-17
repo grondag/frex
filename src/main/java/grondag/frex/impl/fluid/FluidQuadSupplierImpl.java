@@ -23,11 +23,13 @@ import java.util.function.Function;
 import grondag.frex.Frex;
 import grondag.frex.api.fluid.FluidQuadSupplier;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import org.jetbrains.annotations.ApiStatus.Internal;
 
 import net.minecraft.fluid.Fluid;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+@Internal
 public class FluidQuadSupplierImpl {
 	private static final Object2ObjectOpenHashMap<Identifier, Function<Fluid, FluidQuadSupplier>> FACTORIES = new Object2ObjectOpenHashMap<>();
 	private static final IdentityHashMap<Fluid, FluidQuadSupplier> SUPPLIERS = new IdentityHashMap<>();

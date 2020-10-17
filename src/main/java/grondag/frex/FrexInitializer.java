@@ -16,8 +16,6 @@
 
 package grondag.frex;
 
-import org.apiguardian.api.API;
-
 /**
  * Use to make FREX an optional dependency. To do so, implement this interface
  * in a stand-alone class and declare a "FREX" end point in the mod's
@@ -34,7 +32,6 @@ import org.apiguardian.api.API;
  * "frex" end point for mods that nest the FREX library or have a hard dependency on FREX.
  * Such mods can safely handle FREX registration in their client initialize instance.
  */
-@API(status = API.Status.MAINTAINED)
 
 public interface FrexInitializer {
 	/**

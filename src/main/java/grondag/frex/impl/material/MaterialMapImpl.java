@@ -27,7 +27,7 @@ import java.util.List;
 import com.google.common.collect.ImmutableList;
 import grondag.frex.Frex;
 import grondag.frex.api.material.MaterialMap;
-import org.apiguardian.api.API;
+import org.jetbrains.annotations.ApiStatus.Internal;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -40,9 +40,7 @@ import net.minecraft.util.registry.Registry;
 import net.fabricmc.fabric.api.resource.ResourceReloadListenerKeys;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 
-
-
-@API(status = API.Status.INTERNAL)
+@Internal
 public class MaterialMapImpl implements SimpleSynchronousResourceReloadListener {
 	private MaterialMapImpl() { }
 
