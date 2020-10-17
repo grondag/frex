@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright 2019 grondag
+/*
+ * Copyright 2019, 2020 grondag
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -12,15 +12,11 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
  * License for the specific language governing permissions and limitations under
  * the License.
- ******************************************************************************/
+ */
 
 package grondag.frex.api.material;
 
 import java.util.function.Consumer;
-
-import org.apiguardian.api.API;
-
-import net.minecraft.util.Identifier;
 
 import grondag.frex.api.material.Uniform.Uniform1f;
 import grondag.frex.api.material.Uniform.Uniform1i;
@@ -32,6 +28,9 @@ import grondag.frex.api.material.Uniform.Uniform4f;
 import grondag.frex.api.material.Uniform.Uniform4i;
 import grondag.frex.api.material.Uniform.UniformArrayf;
 import grondag.frex.api.material.Uniform.UniformArrayi;
+import org.apiguardian.api.API;
+
+import net.minecraft.util.Identifier;
 
 /**
  * Allows creation of uniforms via one of the provided "uniform..."

@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright 2019 grondag
+/*
+ * Copyright 2019, 2020 grondag
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -12,10 +12,13 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
  * License for the specific language governing permissions and limitations under
  * the License.
- ******************************************************************************/
+ */
+
 
 package grondag.frex;
 
+import grondag.frex.impl.fluid.FluidQuadSupplierImpl;
+import grondag.frex.impl.material.MaterialMapImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apiguardian.api.API;
@@ -27,9 +30,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.InvalidateRenderStateCallback
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
-
-import grondag.frex.impl.fluid.FluidQuadSupplierImpl;
-import grondag.frex.impl.material.MaterialMapImpl;
 
 public class Frex implements ClientModInitializer {
 	public static Logger LOG = LogManager.getLogger("FREX");
@@ -62,7 +62,7 @@ public class Frex implements ClientModInitializer {
 		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(MaterialMapImpl.INSTANCE);
 
 		FabricLoader.getInstance().getEntrypoints("frex", FrexInitializer.class).forEach(
-				api -> api.onInitalizeFrex());
+			api -> api.onInitalizeFrex());
 
 		InvalidateRenderStateCallback.EVENT.register(FluidQuadSupplierImpl::reload);
 	}

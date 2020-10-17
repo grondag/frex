@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright 2020 grondag
+/*
+ * Copyright 2019, 2020 grondag
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
  * License for the specific language governing permissions and limitations under
  * the License.
- ******************************************************************************/
+ */
 
 package grondag.frex.impl.fluid;
 
@@ -20,14 +20,13 @@ import java.util.IdentityHashMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import grondag.frex.Frex;
+import grondag.frex.api.fluid.FluidQuadSupplier;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 import net.minecraft.fluid.Fluid;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
-import grondag.frex.Frex;
-import grondag.frex.api.fluid.FluidQuadSupplier;
 
 public class FluidQuadSupplierImpl {
 	private static final Object2ObjectOpenHashMap<Identifier, Function<Fluid, FluidQuadSupplier>> FACTORIES = new Object2ObjectOpenHashMap<>();

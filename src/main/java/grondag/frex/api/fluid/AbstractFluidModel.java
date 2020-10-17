@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright 2020 grondag
+/*
+ * Copyright 2019, 2020 grondag
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
  * License for the specific language governing permissions and limitations under
  * the License.
- ******************************************************************************/
+ */
 
 package grondag.frex.api.fluid;
 
@@ -92,20 +92,20 @@ public abstract class AbstractFluidModel implements FluidQuadSupplier, FluidRend
 		final boolean isUpVisible = !world.getFluidState(searchPos.set(centerPos, Direction.UP)).getFluid().matchesType(fluid);
 
 		final boolean isDownVisible = (!isSideBlocked(world, Direction.DOWN.getOpposite(), 1.0F, centerPos, blockState)
-				&& !world.getFluidState(searchPos.set(centerPos, Direction.DOWN)).getFluid().matchesType(fluid))
-				&& !isSideBlocked(world, searchPos.set(centerPos, Direction.DOWN), Direction.DOWN, 0.8888889F);
+		&& !world.getFluidState(searchPos.set(centerPos, Direction.DOWN)).getFluid().matchesType(fluid))
+		&& !isSideBlocked(world, searchPos.set(centerPos, Direction.DOWN), Direction.DOWN, 0.8888889F);
 
 		final boolean isNorthVisible = (!isSideBlocked(world, Direction.NORTH.getOpposite(), 1.0F, centerPos, blockState)
-				&& !world.getFluidState(searchPos.set(centerPos, Direction.NORTH)).getFluid().matchesType(fluid));
+		&& !world.getFluidState(searchPos.set(centerPos, Direction.NORTH)).getFluid().matchesType(fluid));
 
 		final boolean isSouthVisible = (!isSideBlocked(world, Direction.SOUTH.getOpposite(), 1.0F, centerPos, blockState)
-				&& !world.getFluidState(searchPos.set(centerPos, Direction.SOUTH)).getFluid().matchesType(fluid));
+		&& !world.getFluidState(searchPos.set(centerPos, Direction.SOUTH)).getFluid().matchesType(fluid));
 
 		final boolean isWestVisible = (!isSideBlocked(world, Direction.WEST.getOpposite(), 1.0F, centerPos, blockState)
-				&& !world.getFluidState(searchPos.set(centerPos, Direction.WEST)).getFluid().matchesType(fluid));
+		&& !world.getFluidState(searchPos.set(centerPos, Direction.WEST)).getFluid().matchesType(fluid));
 
 		final boolean isEastVisible = (!isSideBlocked(world, Direction.EAST.getOpposite(), 1.0F, centerPos, blockState)
-				&& !world.getFluidState(searchPos.set(centerPos, Direction.EAST)).getFluid().matchesType(fluid));
+		&& !world.getFluidState(searchPos.set(centerPos, Direction.EAST)).getFluid().matchesType(fluid));
 
 		if (isUpVisible || isDownVisible || isEastVisible || isWestVisible || isNorthVisible || isSouthVisible) {
 			final Sprite stillSprite = sprites[0];

@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright 2019 grondag
+/*
+ * Copyright 2019, 2020 grondag
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
  * License for the specific language governing permissions and limitations under
  * the License.
- ******************************************************************************/
+ */
 
 package grondag.frex.impl.material;
 
@@ -21,6 +21,8 @@ import java.util.Locale;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import grondag.frex.Frex;
+import grondag.frex.api.material.ShaderBuilder;
 import org.apiguardian.api.API;
 
 import net.minecraft.util.Identifier;
@@ -31,9 +33,6 @@ import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 import net.fabricmc.fabric.api.renderer.v1.material.MaterialFinder;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
-
-import grondag.frex.Frex;
-import grondag.frex.api.material.ShaderBuilder;
 
 @API(status = API.Status.INTERNAL)
 public class MaterialDeserializer {
@@ -105,15 +104,15 @@ public class MaterialDeserializer {
 	private static BlendMode readBlendMode(String val) {
 		val = val.toLowerCase(Locale.ROOT);
 		switch(val) {
-		case "solid":
-		default:
-			return BlendMode.SOLID;
-		case "cutout":
-			return BlendMode.CUTOUT;
-		case "cutout_mipped":
-			return BlendMode.CUTOUT_MIPPED;
-		case "translucent":
-			return BlendMode.TRANSLUCENT;
+			case "solid":
+			default:
+				return BlendMode.SOLID;
+			case "cutout":
+				return BlendMode.CUTOUT;
+			case "cutout_mipped":
+				return BlendMode.CUTOUT_MIPPED;
+			case "translucent":
+				return BlendMode.TRANSLUCENT;
 		}
 	}
 }

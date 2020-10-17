@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright 2020 grondag
+/*
+ * Copyright 2019, 2020 grondag
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -12,17 +12,17 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
  * License for the specific language governing permissions and limitations under
  * the License.
- ******************************************************************************/
+ */
 
 package grondag.frex.impl.material;
 
 import java.util.IdentityHashMap;
 
+import grondag.frex.api.material.MaterialMap;
+
 import net.minecraft.client.texture.Sprite;
 
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
-
-import grondag.frex.api.material.MaterialMap;
 
 class MultiMaterialMap implements MaterialMap {
 	private final IdentityHashMap<Sprite, RenderMaterial> spriteMap;

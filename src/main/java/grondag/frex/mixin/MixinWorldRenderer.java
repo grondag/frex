@@ -1,5 +1,6 @@
-/*******************************************************************************
- * Copyright 2020 grondag
+/*
+ * Copyright 2019, 2020 grondag
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
@@ -11,9 +12,12 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
  * License for the specific language governing permissions and limitations under
  * the License.
- ******************************************************************************/
+ */
+
 package grondag.frex.mixin;
 
+import grondag.frex.Frex;
+import grondag.frex.api.event.WorldRenderEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,9 +29,6 @@ import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
-
-import grondag.frex.Frex;
-import grondag.frex.api.event.WorldRenderEvent;
 
 @Mixin(WorldRenderer.class)
 public class MixinWorldRenderer {
