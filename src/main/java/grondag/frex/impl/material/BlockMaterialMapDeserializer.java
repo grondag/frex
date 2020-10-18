@@ -16,8 +16,6 @@
 
 package grondag.frex.impl.material;
 
-import javax.annotation.Nullable;
-
 import java.io.InputStreamReader;
 import java.util.IdentityHashMap;
 
@@ -26,6 +24,7 @@ import com.google.gson.JsonObject;
 import grondag.frex.Frex;
 import grondag.frex.api.material.MaterialMap;
 import org.jetbrains.annotations.ApiStatus.Internal;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

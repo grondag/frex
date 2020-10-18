@@ -16,9 +16,8 @@
 
 package grondag.frex.api.material;
 
-import javax.annotation.Nullable;
-
 import grondag.frex.impl.material.MaterialMapImpl;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.texture.Sprite;
