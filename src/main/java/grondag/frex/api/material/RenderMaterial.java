@@ -16,20 +16,60 @@
 
 package grondag.frex.api.material;
 
+import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval;
+
 import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 
 public interface RenderMaterial extends net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial {
+	@Deprecated
 	BlendMode blendMode();
 
-	boolean disableColorIndex(int spriteIndex);
+	@Deprecated
+	@ScheduledForRemoval
+	default boolean disableColorIndex(int spriteIndex) {
+		return disableColorIndex();
+	}
 
-	boolean disableDiffuse(int spriteIndex);
+	boolean disableColorIndex();
 
-	boolean disableAo(int spriteIndex);
+	@Deprecated
+	@ScheduledForRemoval
+	default boolean disableDiffuse(int spriteIndex) {
+		return disableDiffuse();
+	}
 
-	boolean emissive(int spriteIndex);
+	boolean disableDiffuse();
 
-	MaterialShader shader(int spriteIndex);
+	@Deprecated
+	@ScheduledForRemoval
+	default boolean disableAo(int spriteIndex) {
+		return disableAo();
+	}
+
+	boolean disableAo();
+
+	@Deprecated
+	@ScheduledForRemoval
+	default boolean emissive(int spriteIndex) {
+		return emissive();
+	}
+
+	boolean emissive();
+
+	@Deprecated
+	@ScheduledForRemoval
+	default MaterialShader shader(int spriteIndex) {
+		return shader();
+	}
+
+	MaterialShader shader();
 
 	MaterialCondition condition();
+
+	@Override
+	@Deprecated
+	@ScheduledForRemoval
+	default int spriteDepth() {
+		return 1;
+	}
 }

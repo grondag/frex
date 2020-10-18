@@ -48,12 +48,14 @@ public interface QuadEmitter extends net.fabricmc.fabric.api.renderer.v1.mesh.Qu
 
 	@Override
 	default QuadEmitter pos(int vertexIndex, Vector3f vec) {
-		return pos(vertexIndex, vec);
+		MutableQuadView.super.pos(vertexIndex, vec);
+		return this;
 	}
 
 	@Override
 	default QuadEmitter normal(int vertexIndex, Vector3f vec) {
-		return normal(vertexIndex, vec);
+		MutableQuadView.super.normal(vertexIndex, vec);
+		return this;
 	}
 
 	@Override
@@ -61,7 +63,8 @@ public interface QuadEmitter extends net.fabricmc.fabric.api.renderer.v1.mesh.Qu
 
 	@Override
 	default QuadEmitter lightmap(int b0, int b1, int b2, int b3) {
-		return lightmap(b0, b1, b2, b3);
+		MutableQuadView.super.lightmap(b0, b1, b2, b3);
+		return this;
 	}
 
 	@Override

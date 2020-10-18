@@ -48,7 +48,10 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	 */
 	@Override
 	@Deprecated
-	MaterialFinder spriteDepth(int depth);
+	default MaterialFinder spriteDepth(int depth) {
+		// NOOP
+		return this;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -64,7 +67,9 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	 */
 	@Override
 	@Deprecated
-	MaterialFinder blendMode(int spriteIndex, BlendMode blendMode);
+	default MaterialFinder blendMode(int spriteIndex, BlendMode blendMode) {
+		return blendMode(blendMode);
+	}
 
 	/**
 	 * Defines how base sprite pixels will be blended with the scene.
@@ -79,7 +84,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	@Override
 	@Deprecated
 	default MaterialFinder disableColorIndex(int spriteIndex, boolean disable) {
-		return disableColorIndex(0, disable);
+		return disableColorIndex(disable);
 	}
 
 	MaterialFinder disableColorIndex(boolean disable);
@@ -87,7 +92,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	@Override
 	@Deprecated
 	default MaterialFinder disableDiffuse(int spriteIndex, boolean disable) {
-		return disableDiffuse(0, disable);
+		return disableDiffuse(disable);
 	}
 
 	MaterialFinder disableDiffuse(boolean disable);
@@ -95,7 +100,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	@Override
 	@Deprecated
 	default MaterialFinder disableAo(int spriteIndex, boolean disable) {
-		return disableAo(0, disable);
+		return disableAo(disable);
 	}
 
 	MaterialFinder disableAo(boolean disable);
@@ -103,14 +108,14 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	@Override
 	@Deprecated
 	default MaterialFinder emissive(int spriteIndex, boolean isEmissive) {
-		return emissive(0, isEmissive);
+		return emissive(isEmissive);
 	}
 
 	MaterialFinder emissive(boolean isEmissive);
 
 	@Deprecated
 	default MaterialFinder shader(int spriteIndex, MaterialShader shader) {
-		return shader(0, shader);
+		return shader(shader);
 	}
 
 	MaterialFinder shader(MaterialShader shader);
