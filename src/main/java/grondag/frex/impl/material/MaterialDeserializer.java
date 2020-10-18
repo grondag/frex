@@ -43,61 +43,60 @@ public class MaterialDeserializer {
 
 	private static final boolean FREX;
 	private static final grondag.frex.api.Renderer FREX_RENDERER;
-	private static final int MAX_DEPTH;
 
 	static {
 		FREX = Frex.isAvailable();
 		FREX_RENDERER = FREX ? (grondag.frex.api.Renderer)RENDERER : null;
-		MAX_DEPTH = FREX ? FREX_RENDERER.maxSpriteDepth() : 1;
 	}
 
 	public static RenderMaterial deserialize(Reader reader) {
 		final MaterialFinder finder = FINDER.clear();
 		final JsonObject json = JsonHelper.deserialize(reader);
 
+		// "layers" tag still support for old multi-layer format but
+		// only first layer is used. Layer is not requred.
 		if(json.has("layers")) {
 			final JsonArray layers = JsonHelper.asArray(json.get("layers"), "layers");
-			if(!layers.isJsonNull()) {
-				final int depth = layers.size();
-				if(depth > MAX_DEPTH) return null;
 
-				for(int i = 0; i < depth; i++) {
-					readLayer(layers.get(i).getAsJsonObject(), finder, i);
-				}
+			if(!layers.isJsonNull() && layers.size() >= 1) {
+				readLayer(layers.get(0).getAsJsonObject(), finder);
+
+				return finder.find();
 			}
 		}
 
+		readLayer(json, finder);
 		return finder.find();
 	}
 
-	private static void readLayer(JsonObject layer, MaterialFinder finder, int spriteIndex) {
+	private static void readLayer(JsonObject layer, MaterialFinder finder) {
 		if(layer.has("fragmentSource") && layer.has("vertexSource")) {
 			if(FREX) {
 				final ShaderBuilder sb = FREX_RENDERER.shaderBuilder();
 				sb.fragmentSource(new Identifier(JsonHelper.getString(layer, "fragmentSource")));
 				sb.vertexSource(new Identifier(JsonHelper.getString(layer, "vertexSource")));
-				((grondag.frex.api.material.MaterialFinder)finder).shader(spriteIndex, sb.build());
+				((grondag.frex.api.material.MaterialFinder)finder).shader(sb.build());
 			}
 		}
 
 		if(layer.has("disableAo")) {
-			finder.disableAo(spriteIndex, JsonHelper.getBoolean(layer, "disableAo", true));
+			finder.disableAo(0, JsonHelper.getBoolean(layer, "disableAo", true));
 		}
 
 		if(layer.has("disableColorIndex")) {
-			finder.disableColorIndex(spriteIndex, JsonHelper.getBoolean(layer, "disableColorIndex", true));
+			finder.disableColorIndex(0, JsonHelper.getBoolean(layer, "disableColorIndex", true));
 		}
 
 		if(layer.has("disableDiffuse")) {
-			finder.disableDiffuse(spriteIndex, JsonHelper.getBoolean(layer, "disableDiffuse", true));
+			finder.disableDiffuse(0, JsonHelper.getBoolean(layer, "disableDiffuse", true));
 		}
 
 		if(layer.has("emissive")) {
-			finder.emissive(spriteIndex, JsonHelper.getBoolean(layer, "emissive", true));
+			finder.emissive(0, JsonHelper.getBoolean(layer, "emissive", true));
 		}
 
 		if(layer.has("blendMode")) {
-			finder.blendMode(spriteIndex, readBlendMode(JsonHelper.getString(layer, "blendMode")));
+			finder.blendMode(0, readBlendMode(JsonHelper.getString(layer, "blendMode")));
 		}
 	}
 

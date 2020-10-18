@@ -43,10 +43,12 @@ public final class MaterialLoaderImpl {
 	public static synchronized RenderMaterial loadMaterial(Identifier idIn) {
 		final Renderer r = RendererAccess.INSTANCE.getRenderer();
 		RenderMaterial result = r.materialById(idIn);
+
 		if(result == null) {
 			result = loadMaterialInner(idIn);
 			r.registerMaterial(idIn, result);
 		}
+
 		return result;
 	}
 
