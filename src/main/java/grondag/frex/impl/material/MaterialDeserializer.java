@@ -22,7 +22,6 @@ import java.util.Locale;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import grondag.frex.Frex;
-import grondag.frex.api.material.ShaderBuilder;
 import org.jetbrains.annotations.ApiStatus.Internal;
 
 import net.minecraft.util.Identifier;
@@ -42,11 +41,9 @@ public class MaterialDeserializer {
 	private static final MaterialFinder FINDER = RENDERER.materialFinder();
 
 	private static final boolean FREX;
-	private static final grondag.frex.api.Renderer FREX_RENDERER;
 
 	static {
 		FREX = Frex.isAvailable();
-		FREX_RENDERER = FREX ? (grondag.frex.api.Renderer)RENDERER : null;
 	}
 
 	public static RenderMaterial deserialize(Reader reader) {
@@ -72,10 +69,9 @@ public class MaterialDeserializer {
 	private static void readLayer(JsonObject layer, MaterialFinder finder) {
 		if(layer.has("fragmentSource") && layer.has("vertexSource")) {
 			if(FREX) {
-				final ShaderBuilder sb = FREX_RENDERER.shaderBuilder();
-				sb.fragmentSource(new Identifier(JsonHelper.getString(layer, "fragmentSource")));
-				sb.vertexSource(new Identifier(JsonHelper.getString(layer, "vertexSource")));
-				((grondag.frex.api.material.MaterialFinder)finder).shader(sb.build());
+				final grondag.frex.api.material.MaterialFinder ff = (grondag.frex.api.material.MaterialFinder) finder;
+				ff.fragmentShader(new Identifier(JsonHelper.getString(layer, "fragmentSource")));
+				ff.vertexShader(new Identifier(JsonHelper.getString(layer, "vertexSource")));
 			}
 		}
 

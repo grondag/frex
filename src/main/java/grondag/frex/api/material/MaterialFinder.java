@@ -18,6 +18,8 @@ package grondag.frex.api.material;
 
 import grondag.frex.api.Renderer;
 
+import net.minecraft.util.Identifier;
+
 import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 
 /**
@@ -124,4 +126,8 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 
 	@Override
 	RenderMaterial find();
+
+	MaterialFinder vertexShader(Identifier identifier);
+
+	MaterialFinder fragmentShader(Identifier identifier);
 }
