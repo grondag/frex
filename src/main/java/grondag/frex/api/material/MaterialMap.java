@@ -21,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.texture.Sprite;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleType;
 
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
@@ -47,5 +48,9 @@ public interface MaterialMap {
 
 	static MaterialMap defaultMaterialMap() {
 		return MaterialMapImpl.DEFAULT_MAP;
+	}
+
+	static MaterialMap get(ItemStack itemStack) {
+		return MaterialMapImpl.INSTANCE.get(itemStack);
 	}
 }
