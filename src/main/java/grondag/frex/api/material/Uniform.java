@@ -18,6 +18,9 @@ package grondag.frex.api.material;
 
 import org.jetbrains.annotations.ApiStatus.Experimental;
 
+import net.minecraft.util.math.Matrix3f;
+import net.minecraft.util.math.Matrix4f;
+
 /**
  * Interfaces for uniform initialization. Called by renderer when uniform should
  * be potentially updated from game state.
@@ -75,5 +78,15 @@ public interface Uniform {
 	@FunctionalInterface
 	public interface UniformArrayi extends Uniform {
 		void set(int[] v);
+	}
+
+	@FunctionalInterface
+	public interface UniformMatrix4f extends Uniform {
+		void set(Matrix4f matrix);
+	}
+
+	@FunctionalInterface
+	public interface UniformMatrix3f extends Uniform {
+		void set(Matrix3f matrix);
 	}
 }

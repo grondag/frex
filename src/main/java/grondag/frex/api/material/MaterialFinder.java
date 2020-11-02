@@ -18,6 +18,8 @@ package grondag.frex.api.material;
 
 import grondag.frex.api.Renderer;
 
+import net.minecraft.util.Identifier;
+
 import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 
 /**
@@ -111,12 +113,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 
 	MaterialFinder emissive(boolean isEmissive);
 
-	@Deprecated
-	default MaterialFinder shader(int spriteIndex, MaterialShader shader) {
-		return shader(shader);
-	}
-
-	MaterialFinder shader(MaterialShader shader);
+	MaterialFinder shader(Identifier vertexSourceId, Identifier fragmentSourceId);
 
 	MaterialFinder condition(MaterialCondition condition);
 

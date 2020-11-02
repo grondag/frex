@@ -21,8 +21,6 @@ import java.util.function.BooleanSupplier;
 import grondag.frex.Frex;
 import grondag.frex.api.material.MaterialCondition;
 import grondag.frex.api.material.MaterialFinder;
-import grondag.frex.api.material.MaterialShader;
-import grondag.frex.api.material.ShaderBuilder;
 import org.jetbrains.annotations.ApiStatus.Experimental;
 import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval;
 
@@ -60,15 +58,6 @@ public interface Renderer extends net.fabricmc.fabric.api.renderer.v1.Renderer {
 	@ScheduledForRemoval
 	@Deprecated
 	int maxSpriteDepth();
-
-	@Experimental
-	ShaderBuilder shaderBuilder();
-
-	@Experimental
-	MaterialShader shaderById(Identifier id);
-
-	@Experimental
-	boolean registerShader(Identifier id, MaterialShader pipeline);
 
 	@Experimental
 	MaterialCondition createCondition(BooleanSupplier supplier, boolean affectBlocks, boolean affectItems);

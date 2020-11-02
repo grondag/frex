@@ -18,6 +18,8 @@ package grondag.frex.api.material;
 
 import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval;
 
+import net.minecraft.util.Identifier;
+
 import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 
 public interface RenderMaterial extends net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial {
@@ -56,13 +58,9 @@ public interface RenderMaterial extends net.fabricmc.fabric.api.renderer.v1.mate
 
 	boolean emissive();
 
-	@Deprecated
-	@ScheduledForRemoval
-	default MaterialShader shader(int spriteIndex) {
-		return shader();
-	}
+	Identifier vertexShader();
 
-	MaterialShader shader();
+	Identifier fragmentShader();
 
 	MaterialCondition condition();
 
