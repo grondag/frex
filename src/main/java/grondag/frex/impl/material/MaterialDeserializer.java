@@ -70,8 +70,7 @@ public class MaterialDeserializer {
 		if(layer.has("fragmentSource") && layer.has("vertexSource")) {
 			if(FREX) {
 				final grondag.frex.api.material.MaterialFinder ff = (grondag.frex.api.material.MaterialFinder) finder;
-				ff.fragmentShader(new Identifier(JsonHelper.getString(layer, "fragmentSource")));
-				ff.vertexShader(new Identifier(JsonHelper.getString(layer, "vertexSource")));
+				ff.shader(new Identifier(JsonHelper.getString(layer, "vertexSource")), new Identifier(JsonHelper.getString(layer, "fragmentSource")));
 			}
 		}
 

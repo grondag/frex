@@ -26,6 +26,8 @@ import net.minecraft.particle.ParticleType;
 
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 
+// TODO: add Fluid material map support
+
 public interface MaterialMap {
 	/**
 	 * Used by renderer to avoid overhead of sprite reverse lookup when not needed.

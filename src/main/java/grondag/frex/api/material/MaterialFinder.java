@@ -113,12 +113,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 
 	MaterialFinder emissive(boolean isEmissive);
 
-	@Deprecated
-	default MaterialFinder shader(int spriteIndex, MaterialShader shader) {
-		return shader(shader);
-	}
-
-	MaterialFinder shader(MaterialShader shader);
+	MaterialFinder shader(Identifier vertexSourceId, Identifier fragmentSourceId);
 
 	MaterialFinder condition(MaterialCondition condition);
 
@@ -126,8 +121,4 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 
 	@Override
 	RenderMaterial find();
-
-	MaterialFinder vertexShader(Identifier identifier);
-
-	MaterialFinder fragmentShader(Identifier identifier);
 }
