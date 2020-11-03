@@ -17,6 +17,7 @@
 package grondag.frex.api.material;
 
 import grondag.frex.api.Renderer;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.util.Identifier;
 
@@ -68,6 +69,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	 * layers, otherwise Z-fighting or overwrite will occur.
 	 */
 	@Override
+	@Deprecated
 	default MaterialFinder blendMode(int spriteIndex, BlendMode blendMode) {
 		return blendMode(blendMode);
 	}
@@ -79,7 +81,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	 * @param blendMode
 	 * @return
 	 */
-	MaterialFinder blendMode(BlendMode blendMode);
+	MaterialFinder blendMode(@Nullable BlendMode blendMode);
 
 	@Override
 	@Deprecated

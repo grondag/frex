@@ -17,14 +17,14 @@
 package grondag.frex.api.material;
 
 import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.util.Identifier;
 
 import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 
 public interface RenderMaterial extends net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial {
-	@Deprecated
-	BlendMode blendMode();
+	@Nullable BlendMode blendMode();
 
 	@Deprecated
 	@ScheduledForRemoval
