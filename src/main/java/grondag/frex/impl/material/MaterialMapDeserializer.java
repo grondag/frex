@@ -16,7 +16,9 @@
 
 package grondag.frex.impl.material;
 
+import java.io.InputStreamReader;
 import java.util.IdentityHashMap;
+import java.util.List;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -26,9 +28,13 @@ import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.block.BlockModels;
 import net.minecraft.client.texture.MissingSprite;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
+import net.minecraft.state.State;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 
@@ -88,4 +94,49 @@ public final class MaterialMapDeserializer {
 		}
 	}
 
+	public static <T extends State<?, ?>> void deserialize(List<T> states, Identifier idForLog, InputStreamReader reader, IdentityHashMap<T, MaterialMap> map) {
+		try {
+			final JsonObject json = JsonHelper.deserialize(reader);
+			final String idString = idForLog.toString();
+
+			final MaterialMap globalDefaultMap = MaterialMapImpl.DEFAULT_MAP;
+			@Nullable RenderMaterial defaultMaterial = null;
+			MaterialMap defaultMap = globalDefaultMap;
+
+			if (json.has("defaultMaterial")) {
+				defaultMaterial = MaterialLoaderImpl.loadMaterial(idString, json.get("defaultMaterial").getAsString(), defaultMaterial);
+				defaultMap = new SingleMaterialMap(defaultMaterial);
+			}
+
+			if (json.has("defaultMap")) {
+				defaultMap = loadMaterialMap(idString + "#default", json.getAsJsonObject("defaultMap"), defaultMap, defaultMaterial);
+			}
+
+			JsonObject variants = null;
+
+			if (json.has("variants")) {
+				variants = json.getAsJsonObject("variants");
+
+				if(variants.isJsonNull()) {
+					Frex.LOG.warn("Unable to load variant material maps for " + idString + " because the 'variants' block is empty. Using default map.");
+					variants = null;
+				}
+			}
+
+			for(final T state : states) {
+				MaterialMap result = defaultMap;
+
+				if (variants != null)  {
+					final String stateId = BlockModels.propertyMapToString(state.getEntries());
+					result = loadMaterialMap(idString + "#" + stateId, variants.getAsJsonObject(stateId), defaultMap, defaultMaterial);
+				}
+
+				if (result != globalDefaultMap) {
+					map.put(state, result);
+				}
+			}
+		} catch (final Exception e) {
+			Frex.LOG.warn("Unable to load material map for " + idForLog.toString() + " due to unhandled exception:", e);
+		}
+	}
 }

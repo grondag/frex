@@ -21,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.texture.Sprite;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleType;
 
@@ -42,6 +43,10 @@ public interface MaterialMap {
 
 	static MaterialMap get(BlockState state) {
 		return MaterialMapImpl.INSTANCE.get(state);
+	}
+
+	static MaterialMap get(FluidState fluidState) {
+		return MaterialMapImpl.INSTANCE.get(fluidState);
 	}
 
 	static MaterialMap getForParticle(ParticleType<?> particleType) {
