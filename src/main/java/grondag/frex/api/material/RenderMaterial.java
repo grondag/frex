@@ -26,6 +26,26 @@ import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 public interface RenderMaterial extends net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial {
 	@Nullable BlendMode blendMode();
 
+	boolean blur();
+
+	MaterialCondition condition();
+
+	boolean cull();
+
+	boolean cutout();
+
+	int decal();
+
+	int depthTest();
+
+	@Deprecated
+	@ScheduledForRemoval
+	default boolean disableAo(int spriteIndex) {
+		return disableAo();
+	}
+
+	boolean disableAo();
+
 	@Deprecated
 	@ScheduledForRemoval
 	default boolean disableColorIndex(int spriteIndex) {
@@ -42,13 +62,7 @@ public interface RenderMaterial extends net.fabricmc.fabric.api.renderer.v1.mate
 
 	boolean disableDiffuse();
 
-	@Deprecated
-	@ScheduledForRemoval
-	default boolean disableAo(int spriteIndex) {
-		return disableAo();
-	}
-
-	boolean disableAo();
+	boolean discardsTexture();
 
 	@Deprecated
 	@ScheduledForRemoval
@@ -58,11 +72,19 @@ public interface RenderMaterial extends net.fabricmc.fabric.api.renderer.v1.mate
 
 	boolean emissive();
 
-	Identifier vertexShader();
+	boolean enableLightmap();
+
+	boolean flashOverlay();
+
+	int fog();
 
 	Identifier fragmentShader();
 
-	MaterialCondition condition();
+	boolean hurtOverlay();
+
+	boolean lines();
+
+	boolean sorted();
 
 	@Override
 	@Deprecated
@@ -70,4 +92,18 @@ public interface RenderMaterial extends net.fabricmc.fabric.api.renderer.v1.mate
 	default int spriteDepth() {
 		return 1;
 	}
+
+	int target();
+
+	Identifier texture();
+
+	int transparency();
+
+	boolean transparentCutout();
+
+	boolean unmipped();
+
+	Identifier vertexShader();
+
+	int writeMask();
 }
