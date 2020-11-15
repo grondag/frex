@@ -16,7 +16,6 @@
 
 package grondag.frex.impl.material;
 
-import java.io.Reader;
 import java.util.Locale;
 
 import com.google.gson.JsonArray;
@@ -67,9 +66,8 @@ public class MaterialDeserializer {
 	private static final Renderer RENDERER = RendererAccess.INSTANCE.getRenderer();
 	private static final MaterialFinder FINDER = RENDERER.materialFinder();
 
-	public static RenderMaterial deserialize(Reader reader) {
+	public static RenderMaterial deserialize(JsonObject json) {
 		final MaterialFinder finder = FINDER.clear();
-		final JsonObject json = JsonHelper.deserialize(reader);
 
 		// "layers" tag still support for old multi-layer format but
 		// only first layer is used. Layer is not requred.
@@ -77,83 +75,83 @@ public class MaterialDeserializer {
 			final JsonArray layers = JsonHelper.asArray(json.get("layers"), "layers");
 
 			if(!layers.isJsonNull() && layers.size() >= 1) {
-				readLayer(layers.get(0).getAsJsonObject(), finder);
+				readMaterial(layers.get(0).getAsJsonObject(), finder);
 
 				return finder.find();
 			}
 		}
 
-		readLayer(json, finder);
+		readMaterial(json, finder);
 		return finder.find();
 	}
 
-	private static void readLayer(JsonObject layer, MaterialFinder finder) {
+	private static void readMaterial(JsonObject obj, MaterialFinder finder) {
 		if(finder instanceof grondag.frex.api.material.MaterialFinder) {
-			readLayerFrex(layer, (grondag.frex.api.material.MaterialFinder) finder);
+			readMaterialFrex(obj, (grondag.frex.api.material.MaterialFinder) finder);
 			return;
 		}
 
-		if(layer.has("disableAo")) {
-			finder.disableAo(0, JsonHelper.getBoolean(layer, "disableAo", true));
+		if(obj.has("disableAo")) {
+			finder.disableAo(0, JsonHelper.getBoolean(obj, "disableAo", true));
 		}
 
-		if(layer.has("disableColorIndex")) {
-			finder.disableColorIndex(0, JsonHelper.getBoolean(layer, "disableColorIndex", true));
+		if(obj.has("disableColorIndex")) {
+			finder.disableColorIndex(0, JsonHelper.getBoolean(obj, "disableColorIndex", true));
 		}
 
-		if(layer.has("disableDiffuse")) {
-			finder.disableDiffuse(0, JsonHelper.getBoolean(layer, "disableDiffuse", true));
+		if(obj.has("disableDiffuse")) {
+			finder.disableDiffuse(0, JsonHelper.getBoolean(obj, "disableDiffuse", true));
 		}
 
-		if(layer.has("emissive")) {
-			finder.emissive(0, JsonHelper.getBoolean(layer, "emissive", true));
+		if(obj.has("emissive")) {
+			finder.emissive(0, JsonHelper.getBoolean(obj, "emissive", true));
 		}
 
-		if(layer.has("blendMode")) {
-			finder.blendMode(0, readBlendMode(JsonHelper.getString(layer, "blendMode")));
+		if(obj.has("blendMode")) {
+			finder.blendMode(0, readBlendMode(JsonHelper.getString(obj, "blendMode")));
 		}
 	}
 
-	private static void readLayerFrex(JsonObject layer, grondag.frex.api.material.MaterialFinder finder) {
-		if(layer.has("fragmentSource") && layer.has("vertexSource")) {
-			finder.shader(new Identifier(JsonHelper.getString(layer, "vertexSource")), new Identifier(JsonHelper.getString(layer, "fragmentSource")));
+	private static void readMaterialFrex(JsonObject obj, grondag.frex.api.material.MaterialFinder finder) {
+		if(obj.has("fragmentSource") && obj.has("vertexSource")) {
+			finder.shader(new Identifier(JsonHelper.getString(obj, "vertexSource")), new Identifier(JsonHelper.getString(obj, "fragmentSource")));
 		}
 
 		// We test for tags even though getBoolean also does so because we don't necessarily know the correct default value
-		if(layer.has("disableAo")) {
-			finder.disableAo(JsonHelper.getBoolean(layer, "disableAo", false));
+		if(obj.has("disableAo")) {
+			finder.disableAo(JsonHelper.getBoolean(obj, "disableAo", false));
 		}
 
-		if(layer.has("disableColorIndex")) {
-			finder.disableColorIndex(JsonHelper.getBoolean(layer, "disableColorIndex", false));
+		if(obj.has("disableColorIndex")) {
+			finder.disableColorIndex(JsonHelper.getBoolean(obj, "disableColorIndex", false));
 		}
 
-		if(layer.has("disableDiffuse")) {
-			finder.disableDiffuse(JsonHelper.getBoolean(layer, "disableDiffuse", false));
+		if(obj.has("disableDiffuse")) {
+			finder.disableDiffuse(JsonHelper.getBoolean(obj, "disableDiffuse", false));
 		}
 
-		if(layer.has("emissive")) {
-			finder.emissive(JsonHelper.getBoolean(layer, "emissive", false));
+		if(obj.has("emissive")) {
+			finder.emissive(JsonHelper.getBoolean(obj, "emissive", false));
 		}
 
-		if(layer.has("blendMode")) {
-			finder.blendMode(readBlendModeFrex(JsonHelper.getString(layer, "blendMode")));
+		if(obj.has("blendMode")) {
+			finder.blendMode(readBlendModeFrex(JsonHelper.getString(obj, "blendMode")));
 		}
 
-		if(layer.has("blur")) {
-			finder.blur(JsonHelper.getBoolean(layer, "blur", false));
+		if(obj.has("blur")) {
+			finder.blur(JsonHelper.getBoolean(obj, "blur", false));
 		}
 
-		if(layer.has("cull")) {
-			finder.cull(JsonHelper.getBoolean(layer, "cull", false));
+		if(obj.has("cull")) {
+			finder.cull(JsonHelper.getBoolean(obj, "cull", false));
 		}
 
-		if(layer.has("cutout")) {
-			finder.cutout(JsonHelper.getBoolean(layer, "cutout", false));
+		if(obj.has("cutout")) {
+			finder.cutout(JsonHelper.getBoolean(obj, "cutout", false));
 		}
 
-		if(layer.has("decal")) {
-			final String decal = layer.get("decal").getAsString().toLowerCase();
+		if(obj.has("decal")) {
+			final String decal = obj.get("decal").getAsString().toLowerCase();
 
 			if (decal.equals("polygon_offset")) {
 				finder.decal(DECAL_POLYGON_OFFSET);
@@ -164,8 +162,8 @@ public class MaterialDeserializer {
 			}
 		}
 
-		if(layer.has("depthTest")) {
-			final String depthTest = layer.get("depthTest").getAsString().toLowerCase();
+		if(obj.has("depthTest")) {
+			final String depthTest = obj.get("depthTest").getAsString().toLowerCase();
 
 			if (depthTest.equals("always")) {
 				finder.depthTest(DEPTH_TEST_ALWAYS);
@@ -178,20 +176,20 @@ public class MaterialDeserializer {
 			}
 		}
 
-		if(layer.has("discardsTexture")) {
-			finder.discardsTexture(JsonHelper.getBoolean(layer, "discardsTexture", false));
+		if(obj.has("discardsTexture")) {
+			finder.discardsTexture(JsonHelper.getBoolean(obj, "discardsTexture", false));
 		}
 
-		if(layer.has("enableLightmap")) {
-			finder.enableLightmap(JsonHelper.getBoolean(layer, "enableLightmap", false));
+		if(obj.has("enableLightmap")) {
+			finder.enableLightmap(JsonHelper.getBoolean(obj, "enableLightmap", false));
 		}
 
-		if(layer.has("flashOverlay")) {
-			finder.flashOverlay(JsonHelper.getBoolean(layer, "flashOverlay", false));
+		if(obj.has("flashOverlay")) {
+			finder.flashOverlay(JsonHelper.getBoolean(obj, "flashOverlay", false));
 		}
 
-		if(layer.has("fog")) {
-			final String fog = layer.get("fog").getAsString().toLowerCase();
+		if(obj.has("fog")) {
+			final String fog = obj.get("fog").getAsString().toLowerCase();
 
 			if (fog.equals("none")) {
 				finder.fog(FOG_NONE);
@@ -202,20 +200,20 @@ public class MaterialDeserializer {
 			}
 		}
 
-		if(layer.has("hurtOverlay")) {
-			finder.hurtOverlay(JsonHelper.getBoolean(layer, "hurtOverlay", false));
+		if(obj.has("hurtOverlay")) {
+			finder.hurtOverlay(JsonHelper.getBoolean(obj, "hurtOverlay", false));
 		}
 
-		if(layer.has("lines")) {
-			finder.lines(JsonHelper.getBoolean(layer, "lines", false));
+		if(obj.has("lines")) {
+			finder.lines(JsonHelper.getBoolean(obj, "lines", false));
 		}
 
-		if(layer.has("sorted")) {
-			finder.sorted(JsonHelper.getBoolean(layer, "sorted", false));
+		if(obj.has("sorted")) {
+			finder.sorted(JsonHelper.getBoolean(obj, "sorted", false));
 		}
 
-		if(layer.has("target")) {
-			final String target = layer.get("target").getAsString().toLowerCase();
+		if(obj.has("target")) {
+			final String target = obj.get("target").getAsString().toLowerCase();
 
 			if (target.equals("main")) {
 				finder.target(TARGET_MAIN);
@@ -234,12 +232,16 @@ public class MaterialDeserializer {
 			}
 		}
 
-		if(layer.has("transparentCutout")) {
-			finder.transparentCutout(JsonHelper.getBoolean(layer, "transparentCutout", false));
+		if(obj.has("texture")) {
+			finder.texture(new Identifier(JsonHelper.getString(obj, "texture")));
 		}
 
-		if(layer.has("transparency")) {
-			final String transparency = layer.get("transparency").getAsString().toLowerCase();
+		if(obj.has("transparentCutout")) {
+			finder.transparentCutout(JsonHelper.getBoolean(obj, "transparentCutout", false));
+		}
+
+		if(obj.has("transparency")) {
+			final String transparency = obj.get("transparency").getAsString().toLowerCase();
 
 			if (transparency.equals("none")) {
 				finder.transparency(TRANSPARENCY_NONE);
@@ -258,12 +260,12 @@ public class MaterialDeserializer {
 			}
 		}
 
-		if(layer.has("unmipped")) {
-			finder.unmipped(JsonHelper.getBoolean(layer, "unmipped", false));
+		if(obj.has("unmipped")) {
+			finder.unmipped(JsonHelper.getBoolean(obj, "unmipped", false));
 		}
 
-		if(layer.has("writeMask")) {
-			final String writeMask = layer.get("writeMask").getAsString().toLowerCase();
+		if(obj.has("writeMask")) {
+			final String writeMask = obj.get("writeMask").getAsString().toLowerCase();
 
 			if (writeMask.equals("color")) {
 				finder.writeMask(WRITE_MASK_COLOR);
@@ -293,7 +295,7 @@ public class MaterialDeserializer {
 		}
 	}
 
-	private static BlendMode readBlendModeFrex(String val) {
+	static BlendMode readBlendModeFrex(String val) {
 		val = val.toLowerCase(Locale.ROOT);
 		switch(val) {
 			case "solid":

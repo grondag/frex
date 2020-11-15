@@ -18,7 +18,7 @@
 package grondag.frex;
 
 import grondag.frex.impl.fluid.FluidQuadSupplierImpl;
-import grondag.frex.impl.material.MaterialMapImpl;
+import grondag.frex.impl.material.MaterialMapLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -58,7 +58,7 @@ public class Frex implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(MaterialMapImpl.INSTANCE);
+		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(MaterialMapLoader.INSTANCE);
 
 		FabricLoader.getInstance().getEntrypoints("frex", FrexInitializer.class).forEach(
 			api -> api.onInitalizeFrex());

@@ -16,7 +16,7 @@
 
 package grondag.frex.api.material;
 
-import grondag.frex.impl.material.MaterialMapImpl;
+import grondag.frex.impl.material.MaterialMapLoader;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
@@ -40,22 +40,22 @@ public interface MaterialMap {
 	@Nullable RenderMaterial getMapped(@Nullable Sprite sprite);
 
 	static MaterialMap get(BlockState state) {
-		return MaterialMapImpl.INSTANCE.get(state);
+		return MaterialMapLoader.INSTANCE.get(state);
 	}
 
 	static MaterialMap get(FluidState fluidState) {
-		return MaterialMapImpl.INSTANCE.get(fluidState);
+		return MaterialMapLoader.INSTANCE.get(fluidState);
 	}
 
 	static MaterialMap getForParticle(ParticleType<?> particleType) {
-		return MaterialMapImpl.INSTANCE.get(particleType);
+		return MaterialMapLoader.INSTANCE.get(particleType);
 	}
 
 	static MaterialMap defaultMaterialMap() {
-		return MaterialMapImpl.DEFAULT_MAP;
+		return MaterialMapLoader.DEFAULT_MAP;
 	}
 
 	static MaterialMap get(ItemStack itemStack) {
-		return MaterialMapImpl.INSTANCE.get(itemStack);
+		return MaterialMapLoader.INSTANCE.get(itemStack);
 	}
 }

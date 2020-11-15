@@ -27,8 +27,8 @@ import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 
 @Internal
 class DefaultedMultiMaterialMap implements MaterialMap {
-	private final IdentityHashMap<Sprite, RenderMaterial> spriteMap;
-	private final RenderMaterial defaultMaterial;
+	protected final IdentityHashMap<Sprite, RenderMaterial> spriteMap;
+	protected final RenderMaterial defaultMaterial;
 
 	DefaultedMultiMaterialMap(RenderMaterial defaultMaterial, IdentityHashMap<Sprite, RenderMaterial> spriteMap) {
 		this.defaultMaterial = defaultMaterial;
