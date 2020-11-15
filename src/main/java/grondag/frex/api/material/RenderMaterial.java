@@ -78,7 +78,9 @@ public interface RenderMaterial extends net.fabricmc.fabric.api.renderer.v1.mate
 
 	int fog();
 
-	Identifier fragmentShader();
+	Identifier fragmentShaderId();
+
+	String fragmentShader();
 
 	boolean hurtOverlay();
 
@@ -95,7 +97,9 @@ public interface RenderMaterial extends net.fabricmc.fabric.api.renderer.v1.mate
 
 	int target();
 
-	Identifier texture();
+	Identifier textureId();
+
+	String texture();
 
 	int transparency();
 
@@ -103,7 +107,18 @@ public interface RenderMaterial extends net.fabricmc.fabric.api.renderer.v1.mate
 
 	boolean unmipped();
 
-	Identifier vertexShader();
+	Identifier vertexShaderId();
+
+	String vertexShader();
 
 	int writeMask();
+
+	/**
+	 * If this material is derived from and/or represents a vanilla {@code RenderLayer}
+	 * and that layer has an associated name (given by Mojang) the name of that layer.
+	 * Value is undefined in other cases.
+	 *
+	 * @return name of associated vanilla {@code RenderLayer} if any, undefined otherwise
+	 */
+	String renderLayerName();
 }
