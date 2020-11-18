@@ -281,12 +281,12 @@ public class MaterialPredicateDeserializer {
 			final int limit = predicates.length;
 
 			for (int i = 0; i < limit; ++i) {
-				if (predicates[i].test(material)) {
-					return true;
+				if (!predicates[i].test(material)) {
+					return false;
 				}
 			}
 
-			return false;
+			return true;
 		}
 	}
 }

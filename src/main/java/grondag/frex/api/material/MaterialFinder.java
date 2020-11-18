@@ -219,6 +219,15 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	MaterialFinder fog(int fog);
 
 	/**
+	 * Sets or disables GUI-style lighting. May also be used for flat in-world renders.
+	 * Cannot be part of primary sorted transparency.
+	 *
+	 * @param gui {@code true} to enable
+	 * @return finder instance for ease of chaining calls
+	 */
+	MaterialFinder gui(boolean gui);
+
+	/**
 	 * Enable or disable the translucent red overlay used to indicate damage.
 	 *
 	 * @param hurtOverlay {@code true} to enable

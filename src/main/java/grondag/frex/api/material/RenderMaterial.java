@@ -78,6 +78,8 @@ public interface RenderMaterial extends net.fabricmc.fabric.api.renderer.v1.mate
 
 	int fog();
 
+	boolean gui();
+
 	Identifier fragmentShaderId();
 
 	String fragmentShader();
