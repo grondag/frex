@@ -16,12 +16,13 @@
 
 package grondag.frex.api.material;
 
-import grondag.frex.impl.material.MaterialLoaderImpl;
 import org.jetbrains.annotations.ApiStatus.Experimental;
 
 import net.minecraft.util.Identifier;
 
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
+
+import grondag.frex.impl.material.MaterialLoaderImpl;
 
 /**
  * For use by model loading libraries - handles deserialization of material JSON
@@ -42,8 +43,15 @@ public interface MaterialLoader {
 	 * @param id domain and path of material json. See notes above.
 	 * @return  Loaded material if successful, null if file not found or specified features are unsupported.
 	 */
-	static RenderMaterial loadMaterial(Identifier id) {
+	static RenderMaterial getOrLoadMaterial(Identifier id) {
 		return MaterialLoaderImpl.loadMaterial(id);
 	}
 
+	/**
+	 * @deprecated Use the better-named {@link #getOrLoadMaterial(Identifier)}
+	 */
+	@Deprecated
+	static RenderMaterial loadMaterial(Identifier id) {
+		return MaterialLoaderImpl.loadMaterial(id);
+	}
 }
