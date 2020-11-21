@@ -20,14 +20,15 @@ import java.util.IdentityHashMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import grondag.frex.Frex;
-import grondag.frex.api.fluid.FluidQuadSupplier;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import org.jetbrains.annotations.ApiStatus.Internal;
 
 import net.minecraft.fluid.Fluid;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
+import grondag.frex.Frex;
+import grondag.frex.api.fluid.FluidQuadSupplier;
 
 @Internal
 public class FluidQuadSupplierImpl {
@@ -38,7 +39,7 @@ public class FluidQuadSupplierImpl {
 	public static void reload() {
 		SUPPLIERS.clear();
 
-		if(handler != null) {
+		if (handler != null) {
 			Registry.FLUID.forEach(fluid -> {
 				final Function<Fluid, FluidQuadSupplier> factory = FACTORIES.get(Registry.FLUID.getId(fluid));
 				SUPPLIERS.put(fluid, handler.apply(fluid, factory));

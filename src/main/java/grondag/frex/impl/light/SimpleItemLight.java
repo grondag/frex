@@ -26,11 +26,11 @@ public class SimpleItemLight implements ItemLight {
 	private final boolean worksInFluid;
 
 	public SimpleItemLight(
-	float intensity,
-	float red,
-	float green,
-	float blue,
-	boolean worksInFluid
+		float intensity,
+		float red,
+		float green,
+		float blue,
+		boolean worksInFluid
 	) {
 		this.intensity = intensity;
 		this.red = red;

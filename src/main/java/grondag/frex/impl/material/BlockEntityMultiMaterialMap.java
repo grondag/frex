@@ -18,12 +18,13 @@ package grondag.frex.impl.material;
 
 import java.util.function.BiPredicate;
 
-import grondag.frex.api.material.BlockEntityMaterialMap;
-import grondag.frex.api.material.MaterialFinder;
-import grondag.frex.api.material.RenderMaterial;
 import org.jetbrains.annotations.ApiStatus.Internal;
 
 import net.minecraft.block.BlockState;
+
+import grondag.frex.api.material.BlockEntityMaterialMap;
+import grondag.frex.api.material.MaterialFinder;
+import grondag.frex.api.material.RenderMaterial;
 
 @Internal
 class BlockEntityMultiMaterialMap implements BlockEntityMaterialMap {

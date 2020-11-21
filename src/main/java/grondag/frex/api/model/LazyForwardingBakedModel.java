@@ -41,31 +41,33 @@ import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 public abstract class LazyForwardingBakedModel implements BakedModel, FabricBakedModel {
 	protected BakedModel lazyWrapped;
 
-	/** MUST BE THREAD-SAFE AND INVARIANT */
+	/** MUST BE THREAD-SAFE AND INVARIANT. */
 	protected abstract BakedModel createWrapped();
 
 	protected BakedModel wrapped() {
 		BakedModel wrapped = lazyWrapped;
-		if(wrapped == null) {
+
+		if (wrapped == null) {
 			wrapped = createWrapped();
 			lazyWrapped = wrapped;
 		}
+
 		return wrapped;
 	}
 
 	@Override
 	public void emitBlockQuads(BlockRenderView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context) {
-		((FabricBakedModel)wrapped()).emitBlockQuads(blockView, state, pos, randomSupplier, context);
+		((FabricBakedModel) wrapped()).emitBlockQuads(blockView, state, pos, randomSupplier, context);
 	}
 
 	@Override
 	public boolean isVanillaAdapter() {
-		return ((FabricBakedModel)wrapped()).isVanillaAdapter();
+		return ((FabricBakedModel) wrapped()).isVanillaAdapter();
 	}
 
 	@Override
 	public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
-		((FabricBakedModel)wrapped()).emitItemQuads(stack, randomSupplier, context);
+		((FabricBakedModel) wrapped()).emitItemQuads(stack, randomSupplier, context);
 	}
 
 	@Override

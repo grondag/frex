@@ -23,9 +23,6 @@ import java.util.function.Predicate;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import grondag.frex.Frex;
-import grondag.frex.api.material.BlockEntityMaterialMap;
-import grondag.frex.api.material.RenderMaterial;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.jetbrains.annotations.ApiStatus.Internal;
 
@@ -34,6 +31,10 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.predicate.StatePredicate;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+
+import grondag.frex.Frex;
+import grondag.frex.api.material.BlockEntityMaterialMap;
+import grondag.frex.api.material.RenderMaterial;
 
 @Internal
 public class BlockEntityMaterialMapDeserializer {
@@ -67,7 +68,7 @@ public class BlockEntityMaterialMapDeserializer {
 	@SuppressWarnings("unchecked")
 	public static BlockEntityMaterialMap loadBlockEntityMaterialMap(String idForLog, JsonArray jsonArray, BlockEntityMaterialMap defaultMap, MaterialTransform defaultTransform) {
 		if (jsonArray == null || jsonArray.isJsonNull() || jsonArray.size() == 0) {
-			return  defaultMap;
+			return defaultMap;
 		}
 
 		try {
@@ -107,7 +108,7 @@ public class BlockEntityMaterialMapDeserializer {
 				return new BlockEntityMultiMaterialMap(predicates.toArray(new BiPredicate[n]), transforms.toArray(new MaterialTransform[n]));
 			}
 		} catch (final Exception e) {
-			Frex.LOG.warn("Unable to load material map " + idForLog + " because of exception. Using default material map." , e);
+			Frex.LOG.warn("Unable to load material map " + idForLog + " because of exception. Using default material map.", e);
 			return defaultMap;
 		}
 	}

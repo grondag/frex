@@ -23,9 +23,9 @@ import net.minecraft.client.render.VertexConsumerProvider;
  * Extension of {@code VertexConsumerProvider} that provides consumers
  * via {@code RenderMaterial} in addition to render layer.  Use this to
  * emit polygons in Entity and BlockEntity renderers that rely on a custom
- * {@code RenderMaterial}.<p>
+ * {@code RenderMaterial}.
  *
- * If the renderer implementation supports this feature, then {@code VertexConsumerProvider}
+ * <p>If the renderer implementation supports this feature, then {@code VertexConsumerProvider}
  * parameters passed during world rendering can probably be safely cast to this interface.
  * However, some mods could make calls to block or entity renderer such that
  * this interface isn't available there.

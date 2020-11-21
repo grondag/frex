@@ -16,12 +16,6 @@
 
 package grondag.frex.impl.material;
 
-import java.util.function.Predicate;
-
-import com.google.gson.JsonObject;
-import grondag.frex.api.material.RenderMaterial;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-
 import static grondag.frex.api.material.MaterialFinder.DECAL_NONE;
 import static grondag.frex.api.material.MaterialFinder.DECAL_POLYGON_OFFSET;
 import static grondag.frex.api.material.MaterialFinder.DECAL_VIEW_OFFSET;
@@ -50,9 +44,16 @@ import static grondag.frex.api.material.MaterialFinder.WRITE_MASK_COLOR;
 import static grondag.frex.api.material.MaterialFinder.WRITE_MASK_COLOR_DEPTH;
 import static grondag.frex.api.material.MaterialFinder.WRITE_MASK_DEPTH;
 
+import java.util.function.Predicate;
+
+import com.google.gson.JsonObject;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+
 import net.minecraft.util.JsonHelper;
 
 import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
+
+import grondag.frex.api.material.RenderMaterial;
 
 public class MaterialPredicateDeserializer {
 	public static Predicate<RenderMaterial> ALWAYS_TRUE = m -> true;
@@ -69,7 +70,7 @@ public class MaterialPredicateDeserializer {
 
 		if (predicates.isEmpty()) {
 			return ALWAYS_TRUE;
-		} else if (predicates.size() == 1){
+		} else if (predicates.size() == 1) {
 			return predicates.get(0);
 		} else {
 			return new ArrayPredicate(predicates.toArray(new Predicate[predicates.size()]));
@@ -77,68 +78,68 @@ public class MaterialPredicateDeserializer {
 	}
 
 	private static void readPredicates(JsonObject json, ObjectArrayList<Predicate<RenderMaterial>> predicates) {
-		if(json.has("texture")) {
+		if (json.has("texture")) {
 			final String vs = JsonHelper.getString(json, "texture");
 			predicates.add(mat -> vs.equals(mat.texture()));
 		}
 
-		if(json.has("vertexSource")) {
+		if (json.has("vertexSource")) {
 			final String vs = JsonHelper.getString(json, "vertexSource");
 			predicates.add(mat -> vs.equals(mat.vertexShader()));
 		}
 
-		if(json.has("fragmentSource")) {
+		if (json.has("fragmentSource")) {
 			final String fs = JsonHelper.getString(json, "fragmentSource");
 			predicates.add(mat -> fs.equals(mat.fragmentShader()));
 		}
 
-		if(json.has("renderLayerName")) {
+		if (json.has("renderLayerName")) {
 			final String layer = JsonHelper.getString(json, "renderLayerName");
 			predicates.add(mat -> layer.equals(mat.renderLayerName()));
 		}
 
 		// We test for tags even though getBoolean also does so because we don't necessarily know the correct default value
-		if(json.has("disableAo")) {
+		if (json.has("disableAo")) {
 			final boolean val = JsonHelper.getBoolean(json, "disableAo", true);
 			predicates.add(mat -> mat.disableAo() == val);
 		}
 
-		if(json.has("disableColorIndex")) {
+		if (json.has("disableColorIndex")) {
 			final boolean val = JsonHelper.getBoolean(json, "disableColorIndex", true);
 			predicates.add(mat -> mat.disableColorIndex() == val);
 		}
 
-		if(json.has("disableDiffuse")) {
+		if (json.has("disableDiffuse")) {
 			final boolean val = JsonHelper.getBoolean(json, "disableDiffuse", true);
 			predicates.add(mat -> mat.disableDiffuse() == val);
 		}
 
-		if(json.has("emissive")) {
+		if (json.has("emissive")) {
 			final boolean val = JsonHelper.getBoolean(json, "emissive", true);
 			predicates.add(mat -> mat.emissive() == val);
 		}
 
-		if(json.has("blendMode")) {
+		if (json.has("blendMode")) {
 			final BlendMode val = MaterialDeserializer.readBlendModeFrex(JsonHelper.getString(json, "blendMode"));
 			predicates.add(mat -> mat.blendMode() == val);
 		}
 
-		if(json.has("blur")) {
+		if (json.has("blur")) {
 			final boolean val = JsonHelper.getBoolean(json, "blur", true);
 			predicates.add(mat -> mat.blur() == val);
 		}
 
-		if(json.has("cull")) {
+		if (json.has("cull")) {
 			final boolean val = JsonHelper.getBoolean(json, "cull", true);
 			predicates.add(mat -> mat.cull() == val);
 		}
 
-		if(json.has("cutout")) {
+		if (json.has("cutout")) {
 			final boolean val = JsonHelper.getBoolean(json, "cutout", true);
 			predicates.add(mat -> mat.cutout() == val);
 		}
 
-		if(json.has("decal")) {
+		if (json.has("decal")) {
 			final String decal = json.get("decal").getAsString().toLowerCase();
 
 			if (decal.equals("polygon_offset")) {
@@ -150,7 +151,7 @@ public class MaterialPredicateDeserializer {
 			}
 		}
 
-		if(json.has("depthTest")) {
+		if (json.has("depthTest")) {
 			final String depthTest = json.get("depthTest").getAsString().toLowerCase();
 
 			if (depthTest.equals("always")) {
@@ -164,22 +165,22 @@ public class MaterialPredicateDeserializer {
 			}
 		}
 
-		if(json.has("discardsTexture")) {
+		if (json.has("discardsTexture")) {
 			final boolean val = JsonHelper.getBoolean(json, "discardsTexture", true);
 			predicates.add(mat -> mat.discardsTexture() == val);
 		}
 
-		if(json.has("enableLightmap")) {
+		if (json.has("enableLightmap")) {
 			final boolean val = JsonHelper.getBoolean(json, "enableLightmap", true);
 			predicates.add(mat -> mat.enableLightmap() == val);
 		}
 
-		if(json.has("flashOverlay")) {
+		if (json.has("flashOverlay")) {
 			final boolean val = JsonHelper.getBoolean(json, "flashOverlay", true);
 			predicates.add(mat -> mat.flashOverlay() == val);
 		}
 
-		if(json.has("fog")) {
+		if (json.has("fog")) {
 			final String fog = json.get("fog").getAsString().toLowerCase();
 
 			if (fog.equals("none")) {
@@ -191,22 +192,22 @@ public class MaterialPredicateDeserializer {
 			}
 		}
 
-		if(json.has("hurtOverlay")) {
+		if (json.has("hurtOverlay")) {
 			final boolean val = JsonHelper.getBoolean(json, "hurtOverlay", true);
 			predicates.add(mat -> mat.hurtOverlay() == val);
 		}
 
-		if(json.has("lines")) {
+		if (json.has("lines")) {
 			final boolean val = JsonHelper.getBoolean(json, "lines", true);
 			predicates.add(mat -> mat.lines() == val);
 		}
 
-		if(json.has("sorted")) {
+		if (json.has("sorted")) {
 			final boolean val = JsonHelper.getBoolean(json, "sorted", true);
 			predicates.add(mat -> mat.sorted() == val);
 		}
 
-		if(json.has("target")) {
+		if (json.has("target")) {
 			final String target = json.get("target").getAsString().toLowerCase();
 
 			if (target.equals("main")) {
@@ -226,12 +227,12 @@ public class MaterialPredicateDeserializer {
 			}
 		}
 
-		if(json.has("transparentCutout")) {
+		if (json.has("transparentCutout")) {
 			final boolean val = JsonHelper.getBoolean(json, "transparentCutout", true);
 			predicates.add(mat -> mat.transparentCutout() == val);
 		}
 
-		if(json.has("transparency")) {
+		if (json.has("transparency")) {
 			final String transparency = json.get("transparency").getAsString().toLowerCase();
 
 			if (transparency.equals("none")) {
@@ -251,12 +252,12 @@ public class MaterialPredicateDeserializer {
 			}
 		}
 
-		if(json.has("unmipped")) {
+		if (json.has("unmipped")) {
 			final boolean val = JsonHelper.getBoolean(json, "unmipped", true);
 			predicates.add(mat -> mat.unmipped() == val);
 		}
 
-		if(json.has("writeMask")) {
+		if (json.has("writeMask")) {
 			final String writeMask = json.get("writeMask").getAsString().toLowerCase();
 
 			if (writeMask.equals("color")) {

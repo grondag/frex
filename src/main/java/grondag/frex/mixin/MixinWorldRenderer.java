@@ -16,10 +16,6 @@
 
 package grondag.frex.mixin;
 
-import grondag.frex.Frex;
-import grondag.frex.api.event.WorldRenderEvent;
-import grondag.frex.api.event.WorldRenderEvents;
-import grondag.frex.impl.event.WorldRenderContextImpl;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,6 +30,11 @@ import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
+
+import grondag.frex.Frex;
+import grondag.frex.api.event.WorldRenderEvent;
+import grondag.frex.api.event.WorldRenderEvents;
+import grondag.frex.impl.event.WorldRenderContextImpl;
 
 @Internal
 @Mixin(WorldRenderer.class)
@@ -52,12 +53,11 @@ public class MixinWorldRenderer {
 		}
 	}
 
-	private final WorldRenderContextImpl context = new  WorldRenderContextImpl();
-
+	private final WorldRenderContextImpl context = new WorldRenderContextImpl();
 
 	@Inject(method = "render", at = @At("HEAD"))
 	private void beforeRender(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, CallbackInfo ci) {
-		context.prepare((WorldRenderer)(Object) this, matrices, tickDelta, limitTime, renderBlockOutline, camera, matrix4f);
+		context.prepare((WorldRenderer) (Object) this, matrices, tickDelta, limitTime, renderBlockOutline, camera, matrix4f);
 		WorldRenderEvents.BEFORE_START.invoker().onRender(context);
 	}
 
@@ -67,7 +67,7 @@ public class MixinWorldRenderer {
 		WorldRenderEvents.AFTER_TERRAIN_SETUP.invoker().onRender(context);
 	}
 
-	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;renderLayer(Lnet/minecraft/client/render/RenderLayer;Lnet/minecraft/client/util/math/MatrixStack;DDD)V", ordinal = 2, shift=Shift.AFTER))
+	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;renderLayer(Lnet/minecraft/client/render/RenderLayer;Lnet/minecraft/client/util/math/MatrixStack;DDD)V", ordinal = 2, shift = Shift.AFTER))
 	void afterTerrainSolid(CallbackInfo ci) {
 		WorldRenderEvents.AFTER_SOLID_TERRAIN.invoker().onRender(context);
 	}

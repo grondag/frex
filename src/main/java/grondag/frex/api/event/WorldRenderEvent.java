@@ -31,7 +31,6 @@ import net.fabricmc.fabric.api.event.EventFactory;
 
 @Environment(EnvType.CLIENT)
 public final class WorldRenderEvent {
-
 	/**
 	 * Called at the start of world rendering.
 	 */

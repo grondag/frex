@@ -16,12 +16,6 @@
 
 package grondag.frex.impl.material;
 
-import com.google.gson.JsonObject;
-import grondag.frex.api.material.MaterialFinder;
-import grondag.frex.api.material.RenderMaterial;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import org.jetbrains.annotations.ApiStatus.Internal;
-
 import static grondag.frex.api.material.MaterialFinder.DECAL_NONE;
 import static grondag.frex.api.material.MaterialFinder.DECAL_POLYGON_OFFSET;
 import static grondag.frex.api.material.MaterialFinder.DECAL_VIEW_OFFSET;
@@ -50,15 +44,22 @@ import static grondag.frex.api.material.MaterialFinder.WRITE_MASK_COLOR;
 import static grondag.frex.api.material.MaterialFinder.WRITE_MASK_COLOR_DEPTH;
 import static grondag.frex.api.material.MaterialFinder.WRITE_MASK_DEPTH;
 
+import com.google.gson.JsonObject;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import org.jetbrains.annotations.ApiStatus.Internal;
+
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 
+import grondag.frex.api.material.MaterialFinder;
+import grondag.frex.api.material.RenderMaterial;
+
 @Internal
 public class MaterialTransformDeserializer {
-	private MaterialTransformDeserializer() {}
+	private MaterialTransformDeserializer() { }
 
 	private static final boolean EXTENDED = RendererAccess.INSTANCE.getRenderer().materialFinder() instanceof grondag.frex.api.material.MaterialFinder;
 
@@ -77,7 +78,7 @@ public class MaterialTransformDeserializer {
 
 		if (transforms.isEmpty()) {
 			return MaterialTransform.IDENTITY;
-		} else if (transforms.size() == 1){
+		} else if (transforms.size() == 1) {
 			return transforms.get(0);
 		} else {
 			return new ArrayTransform(transforms.toArray(new MaterialTransform[transforms.size()]));
@@ -99,58 +100,57 @@ public class MaterialTransformDeserializer {
 				transforms[i].apply(finder);
 			}
 		}
-
 	}
 
 	private static void readTransforms(JsonObject json, ObjectArrayList<MaterialTransform> transforms) {
-		if(json.has("fragmentSource") && json.has("vertexSource")) {
+		if (json.has("fragmentSource") && json.has("vertexSource")) {
 			final Identifier vs = new Identifier(JsonHelper.getString(json, "vertexSource"));
 			final Identifier fs = new Identifier(JsonHelper.getString(json, "fragmentSource"));
 			transforms.add(finder -> finder.shader(vs, fs));
 		}
 
 		// We test for tags even though getBoolean also does so because we don't necessarily know the correct default value
-		if(json.has("disableAo")) {
+		if (json.has("disableAo")) {
 			final boolean val = JsonHelper.getBoolean(json, "disableAo", true);
 			transforms.add(finder -> finder.disableAo(val));
 		}
 
-		if(json.has("disableColorIndex")) {
+		if (json.has("disableColorIndex")) {
 			final boolean val = JsonHelper.getBoolean(json, "disableColorIndex", true);
 			transforms.add(finder -> finder.disableColorIndex(val));
 		}
 
-		if(json.has("disableDiffuse")) {
+		if (json.has("disableDiffuse")) {
 			final boolean val = JsonHelper.getBoolean(json, "disableDiffuse", true);
 			transforms.add(finder -> finder.disableDiffuse(val));
 		}
 
-		if(json.has("emissive")) {
+		if (json.has("emissive")) {
 			final boolean val = JsonHelper.getBoolean(json, "emissive", true);
 			transforms.add(finder -> finder.emissive(val));
 		}
 
-		if(json.has("blendMode")) {
+		if (json.has("blendMode")) {
 			final BlendMode val = MaterialDeserializer.readBlendModeFrex(JsonHelper.getString(json, "blendMode"));
 			transforms.add(finder -> finder.blendMode(val));
 		}
 
-		if(json.has("blur")) {
+		if (json.has("blur")) {
 			final boolean val = JsonHelper.getBoolean(json, "blur", true);
 			transforms.add(finder -> finder.blur(val));
 		}
 
-		if(json.has("cull")) {
+		if (json.has("cull")) {
 			final boolean val = JsonHelper.getBoolean(json, "cull", true);
 			transforms.add(finder -> finder.cull(val));
 		}
 
-		if(json.has("cutout")) {
+		if (json.has("cutout")) {
 			final boolean val = JsonHelper.getBoolean(json, "cutout", true);
 			transforms.add(finder -> finder.cutout(val));
 		}
 
-		if(json.has("decal")) {
+		if (json.has("decal")) {
 			final String decal = json.get("decal").getAsString().toLowerCase();
 
 			if (decal.equals("polygon_offset")) {
@@ -162,7 +162,7 @@ public class MaterialTransformDeserializer {
 			}
 		}
 
-		if(json.has("depthTest")) {
+		if (json.has("depthTest")) {
 			final String depthTest = json.get("depthTest").getAsString().toLowerCase();
 
 			if (depthTest.equals("always")) {
@@ -176,22 +176,22 @@ public class MaterialTransformDeserializer {
 			}
 		}
 
-		if(json.has("discardsTexture")) {
+		if (json.has("discardsTexture")) {
 			final boolean val = JsonHelper.getBoolean(json, "discardsTexture", true);
 			transforms.add(finder -> finder.discardsTexture(val));
 		}
 
-		if(json.has("enableLightmap")) {
+		if (json.has("enableLightmap")) {
 			final boolean val = JsonHelper.getBoolean(json, "enableLightmap", true);
 			transforms.add(finder -> finder.enableLightmap(val));
 		}
 
-		if(json.has("flashOverlay")) {
+		if (json.has("flashOverlay")) {
 			final boolean val = JsonHelper.getBoolean(json, "flashOverlay", true);
 			transforms.add(finder -> finder.flashOverlay(val));
 		}
 
-		if(json.has("fog")) {
+		if (json.has("fog")) {
 			final String fog = json.get("fog").getAsString().toLowerCase();
 
 			if (fog.equals("none")) {
@@ -203,22 +203,22 @@ public class MaterialTransformDeserializer {
 			}
 		}
 
-		if(json.has("hurtOverlay")) {
+		if (json.has("hurtOverlay")) {
 			final boolean val = JsonHelper.getBoolean(json, "hurtOverlay", true);
 			transforms.add(finder -> finder.hurtOverlay(val));
 		}
 
-		if(json.has("lines")) {
+		if (json.has("lines")) {
 			final boolean val = JsonHelper.getBoolean(json, "lines", true);
 			transforms.add(finder -> finder.lines(val));
 		}
 
-		if(json.has("sorted")) {
+		if (json.has("sorted")) {
 			final boolean val = JsonHelper.getBoolean(json, "sorted", true);
 			transforms.add(finder -> finder.sorted(val));
 		}
 
-		if(json.has("target")) {
+		if (json.has("target")) {
 			final String target = json.get("target").getAsString().toLowerCase();
 
 			if (target.equals("main")) {
@@ -238,17 +238,17 @@ public class MaterialTransformDeserializer {
 			}
 		}
 
-		if(json.has("texture")) {
+		if (json.has("texture")) {
 			final Identifier texture = new Identifier(JsonHelper.getString(json, "texture"));
 			transforms.add(finder -> finder.texture(texture));
 		}
 
-		if(json.has("transparentCutout")) {
+		if (json.has("transparentCutout")) {
 			final boolean val = JsonHelper.getBoolean(json, "transparentCutout", true);
 			transforms.add(finder -> finder.transparentCutout(val));
 		}
 
-		if(json.has("transparency")) {
+		if (json.has("transparency")) {
 			final String transparency = json.get("transparency").getAsString().toLowerCase();
 
 			if (transparency.equals("none")) {
@@ -268,12 +268,12 @@ public class MaterialTransformDeserializer {
 			}
 		}
 
-		if(json.has("unmipped")) {
+		if (json.has("unmipped")) {
 			final boolean val = JsonHelper.getBoolean(json, "unmipped", true);
 			transforms.add(finder -> finder.unmipped(val));
 		}
 
-		if(json.has("writeMask")) {
+		if (json.has("writeMask")) {
 			final String writeMask = json.get("writeMask").getAsString().toLowerCase();
 
 			if (writeMask.equals("color")) {

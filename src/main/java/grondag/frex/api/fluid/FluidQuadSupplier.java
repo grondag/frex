@@ -21,8 +21,6 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import grondag.frex.impl.fluid.FluidQuadSupplierImpl;
-
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -30,12 +28,14 @@ import net.minecraft.util.Identifier;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 
+import grondag.frex.impl.fluid.FluidQuadSupplierImpl;
+
 /**
- * Identical in operation to {@link FabricBakedModel#emitBlockQuads} but for fluids.<p>
+ * Identical in operation to {@link FabricBakedModel#emitBlockQuads} but for fluids.
  *
- * A FREX-compliant renderer will call this - in addition to the block quad emitter - for
+ * <p>A FREX-compliant renderer will call this - in addition to the block quad emitter - for
  * block state with a non-empty fluid state.  Block state is passed instead of fluid state
- * to keep the method signature compact and provide access to the block state if needed. <p>
+ * to keep the method signature compact and provide access to the block state if needed.
  */
 @FunctionalInterface
 public interface FluidQuadSupplier extends FabricBakedModel {
@@ -56,7 +56,7 @@ public interface FluidQuadSupplier extends FabricBakedModel {
 	/**
 	 * Add a FluidQuadSupplier factory for the given fluid.
 	 *
-	 * Accepts a factory so that instances can be recreated when render state
+	 * <p>Accepts a factory so that instances can be recreated when render state
 	 * is invalidated. This allows implementations to cache sprites or other elements of
 	 * render state without checking for or handling reloads.
 	 */
@@ -68,7 +68,7 @@ public interface FluidQuadSupplier extends FabricBakedModel {
 	 * To be called 1X by renderer implementation. Provides the logic
 	 * that will implement fluid : supplier factory.
 	 *
-	 * Handler gets the fluid and the associated factory if available.
+	 * <p>Handler gets the fluid and the associated factory if available.
 	 */
 	static void setReloadHandler(BiFunction<Fluid, Function<Fluid, FluidQuadSupplier>, FluidQuadSupplier> handler) {
 		FluidQuadSupplierImpl.setReloadHandler(handler);

@@ -16,9 +16,6 @@
 
 package grondag.frex;
 
-import grondag.frex.impl.fluid.FluidQuadSupplierImpl;
-import grondag.frex.impl.light.ItemLightLoader;
-import grondag.frex.impl.material.MaterialMapLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,6 +27,10 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 
+import grondag.frex.impl.fluid.FluidQuadSupplierImpl;
+import grondag.frex.impl.light.ItemLightLoader;
+import grondag.frex.impl.material.MaterialMapLoader;
+
 public class Frex implements ClientModInitializer {
 	public static Logger LOG = LogManager.getLogger("FREX");
 
@@ -38,8 +39,8 @@ public class Frex implements ClientModInitializer {
 	static {
 		boolean result = false;
 
-		for(final ModContainer mod : FabricLoader.getInstance().getAllMods()) {
-			if(mod.getMetadata().containsCustomValue("frex:contains_frex_renderer")) {
+		for (final ModContainer mod : FabricLoader.getInstance().getAllMods()) {
+			if (mod.getMetadata().containsCustomValue("frex:contains_frex_renderer")) {
 				result = true;
 				break;
 			}
@@ -48,9 +49,7 @@ public class Frex implements ClientModInitializer {
 		isAvailable = result;
 	}
 
-	/**
-	 * TODO: replace with something that indicates renderer feature set
-	 */
+	// TODO: replace with something that indicates renderer feature set.
 	@Deprecated
 	public static boolean isAvailable() {
 		return isAvailable;

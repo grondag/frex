@@ -16,13 +16,13 @@
 
 package grondag.frex.impl.event;
 
-import grondag.frex.api.event.WorldRenderContext;
-
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
+
+import grondag.frex.api.event.WorldRenderContext;
 
 public class WorldRenderContextImpl implements WorldRenderContext {
 	protected WorldRenderer worldRenderer;
@@ -35,13 +35,14 @@ public class WorldRenderContextImpl implements WorldRenderContext {
 	protected Frustum frustum;
 
 	public void prepare(
-	WorldRenderer worldRenderer,
-	MatrixStack matrixStack,
-	float tickDelta,
-	long limitTime,
-	boolean blockOutlines,
-	Camera camera,
-	Matrix4f projectionMatrix) {
+		WorldRenderer worldRenderer,
+		MatrixStack matrixStack,
+		float tickDelta,
+		long limitTime,
+		boolean blockOutlines,
+		Camera camera,
+		Matrix4f projectionMatrix
+	) {
 		this.worldRenderer = worldRenderer;
 		this.matrixStack = matrixStack;
 		this.tickDelta = tickDelta;

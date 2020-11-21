@@ -16,13 +16,14 @@
 
 package grondag.frex.impl.material;
 
-import grondag.frex.api.material.MaterialMap;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.client.texture.Sprite;
 
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
+
+import grondag.frex.api.material.MaterialMap;
 
 @Internal
 class SingleMaterialMap implements MaterialMap {

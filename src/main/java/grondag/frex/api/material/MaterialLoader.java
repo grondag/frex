@@ -28,17 +28,17 @@ import grondag.frex.impl.material.MaterialLoaderImpl;
  * For use by model loading libraries - handles deserialization of material JSON
  * files, creating and registering them in the renderer.  Note that resource reload
  * events do not cause materials to be reloaded, but shader source will be refreshed
- * if the renderer supports that feature.<p>
+ * if the renderer supports that feature.
  *
- * Loaded materials will be Fabric API materials if no FREX compliant renderer is present
- * and the materials will (obviously) not have shaders in that case.<p>
+ * <p>Loaded materials will be Fabric API materials if no FREX compliant renderer is present
+ * and the materials will (obviously) not have shaders in that case.
  *
- * Renderer Authors: This interface is implemented by FREX - you do not need to implement it.
+ * <p>Renderer Authors: This interface is implemented by FREX - you do not need to implement it.
  */
 @Experimental
 public interface MaterialLoader {
 	/**
-	 * Material files should be in assets/<mod-id>/materials and have a .json suffix.<p>
+	 * Material files should be in {@code assets/<mod-id>/materials} and have a {@code .json} suffix.
 	 *
 	 * @param id domain and path of material json. See notes above.
 	 * @return  Loaded material if successful, null if file not found or specified features are unsupported.

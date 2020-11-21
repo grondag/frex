@@ -24,9 +24,8 @@ import net.minecraft.util.math.Matrix4f;
 /**
  * Interfaces for uniform initialization. Called by renderer when uniform should
  * be potentially updated from game state.
- * <p>
  *
- * See {@link ShaderManager} and {@link UniformRefreshFrequency}
+ * <p>See {@link ShaderManager} and {@link UniformRefreshFrequency}
  */
 @Experimental
 public interface Uniform {

@@ -16,10 +16,10 @@
 
 package grondag.frex.api.light;
 
+import net.minecraft.item.ItemStack;
+
 import grondag.frex.impl.light.ItemLightLoader;
 import grondag.frex.impl.light.SimpleItemLight;
-
-import net.minecraft.item.ItemStack;
 
 @FunctionalInterface
 public interface ItemLight {

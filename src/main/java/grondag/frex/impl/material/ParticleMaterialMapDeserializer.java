@@ -20,13 +20,14 @@ import java.io.InputStreamReader;
 import java.util.IdentityHashMap;
 
 import com.google.gson.JsonObject;
-import grondag.frex.Frex;
-import grondag.frex.api.material.MaterialMap;
 import org.jetbrains.annotations.ApiStatus.Internal;
 
 import net.minecraft.particle.ParticleType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+
+import grondag.frex.Frex;
+import grondag.frex.api.material.MaterialMap;
 
 @Internal
 public class ParticleMaterialMapDeserializer {
@@ -39,7 +40,6 @@ public class ParticleMaterialMapDeserializer {
 				final MaterialMap result = new SingleMaterialMap(MaterialLoaderImpl.loadMaterial(idString, json.get("material").getAsString(), null));
 				map.put(particleType, result);
 			}
-
 		} catch (final Exception e) {
 			Frex.LOG.warn("Unable to load particle material map for " + idForLog.toString() + " due to unhandled exception:", e);
 		}

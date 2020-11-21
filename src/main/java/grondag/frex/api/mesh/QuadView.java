@@ -16,11 +16,12 @@
 
 package grondag.frex.api.mesh;
 
-import grondag.frex.api.material.RenderMaterial;
 import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval;
 
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.texture.Sprite;
+
+import grondag.frex.api.material.RenderMaterial;
 
 public interface QuadView extends net.fabricmc.fabric.api.renderer.v1.mesh.QuadView {
 	/**
@@ -121,7 +122,6 @@ public interface QuadView extends net.fabricmc.fabric.api.renderer.v1.mesh.QuadV
 	 * Retrieve horizontal sprite atlas coordinates.
 	 */
 	float spriteU(int vertexIndex);
-
 
 	@Override
 	@Deprecated

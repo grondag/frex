@@ -25,8 +25,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import grondag.frex.Frex;
-import grondag.frex.api.light.ItemLight;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -37,6 +35,9 @@ import net.minecraft.util.registry.Registry;
 
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 
+import grondag.frex.Frex;
+import grondag.frex.api.light.ItemLight;
+
 public class ItemLightLoader implements SimpleSynchronousResourceReloadListener {
 	private ItemLightLoader() { }
 
@@ -45,7 +46,7 @@ public class ItemLightLoader implements SimpleSynchronousResourceReloadListener 
 		MAP.clear();
 		final Iterator<Item> items = Registry.ITEM.iterator();
 
-		while(items.hasNext()) {
+		while (items.hasNext()) {
 			loadItem(manager, items.next());
 		}
 	}
@@ -54,7 +55,7 @@ public class ItemLightLoader implements SimpleSynchronousResourceReloadListener 
 		final Identifier itemId = Registry.ITEM.getId(item);
 		final Identifier id = new Identifier(itemId.getNamespace(), "lights/item/" + itemId.getPath() + ".json");
 
-		try(Resource res = manager.getResource(id)) {
+		try (Resource res = manager.getResource(id)) {
 			final ItemLight light = ItemLightDeserializer.deserialize(new InputStreamReader(res.getInputStream(), StandardCharsets.UTF_8));
 
 			if (light != ItemLight.NONE) {
@@ -78,7 +79,7 @@ public class ItemLightLoader implements SimpleSynchronousResourceReloadListener 
 	}
 
 	private static List<Identifier> DEPS = ImmutableList.of();
-	private static final Identifier id =new Identifier("frex:item_light");
+	private static final Identifier id = new Identifier("frex:item_light");
 	public static final ItemLightLoader INSTANCE = new ItemLightLoader();
 	private static final IdentityHashMap<Item, ItemLight> MAP = new IdentityHashMap<>();
 

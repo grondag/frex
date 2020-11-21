@@ -78,12 +78,13 @@ public class ClientEntityPredicate {
 			} else {
 				if (team != null) {
 					final AbstractTeam abstractTeam = entity.getScoreboardTeam();
+
 					if (abstractTeam == null || !team.equals(abstractTeam.getName())) {
 						return false;
 					}
 				}
 
-				return catType == null || entity instanceof CatEntity && ((CatEntity)entity).getTexture().equals(catType);
+				return catType == null || entity instanceof CatEntity && ((CatEntity) entity).getTexture().equals(catType);
 			}
 		}
 	}
@@ -97,7 +98,7 @@ public class ClientEntityPredicate {
 			final EntityEquipmentPredicate equipment = EntityEquipmentPredicate.fromJson(jsonObject.get("equipment"));
 			final PlayerPredicate player = PlayerPredicate.fromJson(jsonObject.get("player"));
 			final FishingHookPredicate fishHook = FishingHookPredicate.fromJson(jsonObject.get("fishing_hook"));
-			final String team = JsonHelper.getString(jsonObject, "team", (String)null);
+			final String team = JsonHelper.getString(jsonObject, "team", (String) null);
 			final Identifier catType = jsonObject.has("catType") ? new Identifier(JsonHelper.getString(jsonObject, "catType")) : null;
 
 			return new ClientEntityPredicate(effects, nbt, flags, equipment, player, fishHook, team, catType);
@@ -107,6 +108,6 @@ public class ClientEntityPredicate {
 	}
 
 	static {
-		ANY = new ClientEntityPredicate(EntityEffectPredicate.EMPTY, NbtPredicate.ANY, EntityFlagsPredicate.ANY, EntityEquipmentPredicate.ANY, PlayerPredicate.ANY, FishingHookPredicate.ANY, (String)null, (Identifier)null);
+		ANY = new ClientEntityPredicate(EntityEffectPredicate.EMPTY, NbtPredicate.ANY, EntityFlagsPredicate.ANY, EntityEquipmentPredicate.ANY, PlayerPredicate.ANY, FishingHookPredicate.ANY, (String) null, (Identifier) null);
 	}
 }

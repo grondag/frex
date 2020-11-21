@@ -20,8 +20,6 @@ import java.io.InputStreamReader;
 import java.util.IdentityHashMap;
 
 import com.google.gson.JsonObject;
-import grondag.frex.Frex;
-import grondag.frex.api.material.MaterialMap;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,9 +29,11 @@ import net.minecraft.util.JsonHelper;
 
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 
+import grondag.frex.Frex;
+import grondag.frex.api.material.MaterialMap;
+
 @Internal
 public class ItemMaterialMapDeserializer {
-
 	public static void deserialize(Item item, Identifier idForLog, InputStreamReader reader, IdentityHashMap<Item, MaterialMap> itemMap) {
 		try {
 			final JsonObject json = JsonHelper.deserialize(reader);

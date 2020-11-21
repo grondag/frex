@@ -22,8 +22,6 @@ import java.util.List;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import grondag.frex.Frex;
-import grondag.frex.api.material.MaterialMap;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,13 +36,16 @@ import net.minecraft.util.JsonHelper;
 
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 
+import grondag.frex.Frex;
+import grondag.frex.api.material.MaterialMap;
+
 @Internal
 public final class MaterialMapDeserializer {
-	private MaterialMapDeserializer() {}
+	private MaterialMapDeserializer() { }
 
 	public static MaterialMap loadMaterialMap(String idForLog, JsonObject mapObject, MaterialMap defaultMap, @Nullable RenderMaterial defaultMaterial) {
 		if (mapObject == null || mapObject.isJsonNull()) {
-			return  defaultMap;
+			return defaultMap;
 		}
 
 		try {
@@ -84,12 +85,11 @@ public final class MaterialMapDeserializer {
 				}
 
 				return spriteMap.isEmpty() ? defaultMap : (defaultMaterial == null ? new MultiMaterialMap(spriteMap) : new DefaultedMultiMaterialMap(defaultMaterial, spriteMap));
-
 			} else {
 				return defaultMap;
 			}
 		} catch (final Exception e) {
-			Frex.LOG.warn("Unable to load material map " + idForLog + " because of exception. Using default material map." , e);
+			Frex.LOG.warn("Unable to load material map " + idForLog + " because of exception. Using default material map.", e);
 			return defaultMap;
 		}
 	}
@@ -117,16 +117,16 @@ public final class MaterialMapDeserializer {
 			if (json.has("variants")) {
 				variants = json.getAsJsonObject("variants");
 
-				if(variants.isJsonNull()) {
+				if (variants.isJsonNull()) {
 					Frex.LOG.warn("Unable to load variant material maps for " + idString + " because the 'variants' block is empty. Using default map.");
 					variants = null;
 				}
 			}
 
-			for(final T state : states) {
+			for (final T state : states) {
 				MaterialMap result = defaultMap;
 
-				if (variants != null)  {
+				if (variants != null) {
 					final String stateId = BlockModels.propertyMapToString(state.getEntries());
 					result = loadMaterialMap(idString + "#" + stateId, variants.getAsJsonObject(stateId), defaultMap, defaultMaterial);
 				}

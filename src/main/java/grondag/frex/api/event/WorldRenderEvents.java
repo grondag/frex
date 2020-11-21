@@ -44,7 +44,6 @@ public final class WorldRenderEvents {
 		}
 	});
 
-
 	/**
 	 * Called after view Frustum is computed and all render chunks to be rendered are
 	 * identified and rebuilt but before chunks are uploaded to GPU.
@@ -56,7 +55,6 @@ public final class WorldRenderEvents {
 			callback.onRender(context);
 		}
 	});
-
 
 	/**
 	 * Called after the Solid, Cutout and Cutout Mipped terrain layers have been output to the framebuffer.
@@ -86,7 +84,7 @@ public final class WorldRenderEvents {
 	 * Called before entities are rendered.  Possibly useful
 	 * for state updates needed by entity renders.
 	 *
-	 * Satin: EntitiesPreRenderCallback.beforeEntitiesRender
+	 * <p>Satin: EntitiesPreRenderCallback.beforeEntitiesRender
 	 */
 	public static final Event<WorldRenderCallback> BEFORE_ENTITIES = EventFactory.createArrayBacked(WorldRenderCallback.class, callbacks -> context -> {
 		for (final WorldRenderCallback callback : callbacks) {
@@ -98,7 +96,7 @@ public final class WorldRenderEvents {
 	 * Called after entities are rendered. Appropriate time
 	 * to append additional entity renders.
 	 *
-	 * Satin: EntitiesPostRenderCallback.onEntitiesRendered
+	 * <p>Satin: EntitiesPostRenderCallback.onEntitiesRendered
 	 * Litematica: LitematicaRenderer.piecewiseRenderEntities
 	 */
 	public static final Event<WorldRenderCallback> AFTER_ENTITIES = EventFactory.createArrayBacked(WorldRenderCallback.class, callbacks -> context -> {
@@ -112,7 +110,7 @@ public final class WorldRenderEvents {
 	 *
 	 * <p>Typical usage is to render.
 	 *
-	 * Cloth: ClothClientHooks.DEBUG_RENDER_PRE
+	 * <p>Cloth: ClothClientHooks.DEBUG_RENDER_PRE
 	 */
 	public static final Event<WorldRenderCallback> BEFORE_DEBUG_RENDER = EventFactory.createArrayBacked(WorldRenderCallback.class, callbacks -> context -> {
 		for (final WorldRenderCallback callback : callbacks) {
@@ -125,7 +123,7 @@ public final class WorldRenderEvents {
 	 *
 	 * <p>This occurs while the splash screen is displayed.
 	 *
-	 * Litematica: LitematicaRenderer.piecewiseRenderTranslucent
+	 * <p>Litematica: LitematicaRenderer.piecewiseRenderTranslucent
 	 * Litematica: LitematicaRenderer.piecewiseRenderOverlay
 	 * JustMap: WaypointRenderer.renderWaypoints
 	 */
@@ -140,7 +138,7 @@ public final class WorldRenderEvents {
 	 *
 	 * <p>This occurs while the splash screen is displayed.
 	 *
-	 * VoxelMap: MixinWorldRenderer.postRenderLayer
+	 * <p>VoxelMap: MixinWorldRenderer.postRenderLayer
 	 * CustomSelectionBox: MixinWorldRenderer.renderWorldBorder
 	 */
 	public static final Event<WorldRenderCallback> BEFORE_TRANSLUCENT_END = EventFactory.createArrayBacked(WorldRenderCallback.class, callbacks -> context -> {
@@ -154,7 +152,7 @@ public final class WorldRenderEvents {
 	 *
 	 * <p>This occurs while the splash screen is displayed.
 	 *
-	 * Satin: PostWorldRenderCallbackV2.onWorldRendered
+	 * <p>Satin: PostWorldRenderCallbackV2.onWorldRendered
 	 * BBOR: ClientInterop.render
 	 */
 	public static final Event<WorldRenderCallback> BEFORE_END = EventFactory.createArrayBacked(WorldRenderCallback.class, callbacks -> context -> {
@@ -168,7 +166,7 @@ public final class WorldRenderEvents {
 	 *
 	 * <p>This occurs while the splash screen is displayed.
 	 *
-	 * Satin: PostWorldRenderCallbackV2.onWorldRendered
+	 * <p>Satin: PostWorldRenderCallbackV2.onWorldRendered
 	 * BBOR: ClientInterop.render
 	 * VoxelMap: MixinWorldRenderer.postRender
 	 */

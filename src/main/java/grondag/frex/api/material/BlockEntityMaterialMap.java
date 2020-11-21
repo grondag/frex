@@ -16,10 +16,10 @@
 
 package grondag.frex.api.material;
 
-import grondag.frex.impl.material.MaterialMapLoader;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
+
+import grondag.frex.impl.material.MaterialMapLoader;
 
 /**
  * Transforms materials for block entities.

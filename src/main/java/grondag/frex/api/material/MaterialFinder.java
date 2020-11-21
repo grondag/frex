@@ -16,18 +16,19 @@
 
 package grondag.frex.api.material;
 
-import grondag.frex.api.Renderer;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.util.Identifier;
 
 import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 
+import grondag.frex.api.Renderer;
+
 /**
  * Finds standard {@link RenderMaterial} instances used to communicate
- * quad rendering characteristics to a {@link RenderContext}.<p>
+ * quad rendering characteristics to a {@link RenderContext}.
  *
- * Must be obtained via {@link Renderer#materialFinder()}.
+ * <p>Must be obtained via {@link Renderer#materialFinder()}.
  */
 public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.material.MaterialFinder {
 	@Override
@@ -53,15 +54,15 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	}
 
 	/**
-	 * Defines how sprite pixels will be blended with the scene. <p>
+	 * Defines how sprite pixels will be blended with the scene.
 	 *
-	 * The application of blend mode is context-dependent, especially
+	 * <p>The application of blend mode is context-dependent, especially
 	 * for {@link BlendMode#TRANSLUCENT}.  Various material properties
 	 * will be set differently when the model is rendered as a block, vs.
 	 * a moving entity block, vs. item in GUI and item floating in the world,
-	 * as examples. <p>
+	 * as examples.
 	 *
-	 * To avoid this ambiguity, pass {@code null} as the parameter and the material
+	 * <p>To avoid this ambiguity, pass {@code null} as the parameter and the material
 	 * will always be applied without adjustment.
 	 *
 	 * @param blendMode
@@ -112,12 +113,13 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 
 	/**
 	 * Enables blur (bilinear texture sampling) on magnification,
-	 * and makes minification blur LOD-linear. Used for enchantment glint.<p>
+	 * and makes minification blur LOD-linear. Used for enchantment glint.
 	 *
-	 * Note this is isn't generally useful for atlas sprites and different from mipmap.
+	 * <p>Note this is isn't generally useful for atlas sprites and different from mipmap.
 	 * Mipmap is done with linear sampline using nearest LOD because otherwise artifacts appear when
 	 * sprites are sampled across LODS levels, especially for randomized rotated
-	 * sprites like grass. <p>
+	 * sprites like grass.
+	 *
 	 * @param blur [@code true} to enable bilinear texture sampling on magnification
 	 * @return finder instance for ease of chaining calls
 	 */
@@ -144,7 +146,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	MaterialFinder cutout(boolean cutout);
 
 	/**
-	 * Parameters to {@link MaterialFinder#decal(int)}
+	 * Parameters to {@link MaterialFinder#decal(int)}.
 	 */
 	int DECAL_NONE = 0;
 	int DECAL_POLYGON_OFFSET = 1;
@@ -158,7 +160,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	MaterialFinder decal(int decal);
 
 	/**
-	 * Parameters to {@link MaterialFinder#depthTest(int)}
+	 * Parameters to {@link MaterialFinder#depthTest(int)}.
 	 */
 	int DEPTH_TEST_DISABLE = 0;
 	int DEPTH_TEST_ALWAYS = 1;
@@ -175,12 +177,12 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	/**
 	 * Performance hint for the renderer -
 	 * set true when the material has a shader and the shader
-	 * uses procedural texturing and does not use the bound texture.<p>
+	 * uses procedural texturing and does not use the bound texture.
 	 *
-	 * Primary use case is to disable upload of animated textures
+	 * <p>Primary use case is to disable upload of animated textures
 	 * that aren't going to be used.
 	 *
-	 * @param [@code true} to enable performance hint
+	 * @param discardsTexture {@code true} to enable performance hint
 	 * @return finder instance for ease of chaining calls
 	 */
 	MaterialFinder discardsTexture(boolean discardsTexture);
@@ -204,7 +206,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	MaterialFinder flashOverlay(boolean flashOverlay);
 
 	/**
-	 * Parameters to {@link #fog(int)}
+	 * Parameters to {@link #fog(int)}.
 	 */
 	int FOG_NONE = 0;
 	int FOG_TINTED = 1;
@@ -249,18 +251,19 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	/**
 	 * For transparent materials, enables sorting of quads by
 	 * camera distance before buffering and drawing. Vanilla sorts
-	 * all transparent render layers even when it isn't strictly needed.<p>
+	 * all transparent render layers even when it isn't strictly needed.
 	 *
-	 * Content authors should set this to false for translucent decal materials
+	 * <p>Content authors should set this to false for translucent decal materials
 	 * when it is known the quad will be backed by a solid quad to avoid the
 	 * performance overhead of sorting.
+	 *
 	 * @param sorted {@code true} to enable sorting of quads by camera distance
 	 * @return finder instance for ease of chaining calls
 	 */
 	MaterialFinder sorted(boolean sorted);
 
 	/**
-	 * Parameters to {@link #target(int)}
+	 * Parameters to {@link #target(int)}.
 	 */
 	int TARGET_MAIN = 0;
 	int TARGET_OUTLINE = 1;
@@ -291,9 +294,9 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	/**
 	 * Enables or disables a lower (~10%) alpha test value for
 	 * cutout rendering.  Used for textures rendered in transparent layer
-	 * to clamp off fuzzy edges or random slightly-more-than-zero-alpha pixels.<p>
+	 * to clamp off fuzzy edges or random slightly-more-than-zero-alpha pixels.
 	 *
-	 * Has no effect unless {@link #transparentCutout(boolean)}
+	 * <p>Has no effect unless {@link #transparentCutout(boolean)}
 	 *
 	 * @param translucentCutout {@code true} to enable
 	 * @return finder instance for ease of chaining calls
@@ -301,26 +304,26 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	MaterialFinder transparentCutout(boolean transparentCutout);
 
 	/**
-	 * Parameters to {@link MaterialFinder#transparency(int)}
+	 * Parameters to {@link MaterialFinder#transparency(int)}.
 	 */
 	int TRANSPARENCY_NONE = 0;
-	/** used for some particles and other effects */
+	/** Used for some particles and other effects. */
 	int TRANSPARENCY_ADDITIVE = 1;
-	/** used for lightning */
+	/** Used for lightning. */
 	int TRANSPARENCY_LIGHTNING = 2;
-	/** used for enchantment glint */
+	/** Used for enchantment glint. */
 	int TRANSPARENCY_GLINT = 3;
-	/** used for block breaking overlay */
+	/** Used for block breaking overlay. */
 	int TRANSPARENCY_CRUMBLING = 4;
-	/** used for terrain blocks, decals and most other use cases */
+	/** Used for terrain blocks, decals and most other use cases. */
 	int TRANSPARENCY_TRANSLUCENT = 5;
-	/** used for terrain particles */
+	/** Used for terrain particles. */
 	int TRANSPARENCY_DEFAULT = 6;
 
 	/**
-	 * Enables or disables texture blending and sets blending mode. <p>
+	 * Enables or disables texture blending and sets blending mode.
 	 *
-	 * If {@link #blendMode(BlendMode)} is used to set a non-null blend mode,
+	 * <p>If {@link #blendMode(BlendMode)} is used to set a non-null blend mode,
 	 * then this setting will be adjusted to an appropriate context-dependent
 	 * value at runtime and is essentially ignored.
 	 *
@@ -342,7 +345,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	MaterialFinder unmipped(boolean unmipped);
 
 	/**
-	 * Parameters to {@link MaterialFinder#writeMask(int)}
+	 * Parameters to {@link MaterialFinder#writeMask(int)}.
 	 */
 	int WRITE_MASK_COLOR = 0;
 	int WRITE_MASK_DEPTH = 1;

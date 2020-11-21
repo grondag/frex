@@ -16,7 +16,6 @@
 
 package grondag.frex.api.material;
 
-import grondag.frex.impl.material.MaterialMapLoader;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
@@ -26,6 +25,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleType;
 
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
+
+import grondag.frex.impl.material.MaterialMapLoader;
 
 public interface MaterialMap {
 	/**

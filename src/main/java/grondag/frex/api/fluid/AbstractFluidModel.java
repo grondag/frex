@@ -47,7 +47,7 @@ public abstract class AbstractFluidModel implements FluidQuadSupplier, FluidRend
 	protected final RenderMaterial material;
 	protected final boolean blendColors;
 
-	protected AbstractFluidModel(RenderMaterial material,  boolean blendColors) {
+	protected AbstractFluidModel(RenderMaterial material, boolean blendColors) {
 		this.material = material;
 		this.blendColors = blendColors;
 	}
@@ -92,20 +92,20 @@ public abstract class AbstractFluidModel implements FluidQuadSupplier, FluidRend
 		final boolean isUpVisible = !world.getFluidState(searchPos.set(centerPos, Direction.UP)).getFluid().matchesType(fluid);
 
 		final boolean isDownVisible = (!isSideBlocked(world, Direction.DOWN.getOpposite(), 1.0F, centerPos, blockState)
-		&& !world.getFluidState(searchPos.set(centerPos, Direction.DOWN)).getFluid().matchesType(fluid))
-		&& !isSideBlocked(world, searchPos.set(centerPos, Direction.DOWN), Direction.DOWN, 0.8888889F);
+			&& !world.getFluidState(searchPos.set(centerPos, Direction.DOWN)).getFluid().matchesType(fluid))
+			&& !isSideBlocked(world, searchPos.set(centerPos, Direction.DOWN), Direction.DOWN, 0.8888889F);
 
 		final boolean isNorthVisible = (!isSideBlocked(world, Direction.NORTH.getOpposite(), 1.0F, centerPos, blockState)
-		&& !world.getFluidState(searchPos.set(centerPos, Direction.NORTH)).getFluid().matchesType(fluid));
+			&& !world.getFluidState(searchPos.set(centerPos, Direction.NORTH)).getFluid().matchesType(fluid));
 
 		final boolean isSouthVisible = (!isSideBlocked(world, Direction.SOUTH.getOpposite(), 1.0F, centerPos, blockState)
-		&& !world.getFluidState(searchPos.set(centerPos, Direction.SOUTH)).getFluid().matchesType(fluid));
+			&& !world.getFluidState(searchPos.set(centerPos, Direction.SOUTH)).getFluid().matchesType(fluid));
 
 		final boolean isWestVisible = (!isSideBlocked(world, Direction.WEST.getOpposite(), 1.0F, centerPos, blockState)
-		&& !world.getFluidState(searchPos.set(centerPos, Direction.WEST)).getFluid().matchesType(fluid));
+			&& !world.getFluidState(searchPos.set(centerPos, Direction.WEST)).getFluid().matchesType(fluid));
 
 		final boolean isEastVisible = (!isSideBlocked(world, Direction.EAST.getOpposite(), 1.0F, centerPos, blockState)
-		&& !world.getFluidState(searchPos.set(centerPos, Direction.EAST)).getFluid().matchesType(fluid));
+			&& !world.getFluidState(searchPos.set(centerPos, Direction.EAST)).getFluid().matchesType(fluid));
 
 		if (isUpVisible || isDownVisible || isEastVisible || isWestVisible || isNorthVisible || isSouthVisible) {
 			final Sprite stillSprite = sprites[0];
@@ -138,7 +138,7 @@ public abstract class AbstractFluidModel implements FluidQuadSupplier, FluidRend
 					v3 = v0;
 				} else {
 					topSprite = sprites[1];
-					final float angle = (float)MathHelper.atan2(velocity.z, velocity.x) - 1.5707964F;
+					final float angle = (float) MathHelper.atan2(velocity.z, velocity.x) - 1.5707964F;
 					final float dx = MathHelper.sin(angle) * 0.25F;
 					final float dy = MathHelper.cos(angle) * 0.25F;
 					u0 = topSprite.getFrameU(8.0F + (-dy - dx) * 16.0F);
@@ -198,7 +198,7 @@ public abstract class AbstractFluidModel implements FluidQuadSupplier, FluidRend
 				.material(material).emit();
 			}
 
-			for(int sideIndex = 0; sideIndex < 4; ++sideIndex) {
+			for (int sideIndex = 0; sideIndex < 4; ++sideIndex) {
 				float y0, y1, x0, x1, z0, z1;
 				Direction face;
 				int c0, c1;
@@ -255,6 +255,7 @@ public abstract class AbstractFluidModel implements FluidQuadSupplier, FluidRend
 
 					if (needsOverlay()) {
 						final Block sideBlock = world.getBlockState(searchPos.set(centerPos, face)).getBlock();
+
 						if (sideBlock instanceof TransparentBlock || sideBlock instanceof LeavesBlock) {
 							sideSprite = overlaySprite();
 							overlay = true;
@@ -315,14 +316,13 @@ public abstract class AbstractFluidModel implements FluidQuadSupplier, FluidRend
 		return isSideBlocked(world, direction, height, pos, world.getBlockState(pos));
 	}
 
-
 	private static float nwHeight(BlockView world, BlockPos.Mutable searchPos, Fluid fluid) {
 		final long posIn = searchPos.asLong();
 
 		int w = 0;
 		float h = 0.0F;
 
-		for(int j = 0; j < 4; ++j) {
+		for (int j = 0; j < 4; ++j) {
 			//  set to y+1 first for up check
 			searchPos.set(posIn).move(-(j & 1), 1, -(j >> 1 & 1));
 
@@ -353,7 +353,7 @@ public abstract class AbstractFluidModel implements FluidQuadSupplier, FluidRend
 		return h / w;
 	}
 
-	public static int colorMix4(int a, int b, int c,  int d) {
+	public static int colorMix4(int a, int b, int c, int d) {
 		final int blue = (((a & 0xFF) + (b & 0xFF) + (c & 0xFF) + (d & 0xFF) + 1) >> 2) & 0xFF;
 		final int green = (((a & 0xFF00) + (b & 0xFF00) + (c & 0xFF00) + (d & 0xFF00) + 0x100) >> 2) & 0xFF00;
 		final int red = (((a & 0xFF0000) + (b & 0xFF0000) + (c & 0xFF0000) + (d & 0xFF0000) + 0x10000) >> 2) & 0xFF0000;

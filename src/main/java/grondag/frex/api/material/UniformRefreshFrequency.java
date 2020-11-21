@@ -20,9 +20,8 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * Governs how often shader uniform initializers are called.
- * <p>
  *
- * In all cases, initializers will only be called if a shader using the uniform
+ * <p>In all cases, initializers will only be called if a shader using the uniform
  * is activated and values are only uploaded if they have changed.
  */
 @Experimental

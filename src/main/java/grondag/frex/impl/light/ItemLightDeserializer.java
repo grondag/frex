@@ -19,14 +19,15 @@ package grondag.frex.impl.light;
 import java.io.InputStreamReader;
 
 import com.google.gson.JsonObject;
-import grondag.frex.api.light.ItemLight;
 import org.jetbrains.annotations.ApiStatus.Internal;
 
 import net.minecraft.util.JsonHelper;
 
+import grondag.frex.api.light.ItemLight;
+
 @Internal
 public class ItemLightDeserializer {
-	private ItemLightDeserializer() {}
+	private ItemLightDeserializer() { }
 
 	public static ItemLight deserialize(InputStreamReader reader) {
 		final JsonObject obj = JsonHelper.deserialize(reader);

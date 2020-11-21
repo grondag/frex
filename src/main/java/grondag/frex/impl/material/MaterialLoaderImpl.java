@@ -21,7 +21,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 import com.google.gson.JsonObject;
-import grondag.frex.Frex;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.jetbrains.annotations.ApiStatus.Internal;
 
@@ -37,9 +36,11 @@ import net.fabricmc.fabric.api.renderer.v1.Renderer;
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 
+import grondag.frex.Frex;
+
 @Internal
 public final class MaterialLoaderImpl {
-	private MaterialLoaderImpl() {}
+	private MaterialLoaderImpl() { }
 
 	private static final ObjectOpenHashSet<Identifier> CAUGHT = new ObjectOpenHashSet<>();
 
@@ -48,7 +49,7 @@ public final class MaterialLoaderImpl {
 			final RenderMaterial result = loadMaterial(new Identifier(materialString));
 			return result == null ? defaultValue : result;
 		} catch (final Exception e) {
-			Frex.LOG.warn("Unable to load material " + materialString + " for material map " + idForLog + " because of exception. Using default material." , e);
+			Frex.LOG.warn("Unable to load material " + materialString + " for material map " + idForLog + " because of exception. Using default material.", e);
 			return defaultValue;
 		}
 	}
@@ -57,7 +58,7 @@ public final class MaterialLoaderImpl {
 		final Renderer r = RendererAccess.INSTANCE.getRenderer();
 		RenderMaterial result = r.materialById(idIn);
 
-		if(result == null) {
+		if (result == null) {
 			result = loadMaterialInner(idIn);
 			r.registerMaterial(idIn, result);
 		}
@@ -71,11 +72,11 @@ public final class MaterialLoaderImpl {
 		RenderMaterial result = null;
 		final ResourceManager rm = MinecraftClient.getInstance().getResourceManager();
 
-		try(Resource res = rm.getResource(id)) {
+		try (Resource res = rm.getResource(id)) {
 			result = MaterialDeserializer.deserialize(readJsonObject(res));
 		} catch (final Exception e) {
 			// TODO:  make error suppression configurable
-			if(CAUGHT.add(idIn)) {
+			if (CAUGHT.add(idIn)) {
 				Frex.LOG.info("Unable to load render material " + idIn.toString() + " due to exception " + e.toString());
 			}
 		}
@@ -103,7 +104,7 @@ public final class MaterialLoaderImpl {
 			stream = res.getInputStream();
 			reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
 			result = JsonHelper.deserialize(reader);
-		} catch(final Exception e) {
+		} catch (final Exception e) {
 			throw new RuntimeException("Unexpected error during material deserialization", e);
 		} finally {
 			try {
@@ -114,7 +115,7 @@ public final class MaterialLoaderImpl {
 				if (stream != null) {
 					stream.close();
 				}
-			} catch(final Exception e) {
+			} catch (final Exception e) {
 				Frex.LOG.warn("Unexpected error during material deserialization", e);
 			}
 		}
