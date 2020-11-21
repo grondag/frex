@@ -81,6 +81,31 @@ public interface Uniform {
 	}
 
 	@FunctionalInterface
+	public interface Uniform1ui extends Uniform {
+		void set(int v0);
+	}
+
+	@FunctionalInterface
+	public interface Uniform2ui extends Uniform {
+		void set(int v0, int v1);
+	}
+
+	@FunctionalInterface
+	public interface Uniform3ui extends Uniform {
+		void set(int v0, int v1, int v2);
+	}
+
+	@FunctionalInterface
+	public interface Uniform4ui extends Uniform {
+		void set(int v0, int v1, int v2, int v3);
+	}
+
+	@FunctionalInterface
+	public interface UniformArrayui extends Uniform {
+		void set(int[] v);
+	}
+
+	@FunctionalInterface
 	public interface UniformMatrix4f extends Uniform {
 		void set(Matrix4f matrix);
 	}
