@@ -20,6 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.Frustum;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
@@ -40,4 +41,18 @@ public interface WorldRenderContext {
 	Matrix4f projectionMatrix();
 
 	@Nullable Frustum frustum();
+
+	/**
+	 * The {@code VertexConsumerProvider} instance being used by the world renderer for most non-terrain renders.
+	 * Generally this will be better for any direct renders because quads for the same layer can be cached
+	 * and then drawn all at once by the world renderer.
+	 *
+	 * <p>IMPORTANT - all vertex coordinates sent to consumers should be relative to the camera to
+	 * be consistent with other quads emitted by the world renderer and other mods.  If this isn't
+	 * possible, caller should use a separate "immediate" instance.
+	 *
+	 * <p>If the renderer implementation supports {@code FrexVertexConsumerProvider} this instance can be
+	 * cast to that type, and caller can use the extended features available in FREX materials.
+	 */
+	VertexConsumerProvider consumers();
 }

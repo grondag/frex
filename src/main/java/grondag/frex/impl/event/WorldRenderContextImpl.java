@@ -18,6 +18,7 @@ package grondag.frex.impl.event;
 
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.Frustum;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
@@ -33,6 +34,7 @@ public class WorldRenderContextImpl implements WorldRenderContext {
 	protected Camera camera;
 	protected Matrix4f projectionMatrix;
 	protected Frustum frustum;
+	protected VertexConsumerProvider consumers;
 
 	public void prepare(
 		WorldRenderer worldRenderer,
@@ -41,7 +43,8 @@ public class WorldRenderContextImpl implements WorldRenderContext {
 		long limitTime,
 		boolean blockOutlines,
 		Camera camera,
-		Matrix4f projectionMatrix
+		Matrix4f projectionMatrix,
+		VertexConsumerProvider consumers
 	) {
 		this.worldRenderer = worldRenderer;
 		this.matrixStack = matrixStack;
@@ -50,6 +53,7 @@ public class WorldRenderContextImpl implements WorldRenderContext {
 		this.blockOutlines = blockOutlines;
 		this.camera = camera;
 		this.projectionMatrix = projectionMatrix;
+		this.consumers = consumers;
 	}
 
 	public void setFrustum(Frustum frustum) {
@@ -94,5 +98,10 @@ public class WorldRenderContextImpl implements WorldRenderContext {
 	@Override
 	public Frustum frustum() {
 		return frustum;
+	}
+
+	@Override
+	public VertexConsumerProvider consumers() {
+		return consumers;
 	}
 }
