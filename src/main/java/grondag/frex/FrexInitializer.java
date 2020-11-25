@@ -18,8 +18,13 @@ package grondag.frex;
 
 /**
  * Use to make FREX an optional dependency. To do so, implement this interface
- * in a stand-alone class and declare a "FREX" end point in the mod's
- * fabric.mod.json that points to the implementation.
+ * in a stand-alone class and declare a "frex" end point in the mod's
+ * fabric.mod.json that points to the implementation.  For example:
+ *
+ * <p><pre>
+ * "entrypoints": {
+ *    "frex": [ "yourorg.yourmod.yourpackage.XmFrexInitializer" ]
+ * }</pre>
  *
  * <p>Every mod that implements this interface and declares and end point will receive
  * exactly one call to {@link #onInitalizeFrex()}.
@@ -32,7 +37,6 @@ package grondag.frex;
  * "frex" end point for mods that nest the FREX library or have a hard dependency on FREX.
  * Such mods can safely handle FREX registration in their client initialize instance.
  */
-
 public interface FrexInitializer {
 	/**
 	 * Signals mods that maintain an optional dependency on FREX that FREX is
