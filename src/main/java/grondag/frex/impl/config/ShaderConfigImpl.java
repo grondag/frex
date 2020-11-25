@@ -33,7 +33,7 @@ public class ShaderConfigImpl {
 	public static Supplier<String> getShaderConfigSupplier(Identifier token) {
 		Preconditions.checkNotNull(token, "Encounted null shader config token. This is a bug in a mod.");
 
-		return MAP.getOrDefault(token, () -> "// Config token " + token.toString() + "NOT FOUND \n");
+		return MAP.getOrDefault(token, () -> "// WARNING - INCLUDE TOKEN NOT FOUND: " + token.toString());
 	}
 
 	public static void registerShaderConfigSupplier(Identifier token, Supplier<String> supplier) {
