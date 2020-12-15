@@ -5,17 +5,18 @@ import net.minecraft.util.Pair;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class ArrayBackedConditionalEvent<C, T> extends ConditionalEvent<C, T> {
-    private final Function<Pair<Function<C, Boolean>, T>[], T> invokerFactory;
+    private final Function<Pair<Predicate<C>, T>[], T> invokerFactory;
     private final T dummyInvoker;
-    private Pair<Function<C, Boolean>, T>[] handlers;
+    private Pair<Predicate<C>, T>[] handlers;
 
-    public ArrayBackedConditionalEvent(Function<Pair<Function<C, Boolean>, T>[], T> invokerFactory) {
+    public ArrayBackedConditionalEvent(Function<Pair<Predicate<C>, T>[], T> invokerFactory) {
         this(invokerFactory, null);
     }
 
-    public ArrayBackedConditionalEvent(Function<Pair<Function<C, Boolean>, T>[], T> invokerFactory, T dummyInvoker) {
+    public ArrayBackedConditionalEvent(Function<Pair<Predicate<C>, T>[], T> invokerFactory, T dummyInvoker) {
         this.invokerFactory = invokerFactory;
         this.dummyInvoker = dummyInvoker;
         this.update();
@@ -28,7 +29,7 @@ public class ArrayBackedConditionalEvent<C, T> extends ConditionalEvent<C, T> {
             } else {
                 //noinspection unchecked
                 invoker = invokerFactory.apply(
-                        (Pair<Function<C, Boolean>, T>[]) Array.newInstance(Pair.class, 0)
+                        (Pair<Predicate<C>, T>[]) Array.newInstance(Pair.class, 0)
                 );
             }
         } else if (handlers.length == 1) {
@@ -39,7 +40,7 @@ public class ArrayBackedConditionalEvent<C, T> extends ConditionalEvent<C, T> {
     }
 
     @Override
-    public void register(Function<C, Boolean> condition, T listener) {
+    public void register(Predicate<C> condition, T listener) {
         if (condition == null) {
             throw new NullPointerException("Tried to register a null condition!");
         }
@@ -50,7 +51,7 @@ public class ArrayBackedConditionalEvent<C, T> extends ConditionalEvent<C, T> {
 
         if (handlers == null) {
             //noinspection unchecked
-            handlers = (Pair<Function<C, Boolean>, T>[]) Array.newInstance(Pair.class, 1);
+            handlers = (Pair<Predicate<C>, T>[]) Array.newInstance(Pair.class, 1);
             handlers[0] = new Pair<>(condition, listener);
         } else {
             handlers = Arrays.copyOf(handlers, handlers.length + 1);
@@ -68,8 +69,8 @@ public class ArrayBackedConditionalEvent<C, T> extends ConditionalEvent<C, T> {
 
         update();
 
-        for (Pair<Function<C, Boolean>, T> pair : handlers) {
-            if (pair.getLeft().apply(context)) {
+        for (Pair<Predicate<C>, T> pair : handlers) {
+            if (pair.getLeft().test(context)) {
                 return true;
             }
         }

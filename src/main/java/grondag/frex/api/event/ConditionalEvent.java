@@ -1,6 +1,6 @@
 package grondag.frex.api.event;
 
-import java.util.function.Function;
+import java.util.function.Predicate;
 
 public abstract class ConditionalEvent<C, T> {
     protected T invoker;
@@ -24,7 +24,7 @@ public abstract class ConditionalEvent<C, T> {
      * @param condition Condition under which the listener should be fired.
      * @param listener The desired listener.
      */
-    public abstract void register(Function<C, Boolean> condition, T listener);
+    public abstract void register(Predicate<C> condition, T listener);
 
     /**
      * Whether any of the registered conditions are true.
