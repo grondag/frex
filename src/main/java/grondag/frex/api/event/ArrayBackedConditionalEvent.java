@@ -32,8 +32,6 @@ public class ArrayBackedConditionalEvent<C, T> extends ConditionalEvent<C, T> {
                         (Pair<Predicate<C>, T>[]) Array.newInstance(Pair.class, 0)
                 );
             }
-        } else if (handlers.length == 1) {
-            invoker = handlers[0].getRight();
         } else {
             invoker = invokerFactory.apply(handlers);
         }
