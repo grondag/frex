@@ -35,7 +35,7 @@ import grondag.frex.api.event.WorldRenderEvent;
 @Internal
 @SuppressWarnings("deprecation")
 @Mixin(WorldRenderer.class)
-public class MixinWorldRenderer {
+public class MixinWorldRendererOldEvents {
 	@Inject(at = @At("HEAD"), method = "render")
 	private void beforeRender(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, CallbackInfo ci) {
 		if (!Frex.isAvailable()) {
