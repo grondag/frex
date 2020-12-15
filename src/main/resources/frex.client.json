@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "grondag.frex.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  	"MixinWorldRenderer"
+      ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
