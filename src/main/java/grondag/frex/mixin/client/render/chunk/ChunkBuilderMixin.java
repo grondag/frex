@@ -1,6 +1,7 @@
 package grondag.frex.mixin.client.render.chunk;
 
-import grondag.frex.api.event.BakedChunkSectionRenderer;
+import grondag.frex.api.event.BakedChunkSectionRenderEvent;
+import grondag.frex.impl.event.ChunkRenderContextImpl;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.client.indigo.renderer.accessor.AccessChunkRendererRegion;
@@ -27,7 +28,7 @@ import java.util.Set;
 @Mixin(targets = "net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk$RebuildTask")
 public class ChunkBuilderMixin {
     @Unique
-    private final BakedChunkSectionRenderer.ChunkRenderContext.Mutable context = new BakedChunkSectionRenderer.ChunkRenderContext.Mutable();
+    private final ChunkRenderContextImpl.Mutable context = new ChunkRenderContextImpl.Mutable();
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/BlockPos;iterate(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/BlockPos;)Ljava/lang/Iterable;"), locals = LocalCapture.CAPTURE_FAILHARD)
     private void initializeContext(float cameraX, float cameraY, float cameraZ, ChunkBuilder.ChunkData data, BlockBufferBuilderStorage buffers, CallbackInfoReturnable<Set<BlockEntity>> cir, int i, BlockPos blockPos, BlockPos blockPos2, ChunkOcclusionDataBuilder chunkOcclusionDataBuilder, Set<BlockEntity> set, ChunkRendererRegion chunkRendererRegion, MatrixStack matrixStack, Random random, BlockRenderManager blockRenderManager) {
@@ -44,6 +45,6 @@ public class ChunkBuilderMixin {
                 }
         );
 
-        BakedChunkSectionRenderer.EVENT.invoker().bake(context);
+        BakedChunkSectionRenderEvent.invoke(context);
     }
 }
