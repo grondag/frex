@@ -14,7 +14,7 @@
  *  the License.
  */
 
-package grondag.frex.mixin.client.render.chunk;
+package grondag.frex.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,21 +23,32 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.client.render.chunk.ChunkRendererRegion;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import grondag.frex.api.event.BakedChunkSectionRenderEvent;
-import grondag.frex.impl.event.ChunkRenderConditionContextImpl;
+import grondag.frex.api.event.RenderRegionBakeListener;
+import grondag.frex.impl.event.ChunkRenderConditionContext;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ChunkRendererRegion.class)
-public class ChunkRendererRegionMixin {
-	@Inject(method = "method_30000", at = @At("HEAD"), cancellable = true)
+public class MixinChunkRendererRegion {
+	@Inject(method = "create", at = @At("HEAD"))
+	private static void onCreate(World world, BlockPos startPos, BlockPos endPos, int chunkRadius, CallbackInfoReturnable<ChunkRendererRegion> cir) {
+		ChunkRenderConditionContext.POOL.get().prepare(startPos.getX() + 1, startPos.getY() + 1, startPos.getZ() + 1, world);
+	}
+
+	@Inject(method = "method_30000", at = @At("RETURN"), cancellable = true)
 	private static void isChunkEmpty(BlockPos startPos, BlockPos endPos, int i, int j, WorldChunk[][] worldChunks, CallbackInfoReturnable<Boolean> cir) {
-		if (BakedChunkSectionRenderEvent.shouldAnyFire(new ChunkRenderConditionContextImpl(startPos, endPos))) {
-			cir.setReturnValue(false);
+		if (cir.getReturnValueZ()) {
+			final ChunkRenderConditionContext ctx = ChunkRenderConditionContext.POOL.get();
+			RenderRegionBakeListener.prepareInvocations(ctx, ctx.listeners);
+
+			if (!ctx.listeners.isEmpty()) {
+				cir.setReturnValue(false);
+			}
 		}
 	}
 }
