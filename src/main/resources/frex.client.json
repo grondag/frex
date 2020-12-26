@@ -1,13 +1,11 @@
 {
   "required": true,
-  "minVersion": "0.8",
   "package": "grondag.frex.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-  ],
-  "client": [
-    "client.render.chunk.ChunkBuilderMixin",
-    "client.render.chunk.ChunkRendererRegionMixin"
+    "MixinChunkBuilder",
+    "MixinChunkRendererRegion",
+  	"MixinWorldRendererOldEvents"
   ],
   "injectors": {
     "defaultRequire": 1
