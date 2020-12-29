@@ -19,7 +19,6 @@ package grondag.frex.mixin;
 import java.util.Random;
 import java.util.Set;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -45,7 +44,7 @@ import net.fabricmc.api.Environment;
 import grondag.frex.api.event.RenderRegionBakeListener;
 import grondag.frex.api.event.RenderRegionBakeListener.RenderRegionContext;
 import grondag.frex.impl.event.BlockStateRendererImpl;
-import grondag.frex.impl.event.ChunkRenderConditionContext;
+import grondag.frex.impl.event.ChunkRenderConditionContext.RenderRegionListenerProvider;
 
 @Environment(EnvType.CLIENT)
 @Mixin(targets = "net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk$RebuildTask")
@@ -59,15 +58,16 @@ public class MixinChunkBuilder implements RenderRegionContext {
 
 	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/BlockPos;iterate(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/BlockPos;)Ljava/lang/Iterable;"), locals = LocalCapture.CAPTURE_FAILHARD)
 	private void onRender(float cameraX, float cameraY, float cameraZ, ChunkBuilder.ChunkData data, BlockBufferBuilderStorage buffers, CallbackInfoReturnable<Set<BlockEntity>> cir, int i, BlockPos blockPos, BlockPos blockPos2, ChunkOcclusionDataBuilder chunkOcclusionDataBuilder, Set<BlockEntity> set, ChunkRendererRegion chunkRendererRegion, MatrixStack matrixStack, Random random, BlockRenderManager blockRenderManager) {
-		final ChunkRenderConditionContext ctx = ChunkRenderConditionContext.POOL.get();
-		final ObjectArrayList<RenderRegionBakeListener> listeners = ctx.listeners;
+		if (region != null) {
+			final RenderRegionBakeListener[] listeners = ((RenderRegionListenerProvider) region).frex_getRenderRegionListeners();
 
-		if (!listeners.isEmpty()) {
-			blockStateRenderer.prepare(blockRenderManager, matrixStack, chunkRendererRegion);
-			final int limit = listeners.size();
+			if (listeners != null) {
+				blockStateRenderer.prepare(blockRenderManager, matrixStack, chunkRendererRegion);
+				final int limit = listeners.length;
 
-			for (int n = 0; n < limit; ++n) {
-				listeners.get(n).bake(this, blockStateRenderer);
+				for (int n = 0; n < limit; ++n) {
+					listeners[n].bake(this, blockStateRenderer);
+				}
 			}
 		}
 	}

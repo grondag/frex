@@ -17,6 +17,7 @@
 package grondag.frex.impl.event;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
@@ -27,22 +28,32 @@ import grondag.frex.api.event.RenderRegionBakeListener.RenderRegionContext;
 public class ChunkRenderConditionContext implements RenderRegionContext {
 	public final ObjectArrayList<RenderRegionBakeListener> listeners = new ObjectArrayList<>();
 	private final BlockPos.Mutable origin = new BlockPos.Mutable();
-	private BlockRenderView blockView;
+
+	public ChunkRenderConditionContext prepare(int x, int y, int z) {
+		listeners.clear();
+		origin.set(x, y, z);
+		return this;
+	}
+
+	public @Nullable RenderRegionBakeListener[] getListeners() {
+		if (listeners.isEmpty()) {
+			return null;
+		} else {
+			return listeners.toArray(new RenderRegionBakeListener[listeners.size()]);
+		}
+	}
 
 	@Override
 	public BlockRenderView blockView() {
-		return blockView;
+		return null;
 	}
 
 	@Override
 	public BlockPos origin() {
-		return this.origin;
+		return origin;
 	}
 
-	public void prepare(int x, int y, int z, BlockRenderView blockView) {
-		origin.set(x, y, z);
-		this.blockView = blockView;
+	public interface RenderRegionListenerProvider {
+		@Nullable RenderRegionBakeListener[] frex_getRenderRegionListeners();
 	}
-
-	public static final ThreadLocal<ChunkRenderConditionContext> POOL = ThreadLocal.withInitial(ChunkRenderConditionContext::new);
 }

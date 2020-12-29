@@ -19,6 +19,8 @@ package grondag.frex.api.event;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
@@ -47,7 +49,11 @@ public interface RenderRegionBakeListener {
 
 	@Environment(EnvType.CLIENT)
 	public interface RenderRegionContext {
-		BlockRenderView blockView();
+		/**
+		 * Not available until chunk baking.  Predicate tests must
+		 * be done based on block position only.
+		 */
+		@Nullable BlockRenderView blockView();
 
 		/**
 		 * Min position (inclusive) of the area being built.
