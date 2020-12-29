@@ -41,7 +41,8 @@ public interface RenderRegionBakeListener {
 
 	/**
 	 * For use by renderer implementations.  Implementations are responsible for providing a thread-safe list
-	 * instance and if populated, invoking all listeners in the list at the appropriate time.
+	 * instance and if populated, invoking all listeners in the list at the appropriate time. Renderer must
+	 * also clear the list instance if needed before calling.
 	 */
 	static void prepareInvocations(RenderRegionContext context, List<RenderRegionBakeListener> listeners) {
 		RenderRegionBakeListenerImpl.prepareInvocations(context, listeners);

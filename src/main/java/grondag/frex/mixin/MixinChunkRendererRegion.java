@@ -56,7 +56,7 @@ public class MixinChunkRendererRegion implements RenderRegionListenerProvider {
 		}
 	}
 
-	@Inject(method = "<init>", at = @At("RETURN"))
+	@Inject(method = "<init>*", at = @At("RETURN"))
 	private void onInit(World world, int chunkX, int chunkZ, WorldChunk[][] chunks, BlockPos startPos, BlockPos endPos, CallbackInfo ci) {
 		// capture our predicate search results while still on the same thread - will happen right after the hook above
 		listeners = TRANSFER_POOL.get().getListeners();

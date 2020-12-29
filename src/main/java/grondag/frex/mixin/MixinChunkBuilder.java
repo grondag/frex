@@ -49,32 +49,37 @@ import grondag.frex.impl.event.ChunkRenderConditionContext.RenderRegionListenerP
 @Environment(EnvType.CLIENT)
 @Mixin(targets = "net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk$RebuildTask")
 public class MixinChunkBuilder implements RenderRegionContext {
-	@Shadow protected ChunkRendererRegion region;
-
 	@Shadow protected BuiltChunk field_20839;
 
 	@Unique
 	private final BlockStateRendererImpl blockStateRenderer = new BlockStateRendererImpl();
 
+	// could shadow this but is set to null by the time we need it
+	@Unique
+	private ChunkRendererRegion contextRegion;
+
 	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/BlockPos;iterate(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/BlockPos;)Ljava/lang/Iterable;"), locals = LocalCapture.CAPTURE_FAILHARD)
 	private void onRender(float cameraX, float cameraY, float cameraZ, ChunkBuilder.ChunkData data, BlockBufferBuilderStorage buffers, CallbackInfoReturnable<Set<BlockEntity>> cir, int i, BlockPos blockPos, BlockPos blockPos2, ChunkOcclusionDataBuilder chunkOcclusionDataBuilder, Set<BlockEntity> set, ChunkRendererRegion chunkRendererRegion, MatrixStack matrixStack, Random random, BlockRenderManager blockRenderManager) {
-		if (region != null) {
-			final RenderRegionBakeListener[] listeners = ((RenderRegionListenerProvider) region).frex_getRenderRegionListeners();
+		if (chunkRendererRegion != null) {
+			final RenderRegionBakeListener[] listeners = ((RenderRegionListenerProvider) chunkRendererRegion).frex_getRenderRegionListeners();
 
 			if (listeners != null) {
+				contextRegion = chunkRendererRegion;
 				blockStateRenderer.prepare(blockRenderManager, matrixStack, chunkRendererRegion);
 				final int limit = listeners.length;
 
 				for (int n = 0; n < limit; ++n) {
 					listeners[n].bake(this, blockStateRenderer);
 				}
+
+				contextRegion = null;
 			}
 		}
 	}
 
 	@Override
 	public BlockRenderView blockView() {
-		return region;
+		return contextRegion;
 	}
 
 	@Override

@@ -63,7 +63,6 @@ public class RenderRegionBakeListenerImpl {
 	}
 
 	public static void prepareInvocations(RenderRegionContext context, List<RenderRegionBakeListener> list) {
-		list.clear();
 		EVENT.invoker().handle(context, list);
 	}
 }
