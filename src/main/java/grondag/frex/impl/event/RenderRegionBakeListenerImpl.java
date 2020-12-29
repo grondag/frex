@@ -53,8 +53,6 @@ public class RenderRegionBakeListenerImpl {
 	}
 
 	private static final Event<BakeHandler> EVENT = EventFactory.createArrayBacked(BakeHandler.class, listeners -> (context, list) -> {
-		list.clear();
-
 		for (final BakeHandler handler : listeners) {
 			handler.handle(context, list);
 		}
@@ -65,6 +63,7 @@ public class RenderRegionBakeListenerImpl {
 	}
 
 	public static void prepareInvocations(RenderRegionContext context, List<RenderRegionBakeListener> list) {
+		list.clear();
 		EVENT.invoker().handle(context, list);
 	}
 }
