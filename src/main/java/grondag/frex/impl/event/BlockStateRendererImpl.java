@@ -41,6 +41,10 @@ public class BlockStateRendererImpl implements BlockStateRenderer {
 	@Override
 	public void bake(BlockPos pos, BlockState state) {
 		final BakedModel model = blockRenderManager.getModel(state);
+
+		matrixStack.push();
+		matrixStack.translate(pos.getX() & 15, pos.getY() & 15, pos.getZ() & 15);
 		((AccessChunkRendererRegion) chunkRendererRegion).fabric_getRenderer().tesselateBlock(state, pos, model, matrixStack);
+		matrixStack.pop();
 	}
 }

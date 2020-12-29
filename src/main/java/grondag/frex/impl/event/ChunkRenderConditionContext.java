@@ -36,7 +36,7 @@ public class ChunkRenderConditionContext implements RenderRegionContext {
 
 	@Override
 	public BlockPos origin() {
-		return null;
+		return this.origin;
 	}
 
 	public void prepare(int x, int y, int z, BlockRenderView blockView) {
