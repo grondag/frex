@@ -3,6 +3,8 @@
   "package": "grondag.frex.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "MixinChunkBuilder",
+    "MixinChunkRendererRegion",
   	"MixinWorldRendererOldEvents"
   ],
   "injectors": {
