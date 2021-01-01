@@ -16,6 +16,9 @@
 
 package grondag.frex.api.material;
 
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+
 import org.jetbrains.annotations.ApiStatus.Experimental;
 
 import net.minecraft.util.math.Matrix3f;
@@ -49,9 +52,16 @@ public interface Uniform {
 		void set(float v0, float v1, float v2, float v3);
 	}
 
-	@FunctionalInterface
 	public interface UniformArrayf extends Uniform {
 		void set(float[] v);
+
+		void setExternal(FloatBuffer buff);
+	}
+
+	public interface UniformArray4f extends Uniform {
+		void set(float[] v);
+
+		void setExternal(FloatBuffer buff);
 	}
 
 	@FunctionalInterface
@@ -99,9 +109,10 @@ public interface Uniform {
 		void set(int v0, int v1, int v2, int v3);
 	}
 
-	@FunctionalInterface
 	public interface UniformArrayui extends Uniform {
 		void set(int[] v);
+
+		void setExternal(IntBuffer data);
 	}
 
 	@FunctionalInterface
