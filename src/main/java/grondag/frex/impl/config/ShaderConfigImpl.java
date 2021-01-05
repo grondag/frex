@@ -31,17 +31,17 @@ public class ShaderConfigImpl {
 	private static final Object2ObjectOpenHashMap<Identifier, Supplier<String>> MAP = new Object2ObjectOpenHashMap<>();
 
 	public static Supplier<String> getShaderConfigSupplier(Identifier token) {
-		Preconditions.checkNotNull(token, "Encounted null shader config token. This is a bug in a mod.");
+		Preconditions.checkNotNull(token, "Encountered null shader config token. This is a bug in a mod.");
 
 		return MAP.getOrDefault(token, () -> "// WARNING - INCLUDE TOKEN NOT FOUND: " + token.toString());
 	}
 
 	public static void registerShaderConfigSupplier(Identifier token, Supplier<String> supplier) {
-		Preconditions.checkNotNull(token, "Encounted null shader config token. This is a bug in a mod.");
-		Preconditions.checkNotNull(supplier, "Encounted null shader config supploer. This is a bug in a mod.");
+		Preconditions.checkNotNull(token, "Encountered null shader config token. This is a bug in a mod.");
+		Preconditions.checkNotNull(supplier, "Encountered null shader config supplier. This is a bug in a mod.");
 
 		if (MAP.put(token, supplier) != null) {
-			Frex.LOG.warn("ShaderConfiSupplier for token " + token.toString() + " was registered more than once. The last registration will be used.");
+			Frex.LOG.warn("ShaderConfigSupplier for token " + token.toString() + " was registered more than once. The last registration will be used.");
 		}
 	}
 }
