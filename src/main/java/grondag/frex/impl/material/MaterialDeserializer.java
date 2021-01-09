@@ -113,8 +113,18 @@ public class MaterialDeserializer {
 	}
 
 	private static void readMaterialFrex(JsonObject obj, grondag.frex.api.material.MaterialFinder finder) {
-		if (obj.has("fragmentSource") && obj.has("vertexSource")) {
-			finder.shader(new Identifier(JsonHelper.getString(obj, "vertexSource")), new Identifier(JsonHelper.getString(obj, "fragmentSource")));
+		final String vertexSource = JsonHelper.getString(obj, "vertexSource", null);
+		final String fragmentSource = JsonHelper.getString(obj, "fragmentSource", null);
+		final String depthVertexSource = JsonHelper.getString(obj, "depthVertexSource", null);
+		final String depthFragmentSource = JsonHelper.getString(obj, "depthFragmentSource", null);
+
+		final Identifier vertexSourceId = vertexSource != null && Identifier.isValid(vertexSource) ? new Identifier(vertexSource) : null;
+		final Identifier fragmentSourceId = fragmentSource != null && Identifier.isValid(fragmentSource) ? new Identifier(fragmentSource) : null;
+		final Identifier depthVertexSourceId = depthVertexSource != null && Identifier.isValid(depthVertexSource) ? new Identifier(depthVertexSource) : null;
+		final Identifier depthFragmentSourceId = depthFragmentSource != null && Identifier.isValid(depthFragmentSource) ? new Identifier(depthFragmentSource) : null;
+
+		if (fragmentSourceId != null || vertexSourceId != null || depthFragmentSourceId != null || depthVertexSourceId != null) {
+			finder.shader(vertexSourceId, fragmentSourceId, depthVertexSourceId, depthFragmentSourceId);
 		}
 
 		// We test for tags even though getBoolean also does so because we don't necessarily know the correct default value

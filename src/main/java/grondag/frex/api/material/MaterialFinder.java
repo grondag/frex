@@ -246,7 +246,9 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	 */
 	MaterialFinder lines(boolean lines);
 
-	MaterialFinder shader(Identifier vertexSourceId, Identifier fragmentSourceId);
+	MaterialFinder shader(@Nullable Identifier vertexSourceId, @Nullable Identifier fragmentSourceId);
+
+	MaterialFinder shader(@Nullable Identifier vertexSourceId, @Nullable Identifier fragmentSourceId, @Nullable Identifier depthVertexSourceId, @Nullable Identifier depthFragmentSourceId);
 
 	/**
 	 * For transparent materials, enables sorting of quads by
