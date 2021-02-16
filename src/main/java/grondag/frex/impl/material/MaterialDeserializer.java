@@ -285,6 +285,10 @@ public class MaterialDeserializer {
 				finder.writeMask(WRITE_MASK_COLOR_DEPTH);
 			}
 		}
+
+		if (obj.has("castShadows")) {
+			finder.castShadows(JsonHelper.getBoolean(obj, "castShadows", true));
+		}
 	}
 
 	private static BlendMode readBlendMode(String val) {

@@ -16,6 +16,7 @@
 
 package grondag.frex.api.material;
 
+import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.util.Identifier;
@@ -221,13 +222,14 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	MaterialFinder fog(int fog);
 
 	/**
-	 * Sets or disables GUI-style lighting. May also be used for flat in-world renders.
-	 * Cannot be part of primary sorted transparency.
-	 *
-	 * @param gui {@code true} to enable
-	 * @return finder instance for ease of chaining calls
+	 * @deprecated No longer has any effect and will be removed in a subsequent release.
 	 */
-	MaterialFinder gui(boolean gui);
+	@Deprecated
+	@ScheduledForRemoval
+	default MaterialFinder gui(boolean gui) {
+		// NOOP
+		return this;
+	}
 
 	/**
 	 * Enable or disable the translucent red overlay used to indicate damage.
@@ -363,4 +365,17 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	 * @return finder instance for ease of chaining calls
 	 */
 	MaterialFinder writeMask(int writeMask);
+
+	/**
+	 * Set true when material should cast shadows. Pipelines that lack
+	 * shadowmaps or some other mechanism for realistic shadows will
+	 * ignore this.  Defaults to true.
+	 *
+	 * <p>Set false for materials that render as solid for practical
+	 * reasons but should not cast shadows.  Beacon beams are a vanilla example.
+	 *
+	 * @param castShadows Set true if material should cast shadows.
+	 * @return finder instance for ease of chaining calls
+	 */
+	MaterialFinder castShadows(boolean castShadows);
 }

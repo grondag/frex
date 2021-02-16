@@ -284,5 +284,10 @@ public class MaterialTransformDeserializer {
 				transforms.add(finder -> finder.writeMask(WRITE_MASK_COLOR_DEPTH));
 			}
 		}
+
+		if (json.has("castShadows")) {
+			final boolean val = JsonHelper.getBoolean(json, "castShadows", true);
+			transforms.add(finder -> finder.castShadows(val));
+		}
 	}
 }
