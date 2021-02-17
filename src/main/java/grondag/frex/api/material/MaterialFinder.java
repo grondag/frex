@@ -189,14 +189,15 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	MaterialFinder discardsTexture(boolean discardsTexture);
 
 	/**
-	 * Enables or disables the vanilla lightmap.
-	 * Some implementations with alternate lighting models
-	 * may interpret this setting different or ignore it.
-	 *
-	 * @param enableLightmap [@code true} to enable vanilla lightmap
-	 * @return finder instance for ease of chaining calls
+	 * @deprecated No longer used or valid.
+	 * The lightmap texture is always available to pipelines that request it.
+	 * Will be removed in a subsequent release.
 	 */
-	MaterialFinder enableLightmap(boolean enableLightmap);
+	@Deprecated
+	@ScheduledForRemoval
+	default MaterialFinder enableLightmap(boolean enableLightmap) {
+		return this;
+	}
 
 	/**
 	 * Enable or disable the translucent flash overlay used to indicate primed TNT.
