@@ -55,7 +55,7 @@ public final class MaterialMapDeserializer {
 			}
 
 			if (mapObject.has("spriteMap")) {
-				final SpriteAtlasTexture blockAtlas = MinecraftClient.getInstance().getBakedModelManager().method_24153(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
+				final SpriteAtlasTexture blockAtlas = MinecraftClient.getInstance().getBakedModelManager().getAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
 				final Sprite missingSprite = blockAtlas.getSprite(MissingSprite.getMissingSpriteId());
 
 				final JsonArray jsonArray = mapObject.getAsJsonArray("spriteMap");

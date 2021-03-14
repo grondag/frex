@@ -1,5 +1,3 @@
-package grondag.frex.api;
-
 /*
  *  Copyright 2019, 2020 grondag
  *
@@ -15,14 +13,17 @@ package grondag.frex.api;
  *  License for the specific language governing permissions and limitations under
  *  the License.
  */
+
+package grondag.frex.api;
+
 public interface RendererFeature {
 	default boolean isAvailable(int featureId) {
 		return false;
 	}
 
-	int EMITTER_CLEAR = 0;
-	int MATERIAL_COPY = 1;
 	// IDs 0 - 4095 are reserved for Fabric API.
+	int BOGUS_FEATURE = 0;
+	int ALSO_BOGUS = 1;
 
 	/** Third-party extension features begin numbering here. */
 	int EXTENSION_BASE = 4096;

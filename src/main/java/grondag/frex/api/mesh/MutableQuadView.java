@@ -21,8 +21,8 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3f;
 
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 
@@ -55,7 +55,7 @@ public interface MutableQuadView extends net.fabricmc.fabric.api.renderer.v1.mes
 	MutableQuadView pos(int vertexIndex, float x, float y, float z);
 
 	@Override
-	default MutableQuadView pos(int vertexIndex, Vector3f vec) {
+	default MutableQuadView pos(int vertexIndex, Vec3f vec) {
 		return pos(vertexIndex, vec.getX(), vec.getY(), vec.getZ());
 	}
 
@@ -63,7 +63,7 @@ public interface MutableQuadView extends net.fabricmc.fabric.api.renderer.v1.mes
 	MutableQuadView normal(int vertexIndex, float x, float y, float z);
 
 	@Override
-	default MutableQuadView normal(int vertexIndex, Vector3f vec) {
+	default MutableQuadView normal(int vertexIndex, Vec3f vec) {
 		return normal(vertexIndex, vec.getX(), vec.getY(), vec.getZ());
 	}
 
