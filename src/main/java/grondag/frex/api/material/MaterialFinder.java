@@ -137,14 +137,27 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	 */
 	MaterialFinder cull(boolean cull);
 
+	//Parameters to {@link #cutout(int)}.
+
+	/** Disable cutout testing. */
+	int CUTOUT_NONE = 0;
+	/** Use 0.5 as cutout threshold. */
+	int CUTOUT_HALF = 1;
+	/** Use 0.1 as cutout threshold. */
+	int CUTOUT_TENTH = 2;
+	/** Use zero as cutout threshold. */
+	int CUTOUT_ZERO = 3;
+	/** Use vertex color alpha as cutout threshold. */
+	int CUTOUT_ALPHA = 4;
+
 	/**
 	 * Directly enables cutout rendering without using {@link #blendMode(BlendMode)}.
 	 * May be overridden if BlendMode is non-null.
 	 *
-	 * @param cutout {@code true} to enable
+	 * @param cutout mode to enable, one of the CUTOUT_ constants.
 	 * @return finder instance for ease of chaining calls
 	 */
-	MaterialFinder cutout(boolean cutout);
+	MaterialFinder cutout(int cutout);
 
 	/**
 	 * Parameters to {@link MaterialFinder#decal(int)}.
@@ -208,19 +221,9 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	MaterialFinder flashOverlay(boolean flashOverlay);
 
 	/**
-	 * Parameters to {@link #fog(int)}.
+	 * Enable or disables atmospheric fog for this material.
 	 */
-	int FOG_NONE = 0;
-	int FOG_TINTED = 1;
-	int FOG_BLACK = 2;
-
-	/**
-	 * Sets or disables fogs to be used for this material.
-	 *
-	 * @param fog one of {@link #FOG_NONE}, {@link #FOG_TINTED} or {@link #FOG_BLACK}
-	 * @return finder instance for ease of chaining calls
-	 */
-	MaterialFinder fog(int fog);
+	MaterialFinder fog(boolean enable);
 
 	/**
 	 * @deprecated No longer has any effect and will be removed in a subsequent release.
@@ -295,18 +298,6 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	 * @return finder instance for ease of chaining calls
 	 */
 	MaterialFinder texture(@Nullable Identifier id);
-
-	/**
-	 * Enables or disables a lower (~10%) alpha test value for
-	 * cutout rendering.  Used for textures rendered in transparent layer
-	 * to clamp off fuzzy edges or random slightly-more-than-zero-alpha pixels.
-	 *
-	 * <p>Has no effect unless {@link #transparentCutout(boolean)}
-	 *
-	 * @param translucentCutout {@code true} to enable
-	 * @return finder instance for ease of chaining calls
-	 */
-	MaterialFinder transparentCutout(boolean transparentCutout);
 
 	/**
 	 * Parameters to {@link MaterialFinder#transparency(int)}.

@@ -32,7 +32,7 @@ public interface RenderMaterial extends net.fabricmc.fabric.api.renderer.v1.mate
 
 	boolean cull();
 
-	boolean cutout();
+	int cutout();
 
 	int decal();
 
@@ -84,7 +84,7 @@ public interface RenderMaterial extends net.fabricmc.fabric.api.renderer.v1.mate
 
 	boolean flashOverlay();
 
-	int fog();
+	boolean fog();
 
 	/**
 	 * @deprecated No longer used or valid. Always returns false.
@@ -120,8 +120,6 @@ public interface RenderMaterial extends net.fabricmc.fabric.api.renderer.v1.mate
 	String texture();
 
 	int transparency();
-
-	boolean transparentCutout();
 
 	boolean unmipped();
 

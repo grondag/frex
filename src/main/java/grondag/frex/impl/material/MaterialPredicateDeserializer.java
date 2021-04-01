@@ -16,6 +16,11 @@
 
 package grondag.frex.impl.material;
 
+import static grondag.frex.api.material.MaterialFinder.CUTOUT_ALPHA;
+import static grondag.frex.api.material.MaterialFinder.CUTOUT_HALF;
+import static grondag.frex.api.material.MaterialFinder.CUTOUT_NONE;
+import static grondag.frex.api.material.MaterialFinder.CUTOUT_TENTH;
+import static grondag.frex.api.material.MaterialFinder.CUTOUT_ZERO;
 import static grondag.frex.api.material.MaterialFinder.DECAL_NONE;
 import static grondag.frex.api.material.MaterialFinder.DECAL_POLYGON_OFFSET;
 import static grondag.frex.api.material.MaterialFinder.DECAL_VIEW_OFFSET;
@@ -23,9 +28,6 @@ import static grondag.frex.api.material.MaterialFinder.DEPTH_TEST_ALWAYS;
 import static grondag.frex.api.material.MaterialFinder.DEPTH_TEST_DISABLE;
 import static grondag.frex.api.material.MaterialFinder.DEPTH_TEST_EQUAL;
 import static grondag.frex.api.material.MaterialFinder.DEPTH_TEST_LEQUAL;
-import static grondag.frex.api.material.MaterialFinder.FOG_BLACK;
-import static grondag.frex.api.material.MaterialFinder.FOG_NONE;
-import static grondag.frex.api.material.MaterialFinder.FOG_TINTED;
 import static grondag.frex.api.material.MaterialFinder.TARGET_CLOUDS;
 import static grondag.frex.api.material.MaterialFinder.TARGET_ENTITIES;
 import static grondag.frex.api.material.MaterialFinder.TARGET_MAIN;
@@ -135,7 +137,21 @@ public class MaterialPredicateDeserializer {
 		}
 
 		if (json.has("cutout")) {
-			final boolean val = JsonHelper.getBoolean(json, "cutout", true);
+			final String cutout = json.get("cutout").getAsString().toLowerCase();
+			int val;
+
+			if (cutout.equals("cutout_half")) {
+				val = CUTOUT_HALF;
+			} else if (cutout.equals("cutout_tenth")) {
+				val = CUTOUT_TENTH;
+			} else if (cutout.equals("cutout_zero")) {
+				val = CUTOUT_ZERO;
+			} else if (cutout.equals("cutout_alpha")) {
+				val = CUTOUT_ALPHA;
+			} else {
+				val = CUTOUT_NONE;
+			}
+
 			predicates.add(mat -> mat.cutout() == val);
 		}
 
@@ -181,15 +197,8 @@ public class MaterialPredicateDeserializer {
 		}
 
 		if (json.has("fog")) {
-			final String fog = json.get("fog").getAsString().toLowerCase();
-
-			if (fog.equals("none")) {
-				predicates.add(mat -> mat.fog() == FOG_NONE);
-			} else if (fog.equals("tinted")) {
-				predicates.add(mat -> mat.fog() == FOG_TINTED);
-			} else if (fog.equals("black")) {
-				predicates.add(mat -> mat.fog() == FOG_BLACK);
-			}
+			final boolean val = JsonHelper.getBoolean(json, "fog", true);
+			predicates.add(mat -> mat.fog() == val);
 		}
 
 		if (json.has("hurtOverlay")) {
@@ -225,11 +234,6 @@ public class MaterialPredicateDeserializer {
 			} else if (target.equals("entities")) {
 				predicates.add(mat -> mat.target() == TARGET_ENTITIES);
 			}
-		}
-
-		if (json.has("transparentCutout")) {
-			final boolean val = JsonHelper.getBoolean(json, "transparentCutout", true);
-			predicates.add(mat -> mat.transparentCutout() == val);
 		}
 
 		if (json.has("transparency")) {

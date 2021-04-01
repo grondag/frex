@@ -42,7 +42,7 @@ public class ItemLightLoader implements SimpleSynchronousResourceReloadListener 
 	private ItemLightLoader() { }
 
 	@Override
-	public void apply(ResourceManager manager) {
+	public void reload(ResourceManager manager) {
 		MAP.clear();
 		final Iterator<Item> items = Registry.ITEM.iterator();
 
