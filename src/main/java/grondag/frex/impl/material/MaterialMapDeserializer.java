@@ -50,7 +50,7 @@ public final class MaterialMapDeserializer {
 
 		try {
 			if (mapObject.has("defaultMaterial")) {
-				defaultMaterial = MaterialLoaderImpl.loadMaterial(idForLog, mapObject.get("defaultMaterial").getAsString(), defaultMaterial);
+				defaultMaterial = MaterialLoaderImpl.loadMaterial(mapObject.get("defaultMaterial").getAsString(), defaultMaterial);
 				defaultMap = new SingleMaterialMap(defaultMaterial);
 			}
 
@@ -81,7 +81,7 @@ public final class MaterialMapDeserializer {
 						continue;
 					}
 
-					spriteMap.put(sprite, MaterialLoaderImpl.loadMaterial(idForLog, obj.get("material").getAsString(), defaultMaterial));
+					spriteMap.put(sprite, MaterialLoaderImpl.loadMaterial(obj.get("material").getAsString(), defaultMaterial));
 				}
 
 				return spriteMap.isEmpty() ? defaultMap : (defaultMaterial == null ? new MultiMaterialMap(spriteMap) : new DefaultedMultiMaterialMap(defaultMaterial, spriteMap));
@@ -104,7 +104,7 @@ public final class MaterialMapDeserializer {
 			MaterialMap defaultMap = globalDefaultMap;
 
 			if (json.has("defaultMaterial")) {
-				defaultMaterial = MaterialLoaderImpl.loadMaterial(idString, json.get("defaultMaterial").getAsString(), defaultMaterial);
+				defaultMaterial = MaterialLoaderImpl.loadMaterial(json.get("defaultMaterial").getAsString(), defaultMaterial);
 				defaultMap = new SingleMaterialMap(defaultMaterial);
 			}
 

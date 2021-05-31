@@ -44,7 +44,7 @@ public class ItemMaterialMapDeserializer {
 			MaterialMap result = globalDefaultMap;
 
 			if (json.has("defaultMaterial")) {
-				defaultMaterial = MaterialLoaderImpl.loadMaterial(idString, json.get("defaultMaterial").getAsString(), defaultMaterial);
+				defaultMaterial = MaterialLoaderImpl.loadMaterial(json.get("defaultMaterial").getAsString(), defaultMaterial);
 				result = new SingleMaterialMap(defaultMaterial);
 			}
 

@@ -90,6 +90,8 @@ public class MaterialMapLoader implements SimpleSynchronousResourceReloadListene
 
 	@Override
 	public void reload(ResourceManager manager) {
+		MaterialLoaderImpl.reset();
+
 		BLOCK_MAP.clear();
 		final Iterator<Block> blocks = Registry.BLOCK.iterator();
 

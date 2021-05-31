@@ -34,10 +34,9 @@ public class ParticleMaterialMapDeserializer {
 	public static void deserialize(ParticleType<?> particleType, Identifier idForLog, InputStreamReader reader, IdentityHashMap<ParticleType<?>, MaterialMap> map) {
 		try {
 			final JsonObject json = JsonHelper.deserialize(reader);
-			final String idString = idForLog.toString();
 
 			if (json.has("material")) {
-				final MaterialMap result = new SingleMaterialMap(MaterialLoaderImpl.loadMaterial(idString, json.get("material").getAsString(), null));
+				final MaterialMap result = new SingleMaterialMap(MaterialLoaderImpl.loadMaterial(json.get("material").getAsString(), null));
 				map.put(particleType, result);
 			}
 		} catch (final Exception e) {

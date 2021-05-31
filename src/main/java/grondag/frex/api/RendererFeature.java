@@ -16,14 +16,27 @@
 
 package grondag.frex.api;
 
+import grondag.frex.impl.RendererFeatureImpl;
+
 public interface RendererFeature {
-	default boolean isAvailable(int featureId) {
-		return false;
+	static boolean isAvailable(int featureId) {
+		return RendererFeatureImpl.isAvailable(featureId);
 	}
 
-	// IDs 0 - 4095 are reserved for Fabric API.
-	int BOGUS_FEATURE = 0;
-	int ALSO_BOGUS = 1;
+	/**
+	 * Renderers should call this exactly once during init to declare available features.
+	 *
+	 * @param features Array of feature flags declared here or third-party flags declared elsewhere.
+	 */
+	static void registerFeatures(int... features) {
+		RendererFeatureImpl.registerFeatures(features);
+	}
+
+	// IDs 0 - 4095 are reserved for FREX.
+	int FREX_BASE = 0;
+
+	/** Present when registerOrUpdateMaterial is supported. */
+	int UPDATE_MATERIAL_REGISTRATION = FREX_BASE;
 
 	/** Third-party extension features begin numbering here. */
 	int EXTENSION_BASE = 4096;

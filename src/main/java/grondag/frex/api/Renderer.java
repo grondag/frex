@@ -67,4 +67,21 @@ public interface Renderer extends net.fabricmc.fabric.api.renderer.v1.Renderer {
 
 	@Experimental
 	boolean registerCondition(Identifier id, MaterialCondition pipeline);
+
+	/**
+	 * Identical to {@link #registerMaterial(Identifier, RenderMaterial)} except registrations
+	 * are replaced if they already exist.  Meant to be used for materials that are loaded
+	 * from resources and need to be updated during resource reload.
+	 *
+	 * <p>Note that mods retaining references to materials obtained from the registry will not
+	 * use the new material definition unless they re-query.  Material maps will handle this
+	 * automatically but mods must be designed to do so.
+	 *
+	 * <p>If this feature is not supported by the renderer, behaves like {@link #registerMaterial(Identifier, RenderMaterial)}.
+	 *
+	 * <p>Returns false if a material with the given identifier was already present.
+	 */
+	default boolean registerOrUpdateMaterial(Identifier id, RenderMaterial material) {
+		return registerMaterial(id, material);
+	}
 }
