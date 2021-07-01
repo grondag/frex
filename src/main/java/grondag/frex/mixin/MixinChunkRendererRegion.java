@@ -44,7 +44,7 @@ public class MixinChunkRendererRegion implements RenderRegionListenerProvider {
 
 	private static final ThreadLocal<ChunkRenderConditionContext> TRANSFER_POOL = ThreadLocal.withInitial(ChunkRenderConditionContext::new);
 
-	@Inject(method = "method_30000", at = @At("RETURN"), cancellable = true)
+	@Inject(method = "isEmptyBetween", at = @At("RETURN"), cancellable = true)
 	private static void isChunkEmpty(BlockPos startPos, BlockPos endPos, int i, int j, WorldChunk[][] worldChunks, CallbackInfoReturnable<Boolean> cir) {
 		// even if region not empty we still test here and capture listeners here
 		final ChunkRenderConditionContext context = TRANSFER_POOL.get().prepare(startPos.getX() + 1, startPos.getY() + 1, startPos.getZ() + 1);
