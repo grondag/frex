@@ -42,7 +42,9 @@ public class ItemLightDeserializer {
 		final float green = JsonHelper.getFloat(obj, "green", 1f);
 		final float blue = JsonHelper.getFloat(obj, "blue", 1f);
 		final boolean worksInFluid = JsonHelper.getBoolean(obj, "worksInFluid", true);
+		final int innerConeAngleDegrees = JsonHelper.getInt(obj, "innerConeAngleDegrees", 360);
+		final int outerConeAngleDegrees = JsonHelper.getInt(obj, "outerConeAngleDegrees", innerConeAngleDegrees);
 
-		return ItemLight.of(intensity, red, green, blue, worksInFluid);
+		return ItemLight.of(intensity, red, green, blue, worksInFluid, innerConeAngleDegrees, outerConeAngleDegrees);
 	}
 }

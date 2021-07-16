@@ -63,6 +63,25 @@ public interface ItemLight {
 		return true;
 	}
 
+	/**
+	 * Setting to a value < 360 will result in a spot light effect.
+	 * This is the angle of full brightness within the light cone.
+	 * Attenuation is assumed to be the same as for non-spot lights.
+	 */
+	default int innerConeAngleDegrees() {
+		return 360;
+	}
+
+	/**
+	 * The angle of reduced brightness around the inner light cone.
+	 * Set to a value < 360 but greater than {@link #innerConeAngleDegrees()}
+	 * to create a fall-off effect around a spot light.
+	 * Attenuation is assumed to be the same as for non-spot lights.
+	 */
+	default int outerConeAngleDegrees() {
+		return 360;
+	}
+
 	ItemLight NONE = () -> 0;
 
 	static ItemLight get(ItemStack stack) {
@@ -76,6 +95,12 @@ public interface ItemLight {
 	}
 
 	static ItemLight of(float intensity, float red, float green, float blue, boolean worksInFluid) {
-		return new SimpleItemLight(intensity, red, green, blue, worksInFluid);
+		return new SimpleItemLight(intensity, red, green, blue, worksInFluid, 360, 360);
+	}
+
+	static ItemLight of(float intensity, float red, float green, float blue, boolean worksInFluid, int innerConeAngleDegrees, int outerConeAngleDegrees) {
+		innerConeAngleDegrees = Math.min(360, Math.max(1, innerConeAngleDegrees));
+		outerConeAngleDegrees = Math.min(360, Math.max(innerConeAngleDegrees, outerConeAngleDegrees));
+		return new SimpleItemLight(intensity, red, green, blue, worksInFluid, innerConeAngleDegrees, outerConeAngleDegrees);
 	}
 }

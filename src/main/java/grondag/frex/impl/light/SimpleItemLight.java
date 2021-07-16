@@ -24,19 +24,25 @@ public class SimpleItemLight implements ItemLight {
 	private final float green;
 	private final float blue;
 	private final boolean worksInFluid;
+	private final int innerConeAngleDegrees;
+	private final int outerConeAngleDegrees;
 
 	public SimpleItemLight(
 		float intensity,
 		float red,
 		float green,
 		float blue,
-		boolean worksInFluid
+		boolean worksInFluid,
+		int innerConeAngleDegrees,
+		int outerConeAngleDegrees
 	) {
 		this.intensity = intensity;
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
 		this.worksInFluid = worksInFluid;
+		this.innerConeAngleDegrees = innerConeAngleDegrees;
+		this.outerConeAngleDegrees = outerConeAngleDegrees;
 	}
 
 	@Override
@@ -62,5 +68,15 @@ public class SimpleItemLight implements ItemLight {
 	@Override
 	public boolean worksInFluid() {
 		return worksInFluid;
+	}
+
+	@Override
+	public int innerConeAngleDegrees() {
+		return innerConeAngleDegrees;
+	}
+
+	@Override
+	public int outerConeAngleDegrees() {
+		return outerConeAngleDegrees;
 	}
 }
