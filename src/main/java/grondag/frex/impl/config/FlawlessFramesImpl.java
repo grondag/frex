@@ -22,9 +22,6 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import com.google.common.base.Preconditions;
-import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.fabricmc.loader.api.FabricLoader;
 
 import grondag.frex.Frex;
@@ -45,22 +42,22 @@ public class FlawlessFramesImpl {
 
 		@Override
 		public void accept(Boolean isActive) {
-			Preconditions.checkState(RenderSystem.isOnRenderThread(), "Flawless Frames must be controlled from the render thread.");
-
 			if (this.isActive != isActive) {
-				if (this.isActive) {
-					ACTIVE.remove(this);
-					if (enableTrace) Frex.LOG.info("Deactivating Flawless Frames at request of " + owner);
-				} else {
-					ACTIVE.add(this);
-					if (enableTrace) Frex.LOG.info("Activating Flawless Frames at request of " + owner);
-				}
+				synchronized (ACTIVE) {
+					if (this.isActive) {
+						ACTIVE.remove(this);
+						if (enableTrace) Frex.LOG.info("Deactivating Flawless Frames at request of " + owner);
+					} else {
+						ACTIVE.add(this);
+						if (enableTrace) Frex.LOG.info("Activating Flawless Frames at request of " + owner);
+					}
 
-				this.isActive = isActive;
+					this.isActive = isActive;
 
-				if (enableTrace) {
-					Frex.LOG.info("Flawless Frames current status is " + isActive());
-					if (isActive()) Frex.LOG.info("Current active controllers are: " + ACTIVE.toString());
+					if (enableTrace) {
+						Frex.LOG.info("Flawless Frames current status is " + isActive());
+						if (isActive()) Frex.LOG.info("Current active controllers are: " + ACTIVE.toString());
+					}
 				}
 			}
 		}
