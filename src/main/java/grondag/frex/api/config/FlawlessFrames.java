@@ -60,8 +60,9 @@ import grondag.frex.impl.config.FlawlessFramesImpl;
  * consumer, but it can be any thread.)
  * <li>Calls are idempotent - setting true or false multiple times in succession has the same
  * outcome as calling once.
- * <li>The renderer will check the current status at the start of a frame and that status
- * will be effective for the whole frame.
+ * <li>The renderer will check the current status at least once every frame, and most
+ * implementations will probably check at the start of the frame.  While an implementation may
+ * check for changes at any time during a frame, it isn't required to change behavior until the next.
  * <li>Because of the above conditions, consumers needing precise control of frames should
  * change status on the render thread before the start of the next frame.</ul>
  *
