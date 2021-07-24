@@ -72,7 +72,7 @@ public class MaterialDeserializer {
 		final MaterialFinder finder = FINDER.clear();
 
 		// "layers" tag still support for old multi-layer format but
-		// only first layer is used. Layer is not requred.
+		// only first layer is used. Layer is not required.
 		if (json.has("layers")) {
 			final JsonArray layers = JsonHelper.asArray(json.get("layers"), "layers");
 

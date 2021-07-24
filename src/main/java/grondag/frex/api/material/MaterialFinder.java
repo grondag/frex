@@ -117,7 +117,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	 * and makes minification blur LOD-linear. Used for enchantment glint.
 	 *
 	 * <p>Note this is isn't generally useful for atlas sprites and different from mipmap.
-	 * Mipmap is done with linear sampline using nearest LOD because otherwise artifacts appear when
+	 * Mipmap is done with linear sampling using nearest LOD because otherwise artifacts appear when
 	 * sprites are sampled across LODS levels, especially for randomized rotated
 	 * sprites like grass.
 	 *
@@ -350,7 +350,7 @@ public interface MaterialFinder extends net.fabricmc.fabric.api.renderer.v1.mate
 	/**
 	 * Determines which standard framebuffer attachments are written.
 	 * Implementations may have additional framebuffer attachments not
-	 * controled by this setting.
+	 * controlled by this setting.
 	 *
 	 * @param writeMask one of {@link MaterialFinder#WRITE_MASK_COLOR}, {@link MaterialFinder#WRITE_MASK_DEPTH},
 	 * or {@link MaterialFinder#WRITE_MASK_COLOR_DEPTH}
