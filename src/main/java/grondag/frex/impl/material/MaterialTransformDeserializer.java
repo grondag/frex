@@ -105,9 +105,12 @@ public class MaterialTransformDeserializer {
 	}
 
 	private static void readTransforms(JsonObject json, ObjectArrayList<MaterialTransform> transforms) {
-		if (json.has("fragmentSource") && json.has("vertexSource")) {
-			final Identifier vs = new Identifier(JsonHelper.getString(json, "vertexSource"));
-			final Identifier fs = new Identifier(JsonHelper.getString(json, "fragmentSource"));
+		final boolean hasFragment = json.has("fragmentSource");
+		final boolean hasVertex = json.has("vertexSource");
+
+		if (hasFragment || hasVertex) {
+			final Identifier vs = hasVertex ? new Identifier(JsonHelper.getString(json, "vertexSource")) : null;
+			final Identifier fs = hasFragment ? new Identifier(JsonHelper.getString(json, "fragmentSource")) : null;
 			transforms.add(finder -> finder.shader(vs, fs));
 		}
 
