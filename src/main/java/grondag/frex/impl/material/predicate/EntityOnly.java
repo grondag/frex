@@ -14,7 +14,7 @@
  *  the License.
  */
 
-package grondag.frex.impl.material;
+package grondag.frex.impl.material.predicate;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -32,11 +32,14 @@ import net.minecraft.scoreboard.AbstractTeam;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 
+import grondag.frex.api.material.RenderMaterial;
+
 /**
  * Stripped-down adaptation of vanilla class used for entity loot predicates.
  */
-public class ClientEntityPredicate {
-	public static final ClientEntityPredicate ANY;
+public class EntityOnly extends EntityBiPredicate {
+	public static final EntityOnly ANY;
+
 	private final EntityEffectPredicate effects;
 	private final NbtPredicate nbt;
 	private final EntityFlagsPredicate flags;
@@ -46,7 +49,7 @@ public class ClientEntityPredicate {
 	@Nullable private final String team;
 	@Nullable private final Identifier catType;
 
-	private ClientEntityPredicate(EntityEffectPredicate effects, NbtPredicate nbt, EntityFlagsPredicate flags, EntityEquipmentPredicate equipment, PlayerPredicate player, FishingHookPredicate fishingHook, @Nullable String team, @Nullable Identifier catType) {
+	private EntityOnly(EntityEffectPredicate effects, NbtPredicate nbt, EntityFlagsPredicate flags, EntityEquipmentPredicate equipment, PlayerPredicate player, FishingHookPredicate fishingHook, @Nullable String team, @Nullable Identifier catType) {
 		this.effects = effects;
 		this.nbt = nbt;
 		this.flags = flags;
@@ -58,6 +61,11 @@ public class ClientEntityPredicate {
 	}
 
 	public boolean test(Entity entity) {
+		return test(entity, null);
+	}
+
+	@Override
+	public boolean test(Entity entity, RenderMaterial ignored) {
 		if (this == ANY) {
 			return true;
 		} else if (entity == null) {
@@ -89,7 +97,7 @@ public class ClientEntityPredicate {
 		}
 	}
 
-	public static ClientEntityPredicate fromJson(@Nullable JsonElement json) {
+	public static EntityOnly fromJson(@Nullable JsonElement json) {
 		if (json != null && !json.isJsonNull()) {
 			final JsonObject jsonObject = JsonHelper.asObject(json, "entity");
 			final EntityEffectPredicate effects = EntityEffectPredicate.fromJson(jsonObject.get("effects"));
@@ -101,13 +109,19 @@ public class ClientEntityPredicate {
 			final String team = JsonHelper.getString(jsonObject, "team", (String) null);
 			final Identifier catType = jsonObject.has("catType") ? new Identifier(JsonHelper.getString(jsonObject, "catType")) : null;
 
-			return new ClientEntityPredicate(effects, nbt, flags, equipment, player, fishHook, team, catType);
+			return new EntityOnly(effects, nbt, flags, equipment, player, fishHook, team, catType);
 		} else {
 			return ANY;
 		}
 	}
 
 	static {
-		ANY = new ClientEntityPredicate(EntityEffectPredicate.EMPTY, NbtPredicate.ANY, EntityFlagsPredicate.ANY, EntityEquipmentPredicate.ANY, PlayerPredicate.ANY, FishingHookPredicate.ANY, (String) null, (Identifier) null);
+		ANY = new EntityOnly(EntityEffectPredicate.EMPTY, NbtPredicate.ANY, EntityFlagsPredicate.ANY, EntityEquipmentPredicate.ANY, PlayerPredicate.ANY, FishingHookPredicate.ANY, (String) null, (Identifier) null);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// not worth elaborating
+		return this == obj;
 	}
 }

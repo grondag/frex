@@ -205,8 +205,12 @@ public class MaterialMapLoader implements SimpleSynchronousResourceReloadListene
 		final Identifier blockEntityId = Registry.BLOCK_ENTITY_TYPE.getId(blockEntityType);
 		final Identifier id = new Identifier(blockEntityId.getNamespace(), "materialmaps/block_entity/" + blockEntityId.getPath() + ".json");
 
-		try (Resource res = manager.getResource(id)) {
-			BlockEntityMaterialMapDeserializer.deserialize(blockEntityType, id, new InputStreamReader(res.getInputStream(), StandardCharsets.UTF_8), BLOCK_ENTITY_MAP);
+		try {
+			List<Resource> resources = manager.getAllResources(id);
+
+			if (resources.size() > 0) {
+				BlockEntityMaterialMapDeserializer.deserialize(blockEntityType, id, resources, BLOCK_ENTITY_MAP);
+			}
 		} catch (final FileNotFoundException e) {
 			// eat these, material maps are not required
 		} catch (final Exception e) {
@@ -218,8 +222,12 @@ public class MaterialMapLoader implements SimpleSynchronousResourceReloadListene
 		final Identifier entityId = Registry.ENTITY_TYPE.getId(entityType);
 		final Identifier id = new Identifier(entityId.getNamespace(), "materialmaps/entity/" + entityId.getPath() + ".json");
 
-		try (Resource res = manager.getResource(id)) {
-			EntityMaterialMapDeserializer.deserialize(entityType, id, new InputStreamReader(res.getInputStream(), StandardCharsets.UTF_8), ENTITY_MAP);
+		try {
+			List<Resource> resources = manager.getAllResources(id);
+
+			if (resources.size() > 0) {
+				EntityMaterialMapDeserializer.deserialize(entityType, id, resources, ENTITY_MAP);
+			}
 		} catch (final FileNotFoundException e) {
 			// eat these, material maps are not required
 		} catch (final Exception e) {

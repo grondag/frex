@@ -311,7 +311,7 @@ public class MaterialDeserializer {
 		}
 	}
 
-	static BlendMode readBlendModeFrex(String val) {
+	public static BlendMode readBlendModeFrex(String val) {
 		val = val.toLowerCase(Locale.ROOT);
 		switch (val) {
 			case "solid":
