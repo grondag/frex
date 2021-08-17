@@ -17,9 +17,11 @@
 package grondag.frex.api.mesh;
 
 import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.texture.Sprite;
+import net.minecraft.util.math.Vec3f;
 
 import grondag.frex.api.material.RenderMaterial;
 
@@ -134,4 +136,32 @@ public interface QuadView extends net.fabricmc.fabric.api.renderer.v1.mesh.QuadV
 	 * Retrieve vertical sprite atlas coordinates.
 	 */
 	float spriteV(int vertexIndex);
+
+	/**
+	 * If false, no vertex tangent was provided.
+	 * Lighting will use automatically computed tangents.
+	 */
+	boolean hasTangent(int vertexIndex);
+
+	/**
+	 * Pass a non-null target to avoid allocation - will be returned with values.
+	 * Otherwise returns a new instance. Returns null if tangent not present.
+	 */
+	@Nullable
+	Vec3f copyTangent(int vertexIndex, @Nullable Vec3f target);
+
+	/**
+	 * Will return {@link Float#NaN} if tangent not present.
+	 */
+	float tangentX(int vertexIndex);
+
+	/**
+	 * Will return {@link Float#NaN} if tangent not present.
+	 */
+	float tangentY(int vertexIndex);
+
+	/**
+	 * Will return {@link Float#NaN} if tangent not present.
+	 */
+	float tangentZ(int vertexIndex);
 }
