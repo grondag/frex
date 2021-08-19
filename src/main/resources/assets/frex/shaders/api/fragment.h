@@ -69,7 +69,6 @@
 
 ******************************************************/
 
-
 /******************************************************
  * VERTEX INPUTS
 ******************************************************/
@@ -290,11 +289,11 @@ vec2 frx_fragLight;
 /*
  * Diffuse shading value from CPU lighting, 0 to 1.
  * Initial value when frx_materialFragment() is called will
- * be frx_vertexDiffuse, or 1.0 if frx_matDisableDiffuse is true.
+ * be frx_vertexDiffuse, or 1.0 if frx_matDisableDiffuse is true
+ * or if the current pipeline disables vertex diffuse shading.
  *
  * Depending on the context or lighting model in effect,
- * this may not be populated or used.
- * Avoid using or modifying this value unless VANILLA_LIGHTING is defined.
+ * this may not be used.
  *
  * Not available in depth pass.
  */
@@ -320,3 +319,8 @@ float frx_fragDiffuse;
  * Not available in depth pass.
  */
 float frx_fragAo;
+
+
+/******************************************************
+ * API METHODS
+******************************************************/
