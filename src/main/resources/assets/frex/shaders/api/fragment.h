@@ -9,7 +9,7 @@
   #include frex:shaders/api/fragment.glsl
 
   Do NOT include this .h file. FREX uses c-style header files
-  to document the shader API in a way that can be view with
+  to document the shader API in a way that can be viewed with
   c-style syntax highlighting in almost any code editor.
   OpenGL shaders do not use header files.
 
@@ -194,7 +194,7 @@ vec4 frx_fragColor;
  * have the value 1.0.
  *
  * When the material is dialectric, frx_fragColor models
- * diffuse reflected color and frx_fragSpecularReflectance
+ * diffuse reflected color and frx_fragReflectance
  * is the linear monochrome specular reflectance (F0).
  *
  * When the material is metallic, frx_fragColor
@@ -204,11 +204,11 @@ vec4 frx_fragColor;
  *
  * Initial value when frx_materialFragment() is called will
  * be sampled from the metalness texture map if one is available, or
- * otherwise set to frx_matSpecularReflectance.
+ * otherwise set to frx_matReflectance.
  *
  * Not available in depth pass.
  */
-float frx_fragSpecularReflectance;
+float frx_fragReflectance;
 
 /*
  * Fragment normal in tangent space.
@@ -324,3 +324,27 @@ float frx_fragAo;
 /******************************************************
  * API METHODS
 ******************************************************/
+
+ /**
+  * Called by renderer after all variables are initialized and before
+  * frx_pipelineFragment() is called to output a fragment.
+  *
+  * The running fragment shader will have multiple, renamed versions of
+  * this method - one for each unique material fragment shader present
+  * in the game. The specific method called is controlled by the material
+  * associated with the current triangle.  If the current material does
+  * not define a custom material shader, no extra processing will happen
+  * before frx_pipelineFragment() is called.
+  */
+void frx_materialFragment();
+
+/**
+ * Called by renderer after frx_materialFragment() completes.
+ * Pipeline authors implement this method to read fragment data,
+ * apply transformation or shading and output to one or more framebuffer
+ * attachments.  These steps are specific to the design of each pipeline.
+ *
+ * The pipeline shader is responsible for ALL WRITES.
+ * The renderer will not update depth or any color attachment.
+ */
+void frx_pipelineFragment();
