@@ -1,16 +1,9 @@
-#include frex:shaders/api/view.glsl
-#include canvas:shaders/internal/world.glsl
-#include canvas:shaders/internal/flags.glsl
-
-/******************************************************
-  frex:shaders/api/world.glsl
-
-  Utilities for querying world information.
-
-  Some transformation-related methods have been moved
-  to view.glsl, which is currently included to prevent
-  breaks until shaders can be updated.
-******************************************************/
+/**************************************************************************
+ * Specifies the variables and methods available in the FREX shader API
+ * for access to world information.
+ *
+ * See FREX Shader API.md for license and general informaiton.
+ *************************************************************************/
 
 /*
  * The number of seconds this world has been rendering since the last render
@@ -18,9 +11,7 @@
  *
  * Use this for effects that need a smoothly increasing counter.
  */
-float frx_renderSeconds() {
-	return _cvu_world[_CV_WORLD_TIME].x;
-}
+const float frx_renderSeconds;
 
 /*
  * The number of frames this world has been rendering since the last render
@@ -28,9 +19,7 @@ float frx_renderSeconds() {
  *
  * Use this for effects that need a discrete increasing counter.
  */
-uint frx_renderFrames() {
-    return _cvu_world_uint[_CV_RENDER_FRAMES];
-}
+const uint frx_renderFrames;
 
 /*
  * Day of the currently rendering world - integer portion only.
@@ -40,9 +29,7 @@ uint frx_renderFrames() {
  * Use this for effects that depend somehow on the season or age of the world.
  * Received from server - may not be smoothly incremented.
  */
-float frx_worldDay() {
-	return _cvu_world[_CV_WORLD_TIME].z;
-}
+const float frx_worldDay;
 
 /*
  * Time of the currently rendering world with values 0 to 1.
@@ -51,17 +38,12 @@ float frx_worldDay() {
  * Use this for effects that depend on the time of day.
  * Received from server - may not be smoothly incremented.
  */
-float frx_worldTime() {
-	return _cvu_world[_CV_WORLD_TIME].y;
-}
-
+const float frx_worldTime;
 
 /*
  * Size of the moon the currently rendering world. Values are 0 to 1.
  */
-float frx_moonSize() {
-	return _cvu_world[_CV_WORLD_TIME].w;
-}
+const float frx_moonSize;
 
 /*
  * Rotation of the sky dome as part of the day/night cycle.
@@ -74,9 +56,7 @@ float frx_moonSize() {
  * so that the sun is slightly over the horizon at world time = 0 and
  * also takes its time setting as well.
  */
-float frx_skyAngleRadians() {
-	return _cvu_world[_CV_SKYLIGHT_VECTOR].w;
-}
+const float frx_skyAngleRadians;
 
 /*
  * Normalized vector of the primary sky light (the sun or moon) used for
@@ -85,9 +65,7 @@ float frx_skyAngleRadians() {
  *
  * See notes on frx_skyAngleRadians() regarding asymmetry.
  */
-vec3 frx_skyLightVector() {
-	return _cvu_world[_CV_SKYLIGHT_VECTOR].xyz;
-}
+const vec3 frx_skyLightVector;
 
 /*
  * Linear RGB color of the most prevalent sky light - the one that is
@@ -104,9 +82,7 @@ vec3 frx_skyLightVector() {
  * Use the FRX_WORLD_IS_MOONLIT flag to query if this is sun or moonlight.
  * Will be unit vector if the world has no skylight.
  */
-vec3 frx_skyLightColor() {
-	return _cvu_world[_CV_SKYLIGHT_COLOR].xyz;
-}
+const vec3 frx_skyLightColor;
 
 /*
  * Measures intensity of direct sky light in lumens/square meter. (lux)
@@ -141,9 +117,7 @@ vec3 frx_skyLightColor() {
  * Use the FRX_WORLD_IS_MOONLIT flag to query if this is sun or moonlight.
  * Will be zero if the world has no skylight.
  */
-float frx_skyLightIlluminance() {
-	return _cvu_world[_CV_SKYLIGHT_COLOR].w;
-}
+const float frx_skyLightIlluminance;
 
 /*
  * Linear RGB color modifier for the most prevalent sky light - the one
@@ -158,9 +132,7 @@ float frx_skyLightIlluminance() {
  * Use the FRX_WORLD_IS_MOONLIT flag to query if this is sun or moonlight.
  * Will be unit vector if the world has no skylight.
  */
-vec3 frx_skyLightAtmosphericColor() {
-	return _cvu_world[_CV_ATMOSPEHRIC_COLOR].xyz;
-}
+const vec3 frx_skyLightAtmosphericColor;
 
 /*
  * Smoothing factor to help with the transition from sun to/from moon light.
@@ -171,9 +143,7 @@ vec3 frx_skyLightAtmosphericColor() {
  * Use the FRX_WORLD_IS_MOONLIT flag to query if this is sun or moonlight.
  * Will be 1.0 (and mean nothing) if the world has no skylight.
  */
-float frx_skyLightTransitionFactor() {
-	return _cvu_world[_CV_ATMOSPEHRIC_COLOR].w;
-}
+const float frx_skyLightTransitionFactor;
 
 /*
  * Ambient light intensity of the currently rendering world.
@@ -181,9 +151,7 @@ float frx_skyLightTransitionFactor() {
  *
  * Experimental, likely to change.
  */
-float frx_ambientIntensity() {
-	return _cvu_world[_CV_AMBIENT_LIGHT].a;
-}
+const float frx_ambientIntensity;
 
 /*
  * DEPRECATED - better options now available
@@ -197,48 +165,25 @@ float frx_ambientIntensity() {
  * Note that Canvas normally handles this automatically.
  * It is exposed for exotic use cases.
  */
-vec4 frx_emissiveColor() {
-	return vec4(_cvu_world[_CV_AMBIENT_LIGHT].rgb, 1.0);
-}
+const vec4 frx_emissiveColor;
 
 /*
  * MC rain strength. Values 0 to 1.
  */
-float frx_rainGradient() {
-	return _cvu_world[_CV_CAMERA_VIEW].w;
-}
+const float frx_rainGradient;
 
 /*
  * MC thunder strength. Values 0 to 1.
  */
-float frx_thunderGradient() {
-	return _cvu_world[_CV_EYE_POSITION].w;
-}
+const float frx_thunderGradient;
 
 /**
  * Same as frx_rainGradient but with exponential smoothing.
  * Speed is controlled in pipeline config.
  */
-float frx_smoothedRainGradient() {
-	return _cvu_world[_CV_ENTITY_VIEW].w;
-}
+const float frx_smoothedRainGradient;
 
 /*
- * True when world.isThundering() is true for the currently rendering world.
- */
-bool frx_isThundering() {
-	return frx_bitValue(_cvu_flags[_CV_WORLD_FLAGS_INDEX], _CV_FLAG_IS_THUNDERING) == 1.0;
-}
-
-/*
- * True when world.getSkyProperties().isDarkened() is true for the currently rendering world.
- * True in Nether - indicates diffuse lighting bottom face is same as top, not as bright.
- */
-bool frx_isSkyDarkened() {
-	return frx_bitValue(_cvu_flags[_CV_WORLD_FLAGS_INDEX], _CV_FLAG_IS_SKY_DARKENED) == 1.0;
-}
-
-/**
  * The background clear color as computed by vanilla logic. Incorporates
  * many different factors.  For use by pipelines that may want to modify
  * and do their own clearing operations. Pipelines can disable the vanilla
@@ -248,68 +193,52 @@ bool frx_isSkyDarkened() {
  * Material shader authors note: this may not be the actual clear color used
  * by the in-effect pipeline. (It might not clear with a single color at all!)
  */
-vec3 frx_vanillaClearColor() {
-	return _cvu_world[_CV_CLEAR_COLOR].rgb;
-}
-
-bool frx_testCondition(int conditionIndex) {
-	return _cv_testCondition(conditionIndex);
-}
-
-// Tokens accepted in frx_worldFlag
-// True when the currently rendering world has a sky with a light source.
-#define FRX_WORLD_HAS_SKYLIGHT 0
-// True when the currently rendering world is the Overworld.
-#define FRX_WORLD_IS_OVERWORLD 1
-// True when the currently rendering world is the Nether.
-#define FRX_WORLD_IS_NETHER 2
-// True when the currently rendering world is the End.
-#define FRX_WORLD_IS_END 3
-// True when world.isRaining() is true for the currently rendering world.
-#define FRX_WORLD_IS_RAINING 4
-// Bet you can guess
-#define FRX_WORLD_IS_THUNDERING 5
-// The sky - it is dark
-#define FRX_WORLD_IS_SKY_DARKENED 6
-// The sky light modeled by frx_skyLightStrength and frx_skyLightVector is the moon
-#define FRX_WORLD_IS_MOONLIT 21
-
-bool frx_worldFlag(int flag) {
-	return frx_bitValue(_cvu_flags[_CV_WORLD_FLAGS_INDEX], flag) == 1.0;
-}
+const vec3 frx_vanillaClearColor;
 
 /*
- * DEPRECATED - use frx_worldFlag
+ * Equals 1 when the currently rendering world has a sky with a light source. Zero otherwise.
  */
-bool frx_worldHasSkylight() {
-	return frx_bitValue(_cvu_flags[_CV_WORLD_FLAGS_INDEX], _CV_FLAG_HAS_SKYLIGHT) == 1.0;
-}
+const int frx_worldHasSkylight;
 
 /*
- * DEPRECATED - use frx_worldFlag
+ * Equals 1 when the currently rendering world is the Overworld. Zero otherwise.
  */
-bool frx_isWorldTheOverworld() {
-	return frx_bitValue(_cvu_flags[_CV_WORLD_FLAGS_INDEX], _CV_FLAG_IS_OVERWORLD) == 1.0;
-}
+const int frx_worldIsOverworld;
 
 /*
- * DEPRECATED - use frx_worldFlag
+ * Equals 1 when the currently rendering world is the Nether. Zero otherwise.
  */
-bool frx_isWorldTheNether() {
-	return frx_bitValue(_cvu_flags[_CV_WORLD_FLAGS_INDEX], _CV_FLAG_IS_NETHER) == 1.0;
-}
+const int frx_worldIsNether;
 
 /*
- * DEPRECATED - use frx_worldFlag
+ * Equals 1 when the currently rendering world is the End. Zero otherwise.
  */
-bool frx_isWorldTheEnd() {
-	return frx_bitValue(_cvu_flags[_CV_WORLD_FLAGS_INDEX], _CV_FLAG_IS_END) == 1.0;
-}
+const int frx_worldIsEnd;
 
 /*
- * DEPRECATED - use frx_worldFlag
+ * Equals 1 when world.isRaining() is true for the currently rendering world.
  */
-bool frx_isRaining() {
-	return frx_bitValue(_cvu_flags[_CV_WORLD_FLAGS_INDEX], _CV_FLAG_IS_RAINING) == 1.0;
-}
+const int frx_worldIsRaining;
 
+/*
+ * Bet you can guess.
+ */
+const int frx_worldIsThundering;
+
+/*
+ * Equals 1 when world.getSkyProperties().isDarkened() is true for the currently rendering world.
+ * Zero otherwise. 
+ * 
+ * True (==1) in Nether - indicates diffuse lighting bottom face is same as top, not as bright.
+ */
+const int frx_worldIsSkyDarkened;
+
+/*
+ *  Equals 1 when the sky light modeled by frx_skyLightStrength and frx_skyLightVector is the moon. Zero otherwise.
+ */
+const int frx_worldIsMoonlit;
+
+/*
+ * Returns 1 when the condition is true, zero otherwise.
+ */
+int frx_testCondition(int conditionIndex);

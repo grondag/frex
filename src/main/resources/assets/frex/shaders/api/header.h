@@ -1,30 +1,26 @@
 #version 330
 
-/******************************************************
-  This file (header.h) documents the definitions used in
-  the FREX shader API to indicate the operating mode of renderer.
-
-  Typical usage is to control conditional compilation of
-  features that may not work or work differently in,
-  for example, GUI vs world rendering.
-
-  These definitions will be automatically included by the
-  renderer implementation at the top of the combined source
-  file. It is never necessary to include header.h or header.glsl.
-
-  Do NOT include this .h file. FREX uses c-style header files
-  to document the shader API in a way that can be view with
-  c-style syntax highlighting in almost any code editor.
-  OpenGL shaders do not use header files.
-
-  Do not declare versions in any pipeline or material shader
-  source files.  GLSL version is controlled by the active pipeline
-  and will be AT LEAST 330 but can be higher if the active pipeline
-  requests it.  The renderer will automatically pre-pend the
-  configured version at the top of the combined source file and
-  will strip any version declarations from input source files.
-
-******************************************************/
+/****************************************************************
+ * Specifies the definitions used in the FREX shader
+ * API to indicate the operating mode of renderer.
+ *
+ * Typical usage is to control conditional compilation of
+ * features that may not work or work differently in,
+ * for example, GUI vs world rendering.
+ *
+ * These definitions will be automatically included by the
+ * renderer implementation at the top of the combined source
+ * file. It is never necessary to include header.h or header.glsl.
+ *
+ * Do not declare versions in any pipeline or material shader
+ * source files.  GLSL version is controlled by the active pipeline
+ * and will be AT LEAST 330 but can be higher if the active pipeline
+ * requests it.  The renderer will automatically pre-pend the
+ * configured version at the top of the combined source file and
+ * will strip any version declarations from input source files.
+ *
+ * See FREX Shader API.md for license and general informaiton.
+ ***************************************************************/
 
 // If not present, lightmaps and other vanilla-specific data will not be valid or may not present.
 // Access to vanilla lighting data should be guarded by #ifdef on this constant.

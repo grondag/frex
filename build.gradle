@@ -106,6 +106,7 @@ sourceSets {
 	        {
 	        	include '**/*'
 	        	exclude '*.DS_Store'
+	        	exclude 'assets/frex/shaders/api/*'
 	        }
 	    }
     test {

@@ -1,96 +1,58 @@
-/******************************************************
-  This file (material.h) specifies the variables available in
-  the FREX shader API to describe the material properties of
-  the current primitive.
-
-  To use this API, put this at the top of your shader code:
-
-  #include frex:shaders/api/material.glsl
-
-  Do NOT include this .h file. FREX uses c-style header files
-  to document the shader API in a way that can be viewed with
-  c-style syntax highlighting in almost any code editor.
-  OpenGL shaders do not use header files.
-
-  Note that implementations are provided by renderers.
-  FREX does not include a material.glsl implementation file.
-  Renderers must ship the implementation in the FREX namespace.
-
-  HOW TO USE THIS SPECIFICATION
-  -----------------------------
-  Shader authors should use this file as a reference document.
-  All of the definitions here are TYPED SYMBOLIC TOKENS.
-  The implementation of a token may vary between renderer implementations.
-  Variable implementations might be uniform, an input variable, or a global
-  variable, at the discretion of the renderer implementation.
-
-  Generally, this does not matter in any practical way, but if you think of a
-  way to write code that would somehow depend on a specific implementation - don't!
-
-  Note that `const` is used to signify that a variable is read-only.  This may or
-  may not be enforced in the implementation, but const variables should never be
-  modified by material or pipeline shaders.
-
-******************************************************/
+/**************************************************************************
+ * Specifies the variables and methods available in the
+ * FREX shader API to describe the material properties of
+ * the current primitive.in
+ *
+ * See FREX Shader API.md for license and general informaiton.
+ *************************************************************************/
 
 /*
- * True when material is emissive.
+ * Equals 1 when material is emissive, zero otherwise.
  * For emissive materials, this is on/off, not a range.
  */
-const bool frx_matEmissive;
-
-/**
- * Multiplicative version frx_matEmissive(), true returns 1, false returns 0
- */
-const float frx_matEmissiveFactor;
+const int frx_matEmissive;
 
 /*
- * True when material is cutout. When enabled,
+ * Equals 1 when material is cutout. When 1,
  * fragments will be discarded if alpha < 0.5.
  */
-const bool frx_matCutout;
-
-/** Multiplicative version frx_matCutout(), true return 1, false returns 0 */
-const float frx_matCutoutFactor;
+const int frx_matCutout;
 
 /*
- * True when material is has Level of Detail (mip mapping) disabled.
+ * Equals 1 when material has Level of Detail (mip mapping) disabled. Zero otherwise.
  * Currently the RenderMaterail finder only allows this for cutout materials.
  */
-const bool frx_matUnmipped;
-
-/** Multiplicative version frx_matUnmipped(), true return 1, false returns 0 */
-const float frx_matUnmippedFactor;
+const int frx_matUnmipped;
 
 /*
- * True when material is marked to disable ambient occlusion shading.
+ * Equals 1 when material is marked to disable ambient occlusion shading. Zero otherwise.
  */
-const bool frx_matDisableAo;
+const int frx_matDisableAo;
 
-/**
- * True when material is marked to disable "diffuse" shading.
+/*
+ * Equals 1 when material is marked to disable "diffuse" shading. Zero otherwise.
  * This may have a different or no effect in non-vanilla lighting models.
  */
-const bool frx_matDisableDiffuse;
+const int frx_matDisableDiffuse;
 
-/**
- * True when should render the red "hurt" overlay.
+/*
+ * Equals 1 when should render the red "hurt" overlay. Zero otherwise.
  * Mostly for use in pipeline shaders - material shaders aren't expected to handle.
  */
-const bool frx_matHurt;
+const int frx_matHurt;
 
-/**
- * True when should render the white "flash" overlay.
+/*
+ * Equals 1 when should render the white "flash" overlay. Zero otherwise.
  * Mostly for use in pipeline shaders - material shaders aren't expected to handle.
  */
-const bool frx_matFlash;
+const int frx_matFlash;
 
-/**
- * Returns 1.0 if material has enchantment glint, 0.0 otherwise.
+/*
+ * Equals 1 if material has enchantment glint, 0 otherwise.
  */
-const float frx_matGlint;
+const int frx_matGlint;
 
-/**
+/*
  * RESERVED FOR FUTURE FEATURE - not yet implemented.
  *
  * Coarse indication of where the surface is located.
@@ -106,7 +68,7 @@ const float frx_matGlint;
  */
 const float frx_matExposure;
 
-/**
+/*
  * Controls if the fragment material is dialectric or metallic.
  * For dialectric materials, this provides the F0 value.
  *
