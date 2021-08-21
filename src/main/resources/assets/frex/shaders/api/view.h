@@ -56,39 +56,39 @@ const vec4 frx_modelToWorld;
 const vec4 frx_modelToCamera;
 
 /*
- * When == 1, vertex coordinates are relative to the camera position.
+ * When true, vertex coordinates are relative to the camera position.
  * Coordinates and normals are unrotated and frx_modelToWorld holds the camera position.
  *
  * Mutually exclusive with frx_modelOriginScreen and frx_modelOriginRegion.
  */
-const int frx_modelOriginCamera;
+const bool frx_modelOriginCamera;
 
 /*
- * When == 1, vertex coordinates are relative are relative to the origin of a
+ * When true, vertex coordinates are relative are relative to the origin of a
  * "cluster" of world render regions. Coordinates and normals are unrotated and
  * frx_modelToWorld holds the cluster origin.
  *
  * Mutually exclusive with frx_modelOriginScreen and frx_modelOriginCamera.
  */
-const int frx_modelOriginRegion;
+const bool frx_modelOriginRegion;
 
 /*
- * When == 1, vertex coordinates are relative to the screen and no transformations
+ * When true, vertex coordinates are relative to the screen and no transformations
  * should be applied. Intended for Hand//GUI rendering.
  *
  * Mutually exclusive with frx_modelOriginCamera and frx_modelOriginRegion.
  */
-const int frx_modelOriginScreen;
+const bool frx_modelOriginScreen;
 
 /*
- * Returns 1 when rendering hand. Zero otherwise.
+ * True when rendering hand.
  */
-const int frx_isHand;
+const bool frx_isHand;
 
 /*
- * Returns 1 when rendering GUI. Zero otherwise.
+ * True when rendering GUI.
  */
-const int frx_isGui;
+const bool frx_isGui;
 
 const mat4 frx_guiViewProjectionMatrix;
 
@@ -178,25 +178,25 @@ const float frx_viewBrightness;
  * When == 1, shader is targetting the solid-pass framebuffer.
  * Mutually exclusive with all other frx_renderTarget_ variables.
  */
-const int frx_renderTargetSolid;
+const bool frx_renderTargetSolid;
 
 /*
  * When == 1, shader is targetting the translucent-pass framebuffer for terrain.
  * Mutually exclusive with all other frx_renderTarget_ variables.
  */
-const int frx_renderTargetTranslucent;
+const bool frx_renderTargetTranslucent;
 
 /*
  * When == 1, shader is targetting the translucent-pass framebuffer for particles.
  * Mutually exclusive with all other frx_renderTarget_ variables.
  */
-const int frx_renderTargetParticles;
+const bool frx_renderTargetParticles;
 
 /*
  * When == 1, shader is targetting the translucent-pass framebuffer for entities.
  * Mutually exclusive with all other frx_renderTarget_ variables.
  */
-const int frx_renderTargetEntity;
+const bool frx_renderTargetEntity;
 
 /*
  * Currently configured terrain view distance, in blocks.
