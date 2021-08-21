@@ -66,9 +66,7 @@ public class FlawlessFramesImpl {
 	@SuppressWarnings("unchecked")
 	public static void onClientInitialization() {
 		final Function<String, Consumer<Boolean>> provider = Controller::new;
-
-		FabricLoader.getInstance().getEntrypoints("frex_flawless_frames", Consumer.class).forEach(
-				api -> api.accept(provider));
+		FabricLoader.getInstance().getEntrypoints("frex_flawless_frames", Consumer.class).forEach(api -> api.accept(provider));
 	}
 
 	private static final Set<Controller> ACTIVE = Collections.newSetFromMap(new IdentityHashMap<Controller, Boolean>());
