@@ -60,17 +60,6 @@ out vec3 frx_vertexNormal;
  */
 out vec4 frx_vertexLight;
 
-/*
- * AO shading value from CPU lighting. 0 to 1.
- * Will be initialized to 1.0 if frx_matDisableAo is true or AO is disabled in the game.
- * Models macro-scale shadowing of world objects on each other.
- *
- * Depending on the context or lighting model in effect,
- * this may not be used and/or will always be 1.0.
- *
- * Not available in depth pass.
- */
-out float frx_vertexAo;
 
 /*
  * Varying variables for generic use in material shaders. Material

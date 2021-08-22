@@ -154,8 +154,6 @@ const float frx_skyLightTransitionFactor;
 const float frx_ambientIntensity;
 
 /*
- * DEPRECATED - better options now available
-
  * Gamma-corrected max light color from lightmap texture.
  * Updated whenever lightmap texture is updated.
  *
@@ -196,7 +194,7 @@ const float frx_smoothedRainGradient;
 const vec3 frx_vanillaClearColor;
 
 /*
- * Equals 1 when the currently rendering world has a sky with a light source. Zero otherwise.
+ * True when the currently rendering world has a sky with a light source. Zero otherwise.
  */
 const int frx_worldHasSkylight;
 
@@ -241,4 +239,4 @@ const int frx_worldIsMoonlit;
 /*
  * Returns 1 when the condition is true, zero otherwise.
  */
-int frx_testCondition(int conditionIndex);
+int frx_conditionTest(int conditionIndex);
