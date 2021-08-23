@@ -53,12 +53,11 @@ out vec3 frx_vertexNormal;
  * Components are as follows:
  * X: Block light intensity.
  * Y: Sky light intensity.
- * Z: Diffuse shading. Will be initialized to 1.0 if frx_matDisableDiffuse is true.
- * W: AO shading. Will be initialized to 1.0 if frx_matDisableAo is true or AO is disabled in the game.
+ * Z: AO shading. Will be initialized to 1.0 if frx_matDisableAo is true or AO is disabled in the game.
  *
  * Not available in depth pass.
  */
-out vec4 frx_vertexLight;
+out vec3 frx_vertexLight;
 
 
 /*

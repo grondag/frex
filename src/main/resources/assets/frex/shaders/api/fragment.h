@@ -42,19 +42,13 @@ in vec3 frx_vertexNormal;
  * are generally better alternatives for achieving emissive lighting effects.
  *
  * All values are normalized (0-1).
- *
- * Components are as follows:
  * X: Block light intensity from vertex shader.
  * Y: Sky light intensity from vertex shader.
- * Z: Diffuse shading factor from vertex shader.
- * W: AO shading factor from vertex shader.
- *
- * Components x, y, and z are used to initialize frx_fragLight
- * but component w (AO) is not. (See comments on frx_fragLight.)
+ * Z: AO shading from vertex shader.
  *
  * Not available in depth pass.
  */
-in vec4 frx_vertexLight;
+in vec3 frx_vertexLight;
 
 /*
  * Interpolated camera distance. Used for fog.
@@ -194,14 +188,16 @@ float frx_fragEmissive;
  * are generally better alternatives for achieving emissive lighting effects.
  *
  * All values are normalized (0-1).
- *
- * Components are as follows:
  * X: Block light intensity. Initialized to frx_vertexLight.x.
  * Y: Sky light intensity. Initialized to frx_vertexLight.y;
- * Z: Diffuse shading. Initialized to frx_vertexLight.z;
- * W: AO shading. See below.
+ * Z: Macro AO shading. Initialized to frx_vertexLight.z
  *
- * Component w (AO) models self-shading of small variations in irregular surfaces.
+ * Not available in depth pass.
+ */
+vec3 frx_fragLight;
+
+/*
+ * Models self-shading of small variations in irregular surfaces.
  * It should not be used for shading by other objects in the world.
  *
  * Initial value when frx_materialFragment() is called will be sampled
@@ -211,12 +207,25 @@ float frx_fragEmissive;
  * The primary use for this by material shaders is to provide PBR support for
  * animated, proecedural surfaces.
  *
- * Macro-scale AO is controlled and applied by the pipeline and may or may not
- * use frx_vertexLight.w.  It can be controlled at a material level via frx_matDisableAo.
- *
- * Not available in depth pass.
+ * Macro-scale AO is controlled and applied by the pipeline.  See frx_fragDisableAo.
  */
-vec4 frx_fragLight;
+float frx_fragAo;
+
+/*
+ * Controls macro-scale AO shading applied by the pipeline based on
+ * proxmity of other objects in the world. Initialized to !frx_matDisableAo.
+ * Depending on the context or lighting model in effect,
+ * this may not be used or may be used differently.
+ */
+bool frx_fragEnableAo;
+
+/*
+ * Controls direcional shading applied by the pipeline based on
+ * surface normals and light sources. Initialized to !frx_matDisableDiffuse.
+ * Depending on the context or lighting model in effect,
+ * this may not be used or may be used differently.
+ */
+bool frx_fragEnableDiffuse;
 
 /****************************************************************
  * API METHODS
