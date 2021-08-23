@@ -56,6 +56,7 @@ out vec3 frx_vertexNormal;
  * Z: AO shading. Will be initialized to 1.0 if frx_matDisableAo is true or AO is disabled in the game.
  *
  * Not available in depth pass.
+ * Gate usage with #ifndef DEPTH_PASS.
  */
 out vec3 frx_vertexLight;
 

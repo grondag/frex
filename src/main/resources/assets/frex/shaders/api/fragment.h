@@ -30,7 +30,6 @@ in vec4 frx_vertexColor;
 
 /*
  * Interpolated vertex normal in world/camera space.
- * Not available in depth pass.
  */
 in vec3 frx_vertexNormal;
 
@@ -47,6 +46,7 @@ in vec3 frx_vertexNormal;
  * Z: AO shading from vertex shader.
  *
  * Not available in depth pass.
+ * Gate usage with #ifndef DEPTH_PASS.
  */
 in vec3 frx_vertexLight;
 
@@ -60,6 +60,7 @@ in float frx_distance;
  * Varying variables for generic use. See comments in vertex.glsl.
  *
  * Not available in depth pass.
+ * Gate usage with #ifndef DEPTH_PASS.
  */
 in vec4 frx_var0;
 in vec4 frx_var1;
@@ -119,6 +120,8 @@ vec4 frx_fragColor;
  * otherwise set to frx_matReflectance.
  *
  * Not available in depth pass.
+ * Not available if PBR is inactive.
+ * Gate usage with #ifdef PBR_ENABLED.
  */
 float frx_fragReflectance;
 
@@ -136,6 +139,8 @@ float frx_fragReflectance;
  * after frx_materialFragment() runs.
  *
  * Not available in depth pass.
+ * Not available if PBR is inactive.
+ * Gate usage with #ifdef PBR_ENABLED.
  */
 vec3 frx_fragNormal;
 
@@ -151,6 +156,8 @@ vec3 frx_fragNormal;
  * animated, proecedural surfaces.
  *
  * Not available in depth pass.
+ * Not available if PBR is inactive.
+ * Gate usage with #ifdef PBR_ENABLED.
  */
 float frx_fragHeight;
 
@@ -163,6 +170,8 @@ float frx_fragHeight;
  * set to frx_matRoughness.
  *
  * Not available in depth pass.
+ * Not available if PBR is inactive.
+ * Gate usage with #ifdef PBR_ENABLED.
  */
 float frx_fragRoughness;
 
@@ -177,6 +186,7 @@ float frx_fragRoughness;
  * frx_materialFragment() runs.
  *
  * Not available in depth pass.
+ * Gate usage with #ifndef DEPTH_PASS.
  */
 float frx_fragEmissive;
 
@@ -193,6 +203,7 @@ float frx_fragEmissive;
  * Z: Macro AO shading. Initialized to frx_vertexLight.z
  *
  * Not available in depth pass.
+ * Gate usage with #ifndef DEPTH_PASS.
  */
 vec3 frx_fragLight;
 
@@ -208,6 +219,10 @@ vec3 frx_fragLight;
  * animated, proecedural surfaces.
  *
  * Macro-scale AO is controlled and applied by the pipeline.  See frx_fragDisableAo.
+ *
+ * Not available in depth pass.
+ * Not available if PBR is inactive.
+ * Gate usage with #ifdef PBR_ENABLED.
  */
 float frx_fragAo;
 
@@ -216,6 +231,9 @@ float frx_fragAo;
  * proxmity of other objects in the world. Initialized to !frx_matDisableAo.
  * Depending on the context or lighting model in effect,
  * this may not be used or may be used differently.
+ *
+ * Not available in depth pass.
+ * Gate usage with #ifndef DEPTH_PASS.
  */
 bool frx_fragEnableAo;
 
@@ -224,6 +242,9 @@ bool frx_fragEnableAo;
  * surface normals and light sources. Initialized to !frx_matDisableDiffuse.
  * Depending on the context or lighting model in effect,
  * this may not be used or may be used differently.
+ *
+ * Not available in depth pass.
+ * Gate usage with #ifndef DEPTH_PASS.
  */
 bool frx_fragEnableDiffuse;
 
