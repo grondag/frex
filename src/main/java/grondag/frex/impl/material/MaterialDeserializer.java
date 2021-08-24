@@ -159,7 +159,7 @@ public class MaterialDeserializer {
 		}
 
 		if (obj.has("cutout")) {
-			final String cutout = obj.get("cutout").getAsString().toLowerCase();
+			final String cutout = obj.get("cutout").getAsString().toLowerCase(Locale.ROOT);
 
 			if (cutout.equals("cutout_half")) {
 				finder.decal(CUTOUT_HALF);
@@ -175,7 +175,7 @@ public class MaterialDeserializer {
 		}
 
 		if (obj.has("decal")) {
-			final String decal = obj.get("decal").getAsString().toLowerCase();
+			final String decal = obj.get("decal").getAsString().toLowerCase(Locale.ROOT);
 
 			if (decal.equals("polygon_offset")) {
 				finder.decal(DECAL_POLYGON_OFFSET);
@@ -187,7 +187,7 @@ public class MaterialDeserializer {
 		}
 
 		if (obj.has("depthTest")) {
-			final String depthTest = obj.get("depthTest").getAsString().toLowerCase();
+			final String depthTest = obj.get("depthTest").getAsString().toLowerCase(Locale.ROOT);
 
 			if (depthTest.equals("always")) {
 				finder.depthTest(DEPTH_TEST_ALWAYS);
@@ -229,7 +229,7 @@ public class MaterialDeserializer {
 		}
 
 		if (obj.has("target")) {
-			final String target = obj.get("target").getAsString().toLowerCase();
+			final String target = obj.get("target").getAsString().toLowerCase(Locale.ROOT);
 
 			if (target.equals("main")) {
 				finder.target(TARGET_MAIN);
@@ -253,7 +253,7 @@ public class MaterialDeserializer {
 		}
 
 		if (obj.has("transparency")) {
-			final String transparency = obj.get("transparency").getAsString().toLowerCase();
+			final String transparency = obj.get("transparency").getAsString().toLowerCase(Locale.ROOT);
 
 			if (transparency.equals("none")) {
 				finder.transparency(TRANSPARENCY_NONE);
@@ -277,7 +277,7 @@ public class MaterialDeserializer {
 		}
 
 		if (obj.has("writeMask")) {
-			final String writeMask = obj.get("writeMask").getAsString().toLowerCase();
+			final String writeMask = obj.get("writeMask").getAsString().toLowerCase(Locale.ROOT);
 
 			if (writeMask.equals("color")) {
 				finder.writeMask(WRITE_MASK_COLOR);

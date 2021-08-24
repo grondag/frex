@@ -46,6 +46,7 @@ import static grondag.frex.api.material.MaterialFinder.WRITE_MASK_COLOR;
 import static grondag.frex.api.material.MaterialFinder.WRITE_MASK_COLOR_DEPTH;
 import static grondag.frex.api.material.MaterialFinder.WRITE_MASK_DEPTH;
 
+import java.util.Locale;
 import java.util.function.Predicate;
 
 import com.google.gson.JsonObject;
@@ -137,7 +138,7 @@ public class MaterialPredicateDeserializer {
 		}
 
 		if (json.has("cutout")) {
-			final String cutout = json.get("cutout").getAsString().toLowerCase();
+			final String cutout = json.get("cutout").getAsString().toLowerCase(Locale.ROOT);
 			int val;
 
 			if (cutout.equals("cutout_half")) {
@@ -156,7 +157,7 @@ public class MaterialPredicateDeserializer {
 		}
 
 		if (json.has("decal")) {
-			final String decal = json.get("decal").getAsString().toLowerCase();
+			final String decal = json.get("decal").getAsString().toLowerCase(Locale.ROOT);
 
 			if (decal.equals("polygon_offset")) {
 				predicates.add(mat -> mat.decal() == DECAL_POLYGON_OFFSET);
@@ -168,7 +169,7 @@ public class MaterialPredicateDeserializer {
 		}
 
 		if (json.has("depthTest")) {
-			final String depthTest = json.get("depthTest").getAsString().toLowerCase();
+			final String depthTest = json.get("depthTest").getAsString().toLowerCase(Locale.ROOT);
 
 			if (depthTest.equals("always")) {
 				predicates.add(mat -> mat.depthTest() == DEPTH_TEST_ALWAYS);
@@ -217,7 +218,7 @@ public class MaterialPredicateDeserializer {
 		}
 
 		if (json.has("target")) {
-			final String target = json.get("target").getAsString().toLowerCase();
+			final String target = json.get("target").getAsString().toLowerCase(Locale.ROOT);
 
 			if (target.equals("main")) {
 				predicates.add(mat -> mat.target() == TARGET_MAIN);
@@ -237,7 +238,7 @@ public class MaterialPredicateDeserializer {
 		}
 
 		if (json.has("transparency")) {
-			final String transparency = json.get("transparency").getAsString().toLowerCase();
+			final String transparency = json.get("transparency").getAsString().toLowerCase(Locale.ROOT);
 
 			if (transparency.equals("none")) {
 				predicates.add(mat -> mat.transparency() == TRANSPARENCY_NONE);
@@ -262,7 +263,7 @@ public class MaterialPredicateDeserializer {
 		}
 
 		if (json.has("writeMask")) {
-			final String writeMask = json.get("writeMask").getAsString().toLowerCase();
+			final String writeMask = json.get("writeMask").getAsString().toLowerCase(Locale.ROOT);
 
 			if (writeMask.equals("color")) {
 				predicates.add(mat -> mat.writeMask() == WRITE_MASK_COLOR);
