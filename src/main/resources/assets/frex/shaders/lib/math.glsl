@@ -7,13 +7,8 @@
 ******************************************************/
 
 #define PI            3.1415926535897932384626433832795
-
-// I prefer a whole pi when I can get it,
-// but I won't say no to half.
-#define HALF_PI    	  1.57079632679489661923
-
-// two PI
-#define TAU           6.2831853071795864769252867665590
+#define HALF_PI    	  1.57079632679489661923 // I prefer a whole pi when I can get it, but I won't say no to half.
+#define TAU           6.2831853071795864769252867665590 // two PI
 
 /*
  * Has been around forever.  Gives a psuedorandom

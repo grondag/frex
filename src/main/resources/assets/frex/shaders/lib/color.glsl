@@ -8,8 +8,8 @@
 
 ******************************************************/
 
-const float FRX_GAMMA = 2.4;
-const float FRX_INVERSE_GAMMA = 1.0 / FRX_GAMMA;
+#define FRX_GAMMA 2.4
+#define FRX_INVERSE_GAMMA (1.0 / FRX_GAMMA)
 
 vec4 frx_fromGamma(vec4 c) {
 	return pow(c, vec4(FRX_GAMMA));
