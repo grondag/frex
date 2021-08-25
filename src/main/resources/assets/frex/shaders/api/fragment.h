@@ -116,8 +116,7 @@ vec4 frx_fragColor;
  * color of metals.
  *
  * Initial value when frx_materialFragment() is called will
- * be sampled from the metalness texture map if one is available, or
- * otherwise set to frx_matReflectance.
+ * be sampled from the metalness texture map.
  *
  * Not available in depth pass.
  * Not available if PBR is inactive.
@@ -129,8 +128,7 @@ float frx_fragReflectance;
  * Fragment normal in tangent space.
  *
  * Initial value when frx_materialFragment() is called will
- * be sampled from the normal map if one is available, or
- * otherwise (0, 0, 1).
+ * be sampled from the normal map.
  *
  * The pipeline shader will consume this for lighting. If any
  * transformation is needed because of smoothed vertex normals or
@@ -150,7 +148,7 @@ vec3 frx_fragNormal;
  * the triangle plane in tangent space.
  *
  * Initial value when frx_materialFragment() is called will be sampled
- * from the height texture map if one is available, or will otherwise be 0.0.
+ * from the height texture map.
  *
  * The primary use for this by material shaders is to provide PBR support for
  * animated, proecedural surfaces.
@@ -166,8 +164,7 @@ float frx_fragHeight;
  * Values range from 0.0 (perfectly smooth) to 1.0 (rough as possible.)
  *
  * Initial value when frx_materialFragment() is called will be sampled
- * from the roughness texture map if one is available, or will otherwise be
- * set to frx_matRoughness.
+ * from the roughness texture map.
  *
  * Not available in depth pass.
  * Not available if PBR is inactive.
@@ -212,8 +209,7 @@ vec3 frx_fragLight;
  * It should not be used for shading by other objects in the world.
  *
  * Initial value when frx_materialFragment() is called will be sampled
- * from the AO texture map if one is available, or will otherwise be 1.0.
- * This is unaffected by frx_matDisableAo.
+ * from the AO texture map.
  *
  * The primary use for this by material shaders is to provide PBR support for
  * animated, proecedural surfaces.

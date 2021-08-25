@@ -67,35 +67,3 @@ const int frx_matGlint;
  * but does it mean it could get wet/icy/etc.
  */
 const float frx_matExposure;
-
-/*
- * Controls if the fragment material is dialectric or metallic.
- * For dialectric materials, this provides the F0 value.
- *
- * The range of values is not continuous to maximize floating point
- * precision in useful ranges.  Dialectic materials
- * will have values ranging from 0.0 to 0.1 and metals will
- * have the value 1.0.
- *
- * When the material is dialectric, the sprite texture color models
- * diffuse reflected color and this value is the linear monochrome
- * specular reflectance (F0).
- *
- * When the material is metallic, the sprite texture color models
- * models specular reflectance, which for metals is often not
- * uniform across the light spectrum and responsible for the perceived
- * color of metals.
- *
- * This value is only used when PBR rendering is active and a specular
- * reflectance map texture is not not available.
- */
-const float frx_matReflectance;
-
-/*
- * Models random light scattering caused by tiny surface irregularities.
- * Values range from 0.0 (perfectly smooth) to 1.0 (rough as possible.)
- *
- * This value is only used when PBR rendering is active and a roughness
- * map texture is not not available.
- */
-const float frx_matRoughness;
