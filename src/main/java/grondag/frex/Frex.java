@@ -27,6 +27,7 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 
+import grondag.frex.impl.config.FlawlessFramesImpl;
 import grondag.frex.impl.fluid.FluidQuadSupplierImpl;
 import grondag.frex.impl.light.ItemLightLoader;
 import grondag.frex.impl.material.MaterialMapLoader;
@@ -62,6 +63,8 @@ public class Frex implements ClientModInitializer {
 
 		FabricLoader.getInstance().getEntrypoints("frex", FrexInitializer.class).forEach(
 			api -> api.onInitalizeFrex());
+
+		FlawlessFramesImpl.onClientInitialization();
 
 		InvalidateRenderStateCallback.EVENT.register(FluidQuadSupplierImpl::reload);
 	}

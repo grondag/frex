@@ -67,6 +67,13 @@ public interface MutableQuadView extends net.fabricmc.fabric.api.renderer.v1.mes
 		return normal(vertexIndex, vec.getX(), vec.getY(), vec.getZ());
 	}
 
+	default MutableQuadView tangent(int vertexIndex, Vec3f vec) {
+		tangent(vertexIndex, vec.getX(), vec.getY(), vec.getZ());
+		return this;
+	}
+
+	MutableQuadView tangent(int vertexIndex, float x, float y, float z);
+
 	@Override
 	MutableQuadView lightmap(int vertexIndex, int lightmap);
 

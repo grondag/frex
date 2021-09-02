@@ -46,6 +46,8 @@ import static grondag.frex.api.material.MaterialFinder.WRITE_MASK_COLOR;
 import static grondag.frex.api.material.MaterialFinder.WRITE_MASK_COLOR_DEPTH;
 import static grondag.frex.api.material.MaterialFinder.WRITE_MASK_DEPTH;
 
+import java.util.Locale;
+
 import com.google.gson.JsonObject;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.jetbrains.annotations.ApiStatus.Internal;
@@ -105,9 +107,12 @@ public class MaterialTransformDeserializer {
 	}
 
 	private static void readTransforms(JsonObject json, ObjectArrayList<MaterialTransform> transforms) {
-		if (json.has("fragmentSource") && json.has("vertexSource")) {
-			final Identifier vs = new Identifier(JsonHelper.getString(json, "vertexSource"));
-			final Identifier fs = new Identifier(JsonHelper.getString(json, "fragmentSource"));
+		final boolean hasFragment = json.has("fragmentSource");
+		final boolean hasVertex = json.has("vertexSource");
+
+		if (hasFragment || hasVertex) {
+			final Identifier vs = hasVertex ? new Identifier(JsonHelper.getString(json, "vertexSource")) : null;
+			final Identifier fs = hasFragment ? new Identifier(JsonHelper.getString(json, "fragmentSource")) : null;
 			transforms.add(finder -> finder.shader(vs, fs));
 		}
 
@@ -148,7 +153,7 @@ public class MaterialTransformDeserializer {
 		}
 
 		if (json.has("cutout")) {
-			final String cutout = json.get("cutout").getAsString().toLowerCase();
+			final String cutout = json.get("cutout").getAsString().toLowerCase(Locale.ROOT);
 
 			if (cutout.equals("cutout_half")) {
 				transforms.add(finder -> finder.decal(CUTOUT_HALF));
@@ -164,7 +169,7 @@ public class MaterialTransformDeserializer {
 		}
 
 		if (json.has("decal")) {
-			final String decal = json.get("decal").getAsString().toLowerCase();
+			final String decal = json.get("decal").getAsString().toLowerCase(Locale.ROOT);
 
 			if (decal.equals("polygon_offset")) {
 				transforms.add(finder -> finder.decal(DECAL_POLYGON_OFFSET));
@@ -176,7 +181,7 @@ public class MaterialTransformDeserializer {
 		}
 
 		if (json.has("depthTest")) {
-			final String depthTest = json.get("depthTest").getAsString().toLowerCase();
+			final String depthTest = json.get("depthTest").getAsString().toLowerCase(Locale.ROOT);
 
 			if (depthTest.equals("always")) {
 				transforms.add(finder -> finder.depthTest(DEPTH_TEST_ALWAYS));
@@ -225,7 +230,7 @@ public class MaterialTransformDeserializer {
 		}
 
 		if (json.has("target")) {
-			final String target = json.get("target").getAsString().toLowerCase();
+			final String target = json.get("target").getAsString().toLowerCase(Locale.ROOT);
 
 			if (target.equals("main")) {
 				transforms.add(finder -> finder.target(TARGET_MAIN));
@@ -250,7 +255,7 @@ public class MaterialTransformDeserializer {
 		}
 
 		if (json.has("transparency")) {
-			final String transparency = json.get("transparency").getAsString().toLowerCase();
+			final String transparency = json.get("transparency").getAsString().toLowerCase(Locale.ROOT);
 
 			if (transparency.equals("none")) {
 				transforms.add(finder -> finder.transparency(TRANSPARENCY_NONE));
@@ -275,7 +280,7 @@ public class MaterialTransformDeserializer {
 		}
 
 		if (json.has("writeMask")) {
-			final String writeMask = json.get("writeMask").getAsString().toLowerCase();
+			final String writeMask = json.get("writeMask").getAsString().toLowerCase(Locale.ROOT);
 
 			if (writeMask.equals("color")) {
 				transforms.add(finder -> finder.writeMask(WRITE_MASK_COLOR));
