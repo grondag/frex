@@ -283,7 +283,8 @@ public class MaterialTester<T> extends MaterialPredicate {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof MaterialTester) {
-			final MaterialTester<T> casted = (MaterialTester) obj;
+			@SuppressWarnings("unchecked")
+			final MaterialTester<T> casted = (MaterialTester<T>) obj;
 			return this.toTest.equals(casted.toTest) && test == casted.test;
 		} else {
 			return false;

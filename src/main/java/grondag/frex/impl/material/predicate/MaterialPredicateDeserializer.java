@@ -14,14 +14,11 @@
  *  the License.
  */
 
-package grondag.frex.impl.material;
+package grondag.frex.impl.material.predicate;
 
 import static grondag.frex.impl.material.predicate.MaterialPredicate.MATERIAL_ALWAYS_TRUE;
 
 import com.google.gson.JsonObject;
-
-import grondag.frex.impl.material.predicate.ArrayPredicate;
-import grondag.frex.impl.material.predicate.MaterialPredicate;
 
 public class MaterialPredicateDeserializer {
 	public static MaterialPredicate deserialize(JsonObject json) {

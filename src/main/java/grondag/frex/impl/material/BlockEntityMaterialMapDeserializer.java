@@ -43,6 +43,7 @@ import grondag.frex.impl.material.predicate.StateMaterialBoth;
 import grondag.frex.impl.material.predicate.StateBiPredicate;
 import grondag.frex.impl.material.predicate.StateOnly;
 import grondag.frex.impl.material.predicate.MaterialPredicate;
+import grondag.frex.impl.material.predicate.MaterialPredicateDeserializer;
 
 @Internal
 public class BlockEntityMaterialMapDeserializer {

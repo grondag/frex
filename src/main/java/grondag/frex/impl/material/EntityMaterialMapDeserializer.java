@@ -41,6 +41,7 @@ import grondag.frex.impl.material.predicate.EntityOnly;
 import grondag.frex.impl.material.predicate.EntityMaterialOnly;
 import grondag.frex.impl.material.predicate.EntityBiPredicate;
 import grondag.frex.impl.material.predicate.MaterialPredicate;
+import grondag.frex.impl.material.predicate.MaterialPredicateDeserializer;
 import grondag.frex.impl.material.predicate.EntityMaterialBoth;
 
 @Internal
