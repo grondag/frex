@@ -46,6 +46,7 @@ import static grondag.frex.api.material.MaterialFinder.WRITE_MASK_COLOR;
 import static grondag.frex.api.material.MaterialFinder.WRITE_MASK_COLOR_DEPTH;
 import static grondag.frex.api.material.MaterialFinder.WRITE_MASK_DEPTH;
 
+import java.util.Locale;
 import java.util.function.BiPredicate;
 
 import com.google.gson.JsonElement;
@@ -85,7 +86,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 	public static MaterialTester<String> createString(JsonElement je, Test<String> test) {
 		try {
 			return new MaterialTester<>(je.getAsString(), test);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 		}
 	}
@@ -93,7 +94,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 	public static MaterialTester<Boolean> createBoolean(JsonElement je, Test<Boolean> test) {
 		try {
 			return new MaterialTester<>(je.getAsBoolean(), test);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 		}
 	}
@@ -101,7 +102,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 	public static MaterialTester<Integer> createInt(JsonElement je, Test<Integer> test) {
 		try {
 			return new MaterialTester<>(je.getAsInt(), test);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 		}
 	}
@@ -109,7 +110,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 	public static MaterialTester<BlendMode> createBlendMode(JsonElement je) {
 		try {
 			return new MaterialTester<>(MaterialDeserializer.readBlendModeFrex(je.getAsString()), BLEND_MODE_TEST);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 		}
 	}
@@ -117,7 +118,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 	// TODO: create public string to int mapper in MaterialDeserializer similar to BlendMode
 	public static MaterialTester<Integer> createCutout(JsonElement je) {
 		try {
-			final String cutout = je.getAsString().toLowerCase();
+			final String cutout = je.getAsString().toLowerCase(Locale.ROOT);
 			int val;
 
 			if (cutout.equals("cutout_half")) {
@@ -133,7 +134,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 			}
 
 			return new MaterialTester<>(val, CUTOUT_TEST);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 		}
 	}
@@ -141,7 +142,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 	// TODO: create public string to int mapper in MaterialDeserializer similar to BlendMode
 	public static MaterialTester<Integer> createDecal(JsonElement je) {
 		try {
-			final String decal = je.getAsString().toLowerCase();
+			final String decal = je.getAsString().toLowerCase(Locale.ROOT);
 			int val;
 
 			if (decal.equals("polygon_offset")) {
@@ -155,7 +156,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 			}
 
 			return new MaterialTester<>(val, DECAL_TEST);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 		}
 	}
@@ -163,7 +164,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 	// TODO: create public string to int mapper in MaterialDeserializer similar to BlendMode
 	public static MaterialTester<Integer> createDepthTest(JsonElement je) {
 		try {
-			final String depthTest = je.getAsString().toLowerCase();
+			final String depthTest = je.getAsString().toLowerCase(Locale.ROOT);
 			int val;
 
 			if (depthTest.equals("always")) {
@@ -179,7 +180,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 			}
 
 			return new MaterialTester<>(val, DEPTH_TEST_TEST);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 		}
 	}
@@ -187,7 +188,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 	// TODO: create public string to int mapper in MaterialDeserializer similar to BlendMode
 	public static MaterialTester<Integer> createTarget(JsonElement je) {
 		try {
-			final String target = je.getAsString().toLowerCase();
+			final String target = je.getAsString().toLowerCase(Locale.ROOT);
 			int val;
 
 			if (target.equals("main")) {
@@ -209,7 +210,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 			}
 
 			return new MaterialTester<>(val, TARGET_TEST);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 		}
 	}
@@ -217,7 +218,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 	// TODO: create public string to int mapper in MaterialDeserializer similar to BlendMode
 	public static MaterialTester<Integer> createTransparency(JsonElement je) {
 		try {
-			final String transparency = je.getAsString().toLowerCase();
+			final String transparency = je.getAsString().toLowerCase(Locale.ROOT);
 			int val;
 
 			if (transparency.equals("none")) {
@@ -239,7 +240,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 			}
 
 			return new MaterialTester<>(val, TRANSPARENCY_TEST);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 		}
 	}
@@ -247,7 +248,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 	// TODO: create public string to int mapper in MaterialDeserializer similar to BlendMode
 	public static MaterialTester<Integer> createWriteMask(JsonElement je) {
 		try {
-			final String writeMask = je.getAsString().toLowerCase();
+			final String writeMask = je.getAsString().toLowerCase(Locale.ROOT);
 			int val;
 
 			if (writeMask.equals("color")) {
@@ -261,7 +262,7 @@ public class MaterialTester<T> extends MaterialPredicate {
 			}
 
 			return new MaterialTester<>(val, WRITE_MASK_TEST);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 		}
 	}

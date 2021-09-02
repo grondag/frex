@@ -24,13 +24,12 @@ import grondag.frex.impl.material.predicate.ArrayPredicate;
 import grondag.frex.impl.material.predicate.MaterialPredicate;
 
 public class MaterialPredicateDeserializer {
-	@SuppressWarnings("unchecked")
 	public static MaterialPredicate deserialize(JsonObject json) {
 		if (json == null || json.isJsonNull()) {
 			return MATERIAL_ALWAYS_TRUE;
 		}
 
-		ArrayPredicate arrayPredicate = new ArrayPredicate(json);
+		final ArrayPredicate arrayPredicate = new ArrayPredicate(json);
 
 		if (arrayPredicate.size() == 0) {
 			return MATERIAL_ALWAYS_TRUE;
