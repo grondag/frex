@@ -1,8 +1,6 @@
-# FREX - Rendering Extensions for the Fabric Rendering API
+# FREX - Rendering Extensions for the Minecraft Mods
 
-Extensions for the Fabric rendering API.  These may or may not be proposed and accepted for inclusion in the Fabric API.  
-
-Also includes a shaded copy of [JOML](https://github.com/JOML-CI/JOML) for use by renderer implementations and rendering mods.
+FREX currently support the Fabric API and Mod Loader.  
 
 Packaged as a separate mod so that rendering implementations and mods that consume these extensions can
 depend on it without directly depending on specific implementation.
