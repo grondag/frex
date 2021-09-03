@@ -47,7 +47,7 @@ import grondag.frex.impl.config.FlawlessFramesImpl;
  *    "frex_flawless_frames": [ "yourorg.yourmod.yourpackage.MyConsumer" ]
  * }</pre>
  *
- * <p>Any provider that implements this end point should ensure every consumer that declares it
+ * <p>Any provider that invokes this end point should ensure every consumer that declares it
  * is called exactly once during initialization. (For providers using FREX, the library
  * automatically satisfies this guarantee.)
  *
