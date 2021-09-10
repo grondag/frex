@@ -3,7 +3,7 @@
  * FREX shader API to describe the material properties of
  * the current primitive.in
  *
- * See FREX Shader API.md for license and general informaiton.
+ * See FREX Shader API.md for license and general information.
  *************************************************************************/
 
 /*
@@ -20,7 +20,7 @@ const int frx_matCutout;
 
 /*
  * Equals 1 when material has Level of Detail (mip mapping) disabled. Zero otherwise.
- * Currently the RenderMaterail finder only allows this for cutout materials.
+ * Currently the RenderMaterial finder only allows this for cutout materials.
  */
 const int frx_matUnmipped;
 
