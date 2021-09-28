@@ -1,4 +1,9 @@
-# FREX - Rendering Extensions for the Minecraft Mods
+# THE FREX PROJECT IS NOW PART OF VRAM-GUILD 
+**THIS REPO IS NO LONGER MAINTAINED.**
+
+**Please go to https://github.com/vram-guild/frex**
+
+# FREX - Rendering Extensions for Minecraft Mods
 
 FREX currently support the Fabric API and Mod Loader.  
 
